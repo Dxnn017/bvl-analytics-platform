@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Datos reales locales
+data/raw/
+data/processed/
+
+# Temporales
+outputs/tmp/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
