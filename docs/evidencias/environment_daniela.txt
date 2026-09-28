@@ -1,0 +1,1 @@
+bash: ./scripts/check_environment.sh: No existe el fichero o el directorio
