@@ -1,0 +1,4 @@
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 20:54 /datalake/bvl/quarantine/smv
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 20:54 /datalake/bvl/quarantine/smv/indices
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 20:54 /datalake/bvl/quarantine/smv/indices/run_id=RUN_20260927_205351
+-rw-r--r--   1 danielanieve supergroup         14 2026-09-27 20:54 /datalake/bvl/quarantine/smv/indices/run_id=RUN_20260927_205351/Indices.json

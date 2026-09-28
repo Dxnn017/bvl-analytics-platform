@@ -1,0 +1,85 @@
+=================================================================
+ BVL ANALYTICS - INGESTA BRONZE
+=================================================================
+Run ID         : RUN_20260927_205351
+Fecha ingesta  : 2026-09-27
+Datasets       : 8
+=================================================================
+
+=================================================================
+Dataset : cotizaciones
+Fuente  : SMV
+Archivo : Cotizaciones.json
+=================================================================
+[OK] Tamaño   : 1,771,802 bytes
+[OK] SHA-256  : fa30b136fbacfe4478fd303f153b6e53a8387092b366c1a2a0f8e60b181bdcf8
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+Dataset : indices
+Fuente  : SMV
+Archivo : Indices.json
+=================================================================
+[REJECTED] JSON inválido: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+[QUARANTINE] /datalake/bvl/quarantine/smv/indices/run_id=RUN_20260927_205351/Indices.json
+
+=================================================================
+Dataset : estado_resultados
+Fuente  : SMV
+Archivo : EstadoResultadosSMV.json
+=================================================================
+[OK] Tamaño   : 5,686,254 bytes
+[OK] SHA-256  : 2f5cd56b883ad372ab8f035a9f75dca8fa83319cd83918c3f02b57c0fd38f22c
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+Dataset : cambios_patrimonio
+Fuente  : SMV
+Archivo : CambiosPatrimonioSMV.json
+=================================================================
+[OK] Tamaño   : 160,953 bytes
+[OK] SHA-256  : 524cedd7627163dd24a6ef3cb42f5b7b35e6f66b4d12087cbb2c33d79e54856b
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+Dataset : situacion_financiera
+Fuente  : SMV
+Archivo : SituacionFinancieraSMV.json
+=================================================================
+[OK] Tamaño   : 8,569,828 bytes
+[OK] SHA-256  : 87459dba7cde4e6bf0d541e66612f1f479102e3bad18399d5e36ac3184893df7
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+Dataset : flujo_efectivo
+Fuente  : SMV
+Archivo : FlujoEfectivoSMV.json
+=================================================================
+[OK] Tamaño   : 7,890,131 bytes
+[OK] SHA-256  : 5565134ba713a5ba57e5f0209635f70c2e732cca311ea227aa422a75ae082d46
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+Dataset : tipo_cambio
+Fuente  : BCRP
+Archivo : BCRP_Tipo_Cambio_Venta.csv
+=================================================================
+[OK] Tamaño   : 154,221 bytes
+[OK] SHA-256  : e2e7bbd76d38d059948ab13082d2a450ce213f64ec179f9e36dc3dd08226fbb0
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+Dataset : embig
+Fuente  : BCRP
+Archivo : BCRP_EMBIG_Peru.csv
+=================================================================
+[OK] Tamaño   : 89,858 bytes
+[OK] SHA-256  : 54de0c388cb6c81f6bbc04fbef953f0f1cd4725fe2ca2158753dc53c22802313
+[SKIPPED_DUPLICATE] Archivo ya procesado.
+
+=================================================================
+ RESUMEN DE INGESTA
+=================================================================
+SKIPPED_DUPLICATE   : 7
+REJECTED            : 1
+=================================================================
