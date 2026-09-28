@@ -1,0 +1,508 @@
+26/09/27 22:43:49 WARN Utils: Your hostname, bigdata resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/09/27 22:43:49 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/09/27 22:43:52 INFO SparkContext: Running Spark version 3.5.1
+26/09/27 22:43:52 INFO SparkContext: OS info Linux, 6.1.0-53-amd64, amd64
+26/09/27 22:43:52 INFO SparkContext: Java version 17.0.20.1
+26/09/27 22:43:52 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/27 22:43:53 INFO ResourceUtils: ==============================================================
+26/09/27 22:43:53 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/09/27 22:43:53 INFO ResourceUtils: ==============================================================
+26/09/27 22:43:53 INFO SparkContext: Submitted application: BVL-Bronze-Profiling
+26/09/27 22:43:53 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 512, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/09/27 22:43:53 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+26/09/27 22:43:53 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/09/27 22:43:53 INFO SecurityManager: Changing view acls to: danielanieve
+26/09/27 22:43:53 INFO SecurityManager: Changing modify acls to: danielanieve
+26/09/27 22:43:53 INFO SecurityManager: Changing view acls groups to: 
+26/09/27 22:43:53 INFO SecurityManager: Changing modify acls groups to: 
+26/09/27 22:43:53 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/09/27 22:43:54 INFO Utils: Successfully started service 'sparkDriver' on port 39395.
+26/09/27 22:43:54 INFO SparkEnv: Registering MapOutputTracker
+26/09/27 22:43:54 INFO SparkEnv: Registering BlockManagerMaster
+26/09/27 22:43:54 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/09/27 22:43:54 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/09/27 22:43:54 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/09/27 22:43:55 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-8e70d9e9-efb8-44ae-96b4-decae6bdfd88
+26/09/27 22:43:55 INFO MemoryStore: MemoryStore started with capacity 127.2 MiB
+26/09/27 22:43:55 INFO SparkEnv: Registering OutputCommitCoordinator
+26/09/27 22:43:55 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/09/27 22:43:55 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/09/27 22:43:56 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+26/09/27 22:43:59 INFO Configuration: resource-types.xml not found
+26/09/27 22:43:59 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/09/27 22:43:59 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (8192 MB per container)
+26/09/27 22:43:59 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/09/27 22:43:59 INFO Client: Setting up container launch context for our AM
+26/09/27 22:43:59 INFO Client: Setting up the launch environment for our AM container
+26/09/27 22:43:59 INFO Client: Preparing resources for our AM container
+26/09/27 22:43:59 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/09/27 22:44:13 INFO Client: Uploading resource file:/tmp/spark-c2fd29f4-95d6-42ef-8ae9-ad22ced4814c/__spark_libs__4532949670230727538.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0002/__spark_libs__4532949670230727538.zip
+26/09/27 22:44:22 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/pyspark.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0002/pyspark.zip
+26/09/27 22:44:23 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0002/py4j-0.10.9.7-src.zip
+26/09/27 22:44:24 INFO Client: Uploading resource file:/tmp/spark-c2fd29f4-95d6-42ef-8ae9-ad22ced4814c/__spark_conf__5625965608940232292.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0002/__spark_conf__.zip
+26/09/27 22:44:24 INFO SecurityManager: Changing view acls to: danielanieve
+26/09/27 22:44:24 INFO SecurityManager: Changing modify acls to: danielanieve
+26/09/27 22:44:24 INFO SecurityManager: Changing view acls groups to: 
+26/09/27 22:44:24 INFO SecurityManager: Changing modify acls groups to: 
+26/09/27 22:44:24 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/09/27 22:44:24 INFO Client: Submitting application application_1790565670216_0002 to ResourceManager
+26/09/27 22:44:25 INFO YarnClientImpl: Submitted application application_1790565670216_0002
+26/09/27 22:44:26 INFO Client: Application report for application_1790565670216_0002 (state: ACCEPTED)
+26/09/27 22:44:26 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1790567064891
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1790565670216_0002/
+	 user: danielanieve
+26/09/27 22:44:40 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> bigdata, PROXY_URI_BASES -> http://bigdata:8088/proxy/application_1790565670216_0002), /proxy/application_1790565670216_0002
+26/09/27 22:44:40 INFO Client: Application report for application_1790565670216_0002 (state: RUNNING)
+26/09/27 22:44:40 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 10.0.2.15
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1790567064891
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1790565670216_0002/
+	 user: danielanieve
+26/09/27 22:44:40 INFO YarnClientSchedulerBackend: Application application_1790565670216_0002 has started running.
+26/09/27 22:44:40 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 36133.
+26/09/27 22:44:40 INFO NettyBlockTransferService: Server created on 10.0.2.15:36133
+26/09/27 22:44:40 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/09/27 22:44:40 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 10.0.2.15, 36133, None)
+26/09/27 22:44:40 INFO BlockManagerMasterEndpoint: Registering block manager 10.0.2.15:36133 with 127.2 MiB RAM, BlockManagerId(driver, 10.0.2.15, 36133, None)
+26/09/27 22:44:41 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 10.0.2.15, 36133, None)
+26/09/27 22:44:41 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 10.0.2.15, 36133, None)
+26/09/27 22:44:41 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /executors/heapHistogram: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /executors/heapHistogram/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:41 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:42 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:42 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:42 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:42 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/27 22:44:42 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after waiting maxRegisteredResourcesWaitingTime: 30000000000(ns)
+===========================================================================
+ BVL ANALYTICS - PERFILADO DE ZONA BRONZE
+===========================================================================
+
+===========================================================================
+DATASET : cotizaciones
+FUENTE  : SMV
+FORMATO : JSON
+===========================================================================
+Registros   : 5,101
+Columnas    : 12
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- Apertura_Actual: double (nullable = true)
+ |-- Cierre_Actual: double (nullable = true)
+ |-- Cierre_Anterior: double (nullable = true)
+ |-- Descripcion: string (nullable = true)
+ |-- FechaAnterior: string (nullable = true)
+ |-- FechaCotizacion: string (nullable = true)
+ |-- FechaRegistro: string (nullable = true)
+ |-- Maxima_Actual: double (nullable = true)
+ |-- Minima_Actual: double (nullable = true)
+ |-- Monto_Negociado: double (nullable = true)
+ |-- Promedio_Actual: double (nullable = true)
+ |-- Valor: string (nullable = true)
+
+
+NULOS:
+  Apertura_Actual                0
+  Cierre_Actual                  0
+  Cierre_Anterior                0
+  Descripcion                    0
+  FechaAnterior                  0
+  FechaCotizacion                0
+  FechaRegistro                  0
+  Maxima_Actual                  0
+  Minima_Actual                  0
+  Monto_Negociado                0
+  Promedio_Actual                0
+  Valor                          0
+
+MUESTRA:
++---------------+-------------+---------------+-----------------------+-------------+------------------------+------------------------+-------------+-------------+---------------+---------------+--------+
+|Apertura_Actual|Cierre_Actual|Cierre_Anterior|Descripcion            |FechaAnterior|FechaCotizacion         |FechaRegistro           |Maxima_Actual|Minima_Actual|Monto_Negociado|Promedio_Actual|Valor   |
++---------------+-------------+---------------+-----------------------+-------------+------------------------+------------------------+-------------+-------------+---------------+---------------+--------+
+|8.5            |8.5          |8.5            |Alicorp S.A.A.         |27/03/2025   |28/03/2025 12:00:00 a.m.|28/03/2025 05:57:33 p.m.|8.52         |8.5          |493310.5       |8.5            |ALICORC1|
+|194.9          |192.7        |203.0          |Amazon.Com Incorporated|27/03/2025   |28/03/2025 12:00:00 a.m.|28/03/2025 05:57:33 p.m.|194.9        |192.7        |249182.68425   |194.19         |AMZN    |
+|1.54           |1.54         |1.5            |Banco Bbva Peru        |27/03/2025   |28/03/2025 12:00:00 a.m.|28/03/2025 05:57:34 p.m.|1.55         |1.5          |213353.62      |1.52           |BBVAC1  |
++---------------+-------------+---------------+-----------------------+-------------+------------------------+------------------------+-------------+-------------+---------------+---------------+--------+
+only showing top 3 rows
+
+Tiempo perfilado: 22.176 s
+
+===========================================================================
+DATASET : indices
+FUENTE  : SMV
+FORMATO : JSON
+===========================================================================
+Registros   : 16
+Columnas    : 11
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- Clase: string (nullable = true)
+ |-- ClaseIndice: string (nullable = true)
+ |-- Fecha: string (nullable = true)
+ |-- Indice: string (nullable = true)
+ |-- Tipo: string (nullable = true)
+ |-- anterior: double (nullable = true)
+ |-- apertura: double (nullable = true)
+ |-- maxima: double (nullable = true)
+ |-- minima: double (nullable = true)
+ |-- ultimo: double (nullable = true)
+ |-- variacion: double (nullable = true)
+
+
+NULOS:
+  Clase                          0
+  ClaseIndice                    16
+  Fecha                          0
+  Indice                         0
+  Tipo                           0
+  anterior                       0
+  apertura                       0
+  maxima                         0
+  minima                         0
+  ultimo                         0
+  variacion                      0
+
+MUESTRA:
++---------+-----------+------------------------+-----------------------+-------+--------+--------+------+-------+-------+---------+
+|Clase    |ClaseIndice|Fecha                   |Indice                 |Tipo   |anterior|apertura|maxima|minima |ultimo |variacion|
++---------+-----------+------------------------+-----------------------+-------+--------+--------+------+-------+-------+---------+
+|De Sector|NULL       |06/01/2025 12:00:00 a.m.|S&P/BVL Consumer       |SPBLCPT|1284.15 |1284.15 |1284.5|1276.91|1278.83|-0.41    |
+|De Sector|NULL       |06/01/2025 12:00:00 a.m.|S&P/BVL Public Services|SPBLSPT|776.14  |776.14  |778.72|773.35 |778.33 |0.28     |
+|De Sector|NULL       |06/01/2025 12:00:00 a.m.|S&P/BVL Mining         |SPBLMPT|624.15  |624.15  |629.74|621.92 |629.39 |0.84     |
++---------+-----------+------------------------+-----------------------+-------+--------+--------+------+-------+-------+---------+
+only showing top 3 rows
+
+Tiempo perfilado: 2.853 s
+
+===========================================================================
+DATASET : estado_resultados
+FUENTE  : SMV
+FORMATO : JSON
+===========================================================================
+Registros   : 11,609
+Columnas    : 18
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- CIIU: string (nullable = true)
+ |-- Cuenta: string (nullable = true)
+ |-- DescripcionCuenta: string (nullable = true)
+ |-- Ejercicio: string (nullable = true)
+ |-- FechaRegistro: string (nullable = true)
+ |-- MetodoFlujoEfectivo: string (nullable = true)
+ |-- Moneda: string (nullable = true)
+ |-- Monto1: double (nullable = true)
+ |-- Monto2: double (nullable = true)
+ |-- Monto3: double (nullable = true)
+ |-- Monto4: double (nullable = true)
+ |-- NombreEmpresa: string (nullable = true)
+ |-- RPJ: string (nullable = true)
+ |-- RUC: string (nullable = true)
+ |-- TipoEmpresa: string (nullable = true)
+ |-- TipoInformacion: string (nullable = true)
+ |-- TipoSector: string (nullable = true)
+ |-- Trimestre: string (nullable = true)
+
+
+NULOS:
+  CIIU                           0
+  Cuenta                         0
+  DescripcionCuenta              0
+  Ejercicio                      0
+  FechaRegistro                  0
+  MetodoFlujoEfectivo            0
+  Moneda                         0
+  Monto1                         0
+  Monto2                         0
+  Monto3                         0
+  Monto4                         0
+  NombreEmpresa                  0
+  RPJ                            0
+  RUC                            0
+  TipoEmpresa                    0
+  TipoInformacion                0
+  TipoSector                     0
+  Trimestre                      0
+
+MUESTRA:
++----+------+----------------------------------+---------+-------------+-------------------+------+-------+-------+-------+-------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+|CIIU|Cuenta|DescripcionCuenta                 |Ejercicio|FechaRegistro|MetodoFlujoEfectivo|Moneda|Monto1 |Monto2 |Monto3 |Monto4 |NombreEmpresa                                                   |RPJ   |RUC        |TipoEmpresa                                      |TipoInformacion      |TipoSector|Trimestre    |
++----+------+----------------------------------+---------+-------------+-------------------+------+-------+-------+-------+-------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+|    |2D01ST|Ingresos de Actividades Ordinarias|2021     |29/04/2021   |M todo Directo     |Soles |1979.0 |2159.0 |1979.0 |2159.0 |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
+|    |2D0201|Costo de Ventas                   |2021     |29/04/2021   |M todo Directo     |Soles |-1410.0|-1276.0|-1410.0|-1276.0|AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
+|    |2D02ST|Ganancia (Pérdida) Bruta          |2021     |29/04/2021   |M todo Directo     |Soles |569.0  |883.0  |569.0  |883.0  |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
++----+------+----------------------------------+---------+-------------+-------------------+------+-------+-------+-------+-------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+only showing top 3 rows
+
+Tiempo perfilado: 4.901 s
+
+===========================================================================
+DATASET : cambios_patrimonio
+FUENTE  : SMV
+FORMATO : JSON
+===========================================================================
+Registros   : 512
+Columnas    : 10
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- Cuenta: string (nullable = true)
+ |-- DescripcionColumna: string (nullable = true)
+ |-- DescripcionCuenta: string (nullable = true)
+ |-- Ejercicio: string (nullable = true)
+ |-- FechaRegistro: string (nullable = true)
+ |-- Monto1: double (nullable = true)
+ |-- OrdenColumna: string (nullable = true)
+ |-- RPJ: string (nullable = true)
+ |-- TipoInformacion: string (nullable = true)
+ |-- Trimestre: string (nullable = true)
+
+
+NULOS:
+  Cuenta                         0
+  DescripcionColumna             0
+  DescripcionCuenta              0
+  Ejercicio                      0
+  FechaRegistro                  0
+  Monto1                         0
+  OrdenColumna                   0
+  RPJ                            0
+  TipoInformacion                0
+  Trimestre                      0
+
+MUESTRA:
++------+---------------------------+-------------------------------+---------+-------------+---------+------------+------+---------------------+-------------+
+|Cuenta|DescripcionColumna         |DescripcionCuenta              |Ejercicio|FechaRegistro|Monto1   |OrdenColumna|RPJ   |TipoInformacion      |Trimestre    |
++------+---------------------------+-------------------------------+---------+-------------+---------+------------+------+---------------------+-------------+
+|4F0101|Capital social             |SALDOS AL 1ERO DE ENERO DE 2023|2024     |25/04/2024   |7382184.0|1           |B80004|Trimestral Individual|1er Trimestre|
+|4F0101|Capital adicional          |SALDOS AL 1ERO DE ENERO DE 2023|2024     |25/04/2024   |0.0      |2           |B80004|Trimestral Individual|1er Trimestre|
+|4F0101|Acciones Propias en Cartera|SALDOS AL 1ERO DE ENERO DE 2023|2024     |25/04/2024   |0.0      |3           |B80004|Trimestral Individual|1er Trimestre|
++------+---------------------------+-------------------------------+---------+-------------+---------+------------+------+---------------------+-------------+
+only showing top 3 rows
+
+Tiempo perfilado: 2.866 s
+
+===========================================================================
+DATASET : situacion_financiera
+FUENTE  : SMV
+FORMATO : JSON
+===========================================================================
+Registros   : 18,983
+Columnas    : 16
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- CIIU: string (nullable = true)
+ |-- Cuenta: string (nullable = true)
+ |-- DescripcionCuenta: string (nullable = true)
+ |-- Ejercicio: string (nullable = true)
+ |-- FechaRegistro: string (nullable = true)
+ |-- MetodoFlujoEfectivo: string (nullable = true)
+ |-- Moneda: string (nullable = true)
+ |-- Monto1: double (nullable = true)
+ |-- Monto2: double (nullable = true)
+ |-- NombreEmpresa: string (nullable = true)
+ |-- RPJ: string (nullable = true)
+ |-- RUC: string (nullable = true)
+ |-- TipoEmpresa: string (nullable = true)
+ |-- TipoInformacion: string (nullable = true)
+ |-- TipoSector: string (nullable = true)
+ |-- Trimestre: string (nullable = true)
+
+
+NULOS:
+  CIIU                           0
+  Cuenta                         0
+  DescripcionCuenta              0
+  Ejercicio                      0
+  FechaRegistro                  0
+  MetodoFlujoEfectivo            0
+  Moneda                         0
+  Monto1                         0
+  Monto2                         0
+  NombreEmpresa                  0
+  RPJ                            0
+  RUC                            0
+  TipoEmpresa                    0
+  TipoInformacion                0
+  TipoSector                     0
+  Trimestre                      0
+
+MUESTRA:
++----+------+---------------------------------------------------------+---------+-------------+-------------------+------+------+------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+|CIIU|Cuenta|DescripcionCuenta                                        |Ejercicio|FechaRegistro|MetodoFlujoEfectivo|Moneda|Monto1|Monto2|NombreEmpresa                                                   |RPJ   |RUC        |TipoEmpresa                                      |TipoInformacion      |TipoSector|Trimestre    |
++----+------+---------------------------------------------------------+---------+-------------+-------------------+------+------+------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+|    |1D0109|Efectivo y Equivalentes al Efectivo                      |2024     |30/04/2024   |M todo Directo     |Soles |1088.0|941.0 |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
+|    |1D0114|Otros Activos Financieros                                |2024     |30/04/2024   |M todo Directo     |Soles |0.0   |0.0   |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
+|    |1D0121|Cuentas por Cobrar Comerciales y Otras Cuentas por Cobrar|2024     |30/04/2024   |M todo Directo     |Soles |256.0 |459.0 |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
++----+------+---------------------------------------------------------+---------+-------------+-------------------+------+------+------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+only showing top 3 rows
+
+Tiempo perfilado: 6.944 s
+
+===========================================================================
+DATASET : flujo_efectivo
+FUENTE  : SMV
+FORMATO : JSON
+===========================================================================
+Registros   : 16,912
+Columnas    : 16
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- CIIU: string (nullable = true)
+ |-- Cuenta: string (nullable = true)
+ |-- DescripcionCuenta: string (nullable = true)
+ |-- Ejercicio: string (nullable = true)
+ |-- FechaRegistro: string (nullable = true)
+ |-- MetodoFlujoEfectivo: string (nullable = true)
+ |-- Moneda: string (nullable = true)
+ |-- Monto1: double (nullable = true)
+ |-- Monto2: double (nullable = true)
+ |-- NombreEmpresa: string (nullable = true)
+ |-- RPJ: string (nullable = true)
+ |-- RUC: string (nullable = true)
+ |-- TipoEmpresa: string (nullable = true)
+ |-- TipoInformacion: string (nullable = true)
+ |-- TipoSector: string (nullable = true)
+ |-- Trimestre: string (nullable = true)
+
+
+NULOS:
+  CIIU                           0
+  Cuenta                         0
+  DescripcionCuenta              0
+  Ejercicio                      0
+  FechaRegistro                  0
+  MetodoFlujoEfectivo            0
+  Moneda                         0
+  Monto1                         0
+  Monto2                         0
+  NombreEmpresa                  0
+  RPJ                            0
+  RUC                            0
+  TipoEmpresa                    0
+  TipoInformacion                0
+  TipoSector                     0
+  Trimestre                      0
+
+MUESTRA:
++----+------+----------------------------------------------------------------------+---------+-------------+-------------------+------+------+------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+|CIIU|Cuenta|DescripcionCuenta                                                     |Ejercicio|FechaRegistro|MetodoFlujoEfectivo|Moneda|Monto1|Monto2|NombreEmpresa                                                   |RPJ   |RUC        |TipoEmpresa                                      |TipoInformacion      |TipoSector|Trimestre    |
++----+------+----------------------------------------------------------------------+---------+-------------+-------------------+------+------+------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+|    |3D0101|Venta de Bienes y Prestación de Servicios                             |2021     |29/04/2021   |M todo Directo     |Soles |2030.0|1048.0|AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
+|    |3D0112|Regalías, Cuotas, Comisiones, Otros Ingresos de Actividades Ordinarias|2021     |29/04/2021   |M todo Directo     |Soles |0.0   |0.0   |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
+|    |3D0110|Contratos Mantenidos con Propósito de Intermediación o para Negociar  |2021     |29/04/2021   |M todo Directo     |Soles |0.0   |0.0   |AC CAPITALES SOCIEDAD ADMINISTRADORA DE FONDOS DE INVERSION S.A.|I00004|20504893295|SOCIEDADES ADMINISTRADORAS DE FONDOS DE INVERSION|Trimestral Individual|          |1er Trimestre|
++----+------+----------------------------------------------------------------------+---------+-------------+-------------------+------+------+------+----------------------------------------------------------------+------+-----------+-------------------------------------------------+---------------------+----------+-------------+
+only showing top 3 rows
+
+Tiempo perfilado: 3.757 s
+
+===========================================================================
+DATASET : tipo_cambio
+FUENTE  : BCRP
+FORMATO : CSV
+===========================================================================
+Registros   : 7,752
+Columnas    : 2
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- _c0: string (nullable = true)
+ |-- PD04638PD: string (nullable = true)
+
+
+NULOS:
+  _c0                            1
+  PD04638PD                      0
+
+MUESTRA:
++-------+------------------------------------------------------+
+|_c0    |PD04638PD                                             |
++-------+------------------------------------------------------+
+|NULL   |Tipo de cambio - TC Interbancario (S/ por US$) - Venta|
+|02Ene97|2.618                                                 |
+|03Ene97|2.62                                                  |
++-------+------------------------------------------------------+
+only showing top 3 rows
+
+Tiempo perfilado: 6.673 s
+
+===========================================================================
+DATASET : embig
+FUENTE  : BCRP
+FORMATO : CSV
+===========================================================================
+Registros   : 7,482
+Columnas    : 2
+Duplicados  : se evaluaran en Silver
+
+SCHEMA:
+root
+ |-- _c0: string (nullable = true)
+ |-- PD04709XD: string (nullable = true)
+
+
+NULOS:
+  _c0                            1
+  PD04709XD                      0
+
+MUESTRA:
++-------+----------------------------------------------------------------------+
+|_c0    |PD04709XD                                                             |
++-------+----------------------------------------------------------------------+
+|NULL   |Tasas de inter�s: EMBIG (variaci�n en pbs) - Spread - EMBIG Per� (pbs)|
+|01Ene98|421                                                                   |
+|02Ene98|411                                                                   |
++-------+----------------------------------------------------------------------+
+only showing top 3 rows
+
+Tiempo perfilado: 1.707 s
+
+===========================================================================
+ PERFILADO TERMINADO
+===========================================================================
+Reporte: /home/danielanieve/bvl-analytics-platform/outputs/quality/bronze_profile_summary.json
