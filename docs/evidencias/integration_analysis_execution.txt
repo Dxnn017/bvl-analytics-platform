@@ -1,0 +1,348 @@
+26/09/28 01:06:29 WARN Utils: Your hostname, bigdata resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/09/28 01:06:29 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/09/28 01:06:33 INFO SparkContext: Running Spark version 3.5.1
+26/09/28 01:06:33 INFO SparkContext: OS info Linux, 6.1.0-53-amd64, amd64
+26/09/28 01:06:33 INFO SparkContext: Java version 17.0.20.1
+26/09/28 01:06:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/28 01:06:33 INFO ResourceUtils: ==============================================================
+26/09/28 01:06:33 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/09/28 01:06:33 INFO ResourceUtils: ==============================================================
+26/09/28 01:06:33 INFO SparkContext: Submitted application: BVL-Integration-Analysis
+26/09/28 01:06:33 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 512, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/09/28 01:06:34 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+26/09/28 01:06:34 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/09/28 01:06:34 INFO SecurityManager: Changing view acls to: danielanieve
+26/09/28 01:06:34 INFO SecurityManager: Changing modify acls to: danielanieve
+26/09/28 01:06:34 INFO SecurityManager: Changing view acls groups to: 
+26/09/28 01:06:34 INFO SecurityManager: Changing modify acls groups to: 
+26/09/28 01:06:34 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/09/28 01:06:35 INFO Utils: Successfully started service 'sparkDriver' on port 34131.
+26/09/28 01:06:35 INFO SparkEnv: Registering MapOutputTracker
+26/09/28 01:06:35 INFO SparkEnv: Registering BlockManagerMaster
+26/09/28 01:06:35 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/09/28 01:06:35 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/09/28 01:06:35 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/09/28 01:06:36 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-ab45f724-0ea1-496d-8e2b-3ef56e8968f1
+26/09/28 01:06:36 INFO MemoryStore: MemoryStore started with capacity 127.2 MiB
+26/09/28 01:06:36 INFO SparkEnv: Registering OutputCommitCoordinator
+26/09/28 01:06:36 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/09/28 01:06:37 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/09/28 01:06:37 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+26/09/28 01:06:39 INFO Configuration: resource-types.xml not found
+26/09/28 01:06:39 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/09/28 01:06:39 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (8192 MB per container)
+26/09/28 01:06:39 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/09/28 01:06:39 INFO Client: Setting up container launch context for our AM
+26/09/28 01:06:39 INFO Client: Setting up the launch environment for our AM container
+26/09/28 01:06:39 INFO Client: Preparing resources for our AM container
+26/09/28 01:06:40 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/09/28 01:06:57 INFO Client: Uploading resource file:/tmp/spark-ef9ceeb8-e4b4-4eb7-8103-db7a1b004da3/__spark_libs__6514951814812784524.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0007/__spark_libs__6514951814812784524.zip
+26/09/28 01:07:05 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/pyspark.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0007/pyspark.zip
+26/09/28 01:07:06 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0007/py4j-0.10.9.7-src.zip
+26/09/28 01:07:07 INFO Client: Uploading resource file:/tmp/spark-ef9ceeb8-e4b4-4eb7-8103-db7a1b004da3/__spark_conf__18262247425023684923.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1790565670216_0007/__spark_conf__.zip
+26/09/28 01:07:07 INFO SecurityManager: Changing view acls to: danielanieve
+26/09/28 01:07:07 INFO SecurityManager: Changing modify acls to: danielanieve
+26/09/28 01:07:07 INFO SecurityManager: Changing view acls groups to: 
+26/09/28 01:07:07 INFO SecurityManager: Changing modify acls groups to: 
+26/09/28 01:07:07 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/09/28 01:07:07 INFO Client: Submitting application application_1790565670216_0007 to ResourceManager
+26/09/28 01:07:07 INFO YarnClientImpl: Submitted application application_1790565670216_0007
+26/09/28 01:07:08 INFO Client: Application report for application_1790565670216_0007 (state: ACCEPTED)
+26/09/28 01:07:08 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1790575627346
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1790565670216_0007/
+	 user: danielanieve
+26/09/28 01:07:30 INFO Client: Application report for application_1790565670216_0007 (state: RUNNING)
+26/09/28 01:07:30 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 10.0.2.15
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1790575627346
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1790565670216_0007/
+	 user: danielanieve
+26/09/28 01:07:30 INFO YarnClientSchedulerBackend: Application application_1790565670216_0007 has started running.
+26/09/28 01:07:30 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 45431.
+26/09/28 01:07:30 INFO NettyBlockTransferService: Server created on 10.0.2.15:45431
+26/09/28 01:07:30 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/09/28 01:07:31 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 10.0.2.15, 45431, None)
+26/09/28 01:07:31 INFO BlockManagerMasterEndpoint: Registering block manager 10.0.2.15:45431 with 127.2 MiB RAM, BlockManagerId(driver, 10.0.2.15, 45431, None)
+26/09/28 01:07:31 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 10.0.2.15, 45431, None)
+26/09/28 01:07:31 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 10.0.2.15, 45431, None)
+26/09/28 01:07:31 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> bigdata, PROXY_URI_BASES -> http://bigdata:8088/proxy/application_1790565670216_0007), /proxy/application_1790565670216_0007
+26/09/28 01:07:32 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:32 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /executors/heapHistogram: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /executors/heapHistogram/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/09/28 01:07:33 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after waiting maxRegisteredResourcesWaitingTime: 30000000000(ns)
+
+================================================================================
+1. COBERTURA TEMPORAL
+================================================================================
+cotizaciones         2025-01-02 -> 2025-03-28
+indices              2025-01-06 -> 2025-01-06
+tipo_cambio          1997-01-02 -> 2026-09-17
+embig                1998-01-01 -> 2026-09-03
+
+================================================================================
+2. FECHAS ÚNICAS DEL MERCADO
+================================================================================
+Fechas distintas Cotizaciones: 61
+
+================================================================================
+3. COBERTURA DE JOIN POR FECHA
+================================================================================
+Índices                  1/61    (1.64%)
+Tipo Cambio             61/61    (100.00%)
+EMBIG                   61/61    (100.00%)
+
+================================================================================
+4. VALORES COTIZADOS
+================================================================================
+Combinaciones Valor-Descripción: 354
+Descripciones distintas: 252
++-----+-----------+
+|valor|descripcion|
++-----+-----------+
+|AAL  |           |
+|AAPL |           |
+|ABX  |           |
+|ACWI |           |
+|ADBE |           |
+|AGG  |           |
+|AXP  |           |
+|BAC  |           |
+|BKNG |           |
+|BOTZ |           |
+|BRK/B|           |
+|CBU0 |           |
+|CBU7 |           |
+|CSPX |           |
+|CVX  |           |
+|DUST |           |
+|DXJ  |           |
+|ECH  |           |
+|EEM  |           |
+|EFA  |           |
+|EMB  |           |
+|EUFN |           |
+|EWG  |           |
+|EWJ  |           |
+|EZU  |           |
+|FCX  |           |
+|FEZ  |           |
+|GDX  |           |
+|GDXJ |           |
+|GLD  |           |
+|GOOG |           |
+|GOOGL|           |
+|GS   |           |
+|HDV  |           |
+|HEZU |           |
+|HYEM |           |
+|HYG  |           |
+|IBB  |           |
+|IDTM |           |
+|IDTP |           |
+|IEF  |           |
+|IHI  |           |
+|IHYA |           |
+|INDA |           |
+|IUAA |           |
+|IVE  |           |
+|IVV  |           |
+|IWM  |           |
+|IYR  |           |
+|JNJ  |           |
++-----+-----------+
+only showing top 50 rows
+
+
+================================================================================
+5. PERIODOS FINANCIEROS
+================================================================================
+
+estado_resultados
+  Ejercicios: [2021]
+  Empresas: 270
+  RUC: 267
+  RPJ: 270
+
+situacion_financiera
+  Ejercicios: [2024]
+  Empresas: 260
+  RUC: 257
+  RPJ: 260
+
+flujo_efectivo
+  Ejercicios: [2021]
+  Empresas: 270
+  RUC: 267
+  RPJ: 270
+
+cambios_patrimonio
+  Ejercicios: [2024]
+  Empresas: 0
+  RUC: 0
+  RPJ: 1
+
+================================================================================
+6. VALIDACIÓN DE CLAVE COMPUESTA FINANCIERA
+================================================================================
+estado_resultados         filas=11609    claves_unicas=11503    repeticiones=106
+situacion_financiera      filas=18983    claves_unicas=18831    repeticiones=152
+flujo_efectivo            filas=16912    claves_unicas=16822    repeticiones=90
+cambios_patrimonio        filas=512      claves_unicas=32       repeticiones=480
+
+================================================================================
+7. COBERTURA EXPLORATORIA VALOR ↔ EMPRESA
+================================================================================
+Valores distintos: 354
+Valores con coincidencia empresarial: 40
+Cobertura exploratoria: 11.30%
+
+VALORES SIN COINCIDENCIA:
++------+------------------------------+
+|valor |descripcion                   |
++------+------------------------------+
+|PFE   |                              |
+|SBUX  |                              |
+|IBB   |                              |
+|EMB   |                              |
+|HYEM  |                              |
+|JPM   |                              |
+|SLV   |                              |
+|GOOGL |                              |
+|EEM   |                              |
+|IDTP  |                              |
+|IVV   |                              |
+|GOOG  |                              |
+|EWG   |                              |
+|NKE   |                              |
+|AXP   |                              |
+|VLUE  |                              |
+|UUP   |                              |
+|XLV   |                              |
+|CBU0  |                              |
+|INDA  |                              |
+|DUST  |                              |
+|AAL   |                              |
+|ABX   |                              |
+|XLP   |                              |
+|HEZU  |                              |
+|TLH   |                              |
+|GDXJ  |                              |
+|ECH   |                              |
+|DXJ   |                              |
+|AAPL  |                              |
+|FEZ   |                              |
+|V     |                              |
+|GLD   |                              |
+|NUGT  |                              |
+|IEF   |                              |
+|NVDA  |                              |
+|EZU   |                              |
+|XLY   |                              |
+|TSLA  |                              |
+|BRK/B |                              |
+|JNUG  |                              |
+|AGG   |                              |
+|CVX   |                              |
+|HYG   |                              |
+|QUAL  |                              |
+|ADBE  |                              |
+|IYR   |                              |
+|BAC   |                              |
+|ACWI  |                              |
+|XLF   |                              |
+|RSP   |                              |
+|XLK   |                              |
+|UNH   |                              |
+|GDX   |                              |
+|PYPL  |                              |
+|SDIA  |                              |
+|VZ    |                              |
+|VTV   |                              |
+|LQDA  |                              |
+|BOTZ  |                              |
+|CSPX  |                              |
+|IHYA  |                              |
+|TLT   |                              |
+|SPXL  |                              |
+|XLRE  |                              |
+|EFA   |                              |
+|NFLX  |                              |
+|VWO   |                              |
+|SMT/UK|                              |
+|IUAA  |                              |
+|SHY   |                              |
+|JNJ   |                              |
+|FCX   |                              |
+|XLE   |                              |
+|EWJ   |                              |
+|MA    |                              |
+|GS    |                              |
+|EUFN  |                              |
+|SRET  |                              |
+|IWM   |                              |
+|HDV   |                              |
+|SIL   |                              |
+|IDTM  |                              |
+|IVE   |                              |
+|BKNG  |                              |
+|CBU7  |                              |
+|IHI   |                              |
+|WFC   |                              |
+|LQD   |                              |
+|MS    |                              |
+|ABT   |Abbott Laboratories           |
+|AMD   |Advanced Micro Devices, Inc.  |
+|ABNB  |Airbnb, Inc                   |
+|AMZN  |Amazon.Com Incorporated       |
+|ADI   |Analog Devices Inc            |
+|AIHC1 |Andino Investment Holding S.A.|
+|AMAT  |Applied Materials Inc         |
+|ARKK  |Ark Innovation Etf            |
+|T     |At&T Corp                     |
+|BIDU  |Baidu Inc                     |
++------+------------------------------+
+only showing top 100 rows
+
+
+================================================================================
+ANÁLISIS TERMINADO
+================================================================================
+Reporte: /home/danielanieve/bvl-analytics-platform/outputs/quality/integration_analysis.json
