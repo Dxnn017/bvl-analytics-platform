@@ -1,0 +1,21 @@
+============================================================
+BCRP - ESTADO HDFS
+============================================================
+
+=== BRONZE TIPO CAMBIO ===
+150.6 K  150.6 K  /datalake/bvl/bronze/bcrp/tipo_cambio
+
+=== BRONZE EMBIG ===
+87.8 K  87.8 K  /datalake/bvl/bronze/bcrp/embig
+
+=== SILVER TIPO CAMBIO ===
+353.0 K  353.0 K  /datalake/bvl/silver/macroeconomia/tipo_cambio
+
+=== SILVER EMBIG ===
+315.7 K  315.7 K  /datalake/bvl/silver/macroeconomia/embig
+
+=== PARQUET TIPO CAMBIO ===
+357
+
+=== PARQUET EMBIG ===
+345
