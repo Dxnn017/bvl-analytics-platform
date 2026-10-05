@@ -70,3 +70,73 @@ PDF no estructurado
 → Spark
 → Silver Parquet
 → integración con información bursátil y financiera.
+
+## Silver
+
+La transformación de los documentos se realiza mediante PySpark y genera
+datasets estructurados en formato Parquet con compresión Snappy.
+
+Ruta HDFS:
+
+`/datalake/bvl/silver/hechos_importancia/`
+
+### Eventos
+
+`/eventos/`
+
+- 346 eventos o expedientes.
+- 346 números de expediente únicos.
+- 338 eventos clasificados como `COHERENTE`.
+- 8 eventos clasificados como `HISTORICO_REGULARIZACION`.
+
+### Documentos
+
+`/documentos/`
+
+- 990 documentos.
+- 990 GUID únicos.
+- 428 documentos asociados a eventos temporalmente coherentes.
+- 562 documentos asociados a eventos históricos o regularizaciones.
+
+### Contenido textual
+
+`/contenido_textual/`
+
+- 990 registros estructurados.
+- 989 textos provenientes directamente del PDF correspondiente.
+- 1 registro utiliza el texto del archivo canónico debido a un PDF duplicado exacto.
+- 897 documentos clasificados como `OK`.
+- 92 documentos clasificados como `SIN_TEXTO`.
+- 1 documento clasificado como `DUPLICADO`.
+
+### Particionamiento
+
+Los datasets Silver se encuentran particionados mediante:
+
+`coherencia_temporal`
+
+con los valores:
+
+- `COHERENTE`
+- `HISTORICO_REGULARIZACION`
+
+Los documentos históricos o de regularización no se eliminan.
+Se conservan para trazabilidad, pero pueden excluirse del análisis principal
+mediante la bandera de calidad.
+
+## Transformación no estructurado a estructurado
+
+El flujo implementado es:
+
+PDF oficial SMV
+→ HDFS Bronze
+→ extracción de texto
+→ TXT
+→ asociación documento-expediente
+→ normalización y tipado con PySpark
+→ reglas de Data Quality
+→ Parquet/Snappy en Silver
+
+De esta manera, los documentos originalmente no estructurados se convierten
+en información analítica estructurada manteniendo la trazabilidad hacia el
+PDF original.

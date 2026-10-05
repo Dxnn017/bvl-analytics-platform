@@ -1,0 +1,30 @@
+============================================================
+ESTRUCTURA HDFS - SILVER HECHOS DE IMPORTANCIA SMV
+============================================================
+
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=COHERENTE
+-rw-r--r--   1 danielanieve supergroup    1776775 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=COHERENTE/part-00000-23007424-993c-4fab-a3d2-85961930ea6d.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=HISTORICO_REGULARIZACION
+-rw-r--r--   1 danielanieve supergroup    1146616 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=HISTORICO_REGULARIZACION/part-00000-23007424-993c-4fab-a3d2-85961930ea6d.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=COHERENTE
+-rw-r--r--   1 danielanieve supergroup     134500 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=COHERENTE/part-00000-031c4b68-e8a6-45b8-ac35-c9b39ff462c8.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=HISTORICO_REGULARIZACION
+-rw-r--r--   1 danielanieve supergroup     177424 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=HISTORICO_REGULARIZACION/part-00000-031c4b68-e8a6-45b8-ac35-c9b39ff462c8.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/eventos/coherencia_temporal=COHERENTE
+-rw-r--r--   1 danielanieve supergroup      54339 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/eventos/coherencia_temporal=COHERENTE/part-00000-9b4e6f62-d274-4de0-9c49-d7d41e9f4eb9.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/eventos/coherencia_temporal=HISTORICO_REGULARIZACION
+-rw-r--r--   1 danielanieve supergroup      16528 2026-10-04 20:31 /datalake/bvl/silver/hechos_importancia/eventos/coherencia_temporal=HISTORICO_REGULARIZACION/part-00000-9b4e6f62-d274-4de0-9c49-d7d41e9f4eb9.c000.snappy.parquet
+
+============================================================
+TAMAÑOS SILVER
+============================================================
+
+0        0        /datalake/bvl/silver/hechos_importancia/contenido_textual/_SUCCESS
+1.7 M    1.7 M    /datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=COHERENTE
+1.1 M    1.1 M    /datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=HISTORICO_REGULARIZACION
+0        0        /datalake/bvl/silver/hechos_importancia/documentos/_SUCCESS
+131.3 K  131.3 K  /datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=COHERENTE
+173.3 K  173.3 K  /datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=HISTORICO_REGULARIZACION
+0        0        /datalake/bvl/silver/hechos_importancia/eventos/_SUCCESS
+53.1 K   53.1 K   /datalake/bvl/silver/hechos_importancia/eventos/coherencia_temporal=COHERENTE
+16.1 K   16.1 K   /datalake/bvl/silver/hechos_importancia/eventos/coherencia_temporal=HISTORICO_REGULARIZACION
