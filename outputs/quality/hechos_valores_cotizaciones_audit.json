@@ -1,0 +1,75 @@
+{
+  "relaciones_empresa_nemonico": 8,
+  "nemonicos_smv": 8,
+  "nemonicos_en_cotizaciones": 6,
+  "empresas_recuperadas": 6,
+  "eventos_principales_recuperados": 15,
+  "cobertura_previa_ruc": {
+    "resueltos": 277,
+    "total": 338,
+    "pct": 81.9527
+  },
+  "cobertura_combinada_potencial": {
+    "resueltos": 292,
+    "total": 338,
+    "pct": 86.3905
+  },
+  "detalle_nemonicos": [
+    {
+      "empresa_consultada": "CREDICORP LTD.",
+      "razon_social_smv": "CREDICORP LTD.",
+      "nemonico": "BAP",
+      "tipo_valor": "ACCIONES DE CAPITAL",
+      "match_cotizaciones": true
+    },
+    {
+      "empresa_consultada": "INRETAIL PERU CORP.",
+      "razon_social_smv": "INRETAIL PERU CORP.",
+      "nemonico": "INRETC1",
+      "tipo_valor": "SIN DESCRIPCION",
+      "match_cotizaciones": true
+    },
+    {
+      "empresa_consultada": "PPX MINING CORP.",
+      "razon_social_smv": "PPX MINING CORP.",
+      "nemonico": "PPX",
+      "tipo_valor": "ACCIONES DE CAPITAL",
+      "match_cotizaciones": true
+    },
+    {
+      "empresa_consultada": "PPX MINING CORP.",
+      "razon_social_smv": "PPX MINING CORP.",
+      "nemonico": "SGP",
+      "tipo_valor": "ACCIONES DE CAPITAL",
+      "match_cotizaciones": false
+    },
+    {
+      "empresa_consultada": "RIO2 LIMITED",
+      "razon_social_smv": "RIO2 LIMITED",
+      "nemonico": "RIO",
+      "tipo_valor": "ACCIONES DE CAPITAL",
+      "match_cotizaciones": true
+    },
+    {
+      "empresa_consultada": "SOUTHERN COPPER CORPORATION",
+      "razon_social_smv": "SOUTHERN COPPER CORPORATION",
+      "nemonico": "SCCO",
+      "tipo_valor": "ACCIONES DE CAPITAL",
+      "match_cotizaciones": true
+    },
+    {
+      "empresa_consultada": "TELEFONICA S.A.",
+      "razon_social_smv": "TELEFONICA S.A.",
+      "nemonico": "TEF",
+      "tipo_valor": "ACCIONES DE CAPITAL PREFERENCIAL",
+      "match_cotizaciones": true
+    },
+    {
+      "empresa_consultada": "TELEFONICA S.A.",
+      "razon_social_smv": "TELEFONICA S.A.",
+      "nemonico": "TELE4BC14B",
+      "tipo_valor": "PROGRAMA DE BONOS CORPORATIVOS",
+      "match_cotizaciones": false
+    }
+  ]
+}

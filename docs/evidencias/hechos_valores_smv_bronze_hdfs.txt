@@ -1,0 +1,34 @@
+============================================================
+CARGA BRONZE - VALORES SMV CONSULTADOS POR RAZON SOCIAL
+============================================================
+
+=== VALIDANDO FUENTE LOCAL ===
+XML locales: 22
+
+=== PREPARANDO HDFS ===
+
+=== SUBIENDO 22 XML ORIGINALES ===
+
+=== SUBIENDO JSON CONSOLIDADO ===
+
+=== SUBIENDO METADATA DE EXTRACCION ===
+
+=== REPLICACION 1 ===
+
+============================================================
+VALIDACION BRONZE
+============================================================
+XML en HDFS : 22
+JSON en HDFS: 1
+
+=== CHECKSUM JSON LOCAL VS HDFS ===
+LOCAL: 627ce0f84201f7b869551f93072099e0cfc0991ab55a2a1b2704aa50a55a8d24  /media/sf_bvl_shared/puentes_smv/hechos_valores_smv/hechos_empresas_valores_smv.json
+HDFS : 627ce0f84201f7b869551f93072099e0cfc0991ab55a2a1b2704aa50a55a8d24  -
+
+=== VOLUMEN ===
+19.5 K  19.5 K  /datalake/bvl/bronze/smv/hechos_valores_consulta
+3.2 K  3.2 K  /datalake/bvl/metadata/smv/hechos_valores_consulta
+
+============================================================
+BRONZE HECHOS -> VALORES SMV COMPLETADO
+============================================================

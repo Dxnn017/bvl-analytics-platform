@@ -432,3 +432,57 @@ La capa Silver utiliza principalmente:
 - Validaciones de nulidad.
 - Validaciones de unicidad y granularidad.
 
+
+## Identidad empresarial de Hechos de Importancia
+
+Los Hechos de Importancia se mantienen en Silver como eventos independientes y su resolución de identidad empresarial se almacena en una tabla complementaria.
+
+### Bronze
+
+Las consultas adicionales realizadas al servicio oficial SOAP de la SMV se conservan en:
+
+`/datalake/bvl/bronze/smv/hechos_valores_consulta/`
+
+Estructura almacenada:
+
+- `xml/ingestion_date=2026-10-05/`: contiene las 22 respuestas XML originales de las consultas SOAP.
+- `json/ingestion_date=2026-10-05/`: contiene el JSON consolidado con los valores recuperados.
+
+Se almacenan las respuestas originales y el resultado consolidado para mantener la trazabilidad de la extracción.
+
+La metadata de extracción se encuentra en:
+
+`/datalake/bvl/metadata/smv/hechos_valores_consulta/`
+
+### Silver
+
+La identidad empresarial resuelta se encuentra en:
+
+`/datalake/bvl/silver/hechos_importancia/identidad_empresarial/`
+
+La granularidad es un registro por expediente principal de Hechos de Importancia.
+
+Resultados de validación:
+
+- 338 eventos principales.
+- 338 números de expediente distintos.
+- 277 eventos vinculados mediante `RUC_EXACTO`.
+- 15 eventos adicionales vinculados mediante `NEMONICO_SMV`.
+- 46 eventos conservados como `SIN_PUENTE`.
+- 292 eventos identificados.
+- Cobertura de identidad: 86.39 %.
+- 129 empresas distintas.
+- 113 empresas resueltas.
+- 16 empresas sin puente.
+- Cobertura empresarial: 87.60 %.
+- 0 duplicados adicionales.
+
+La resolución se realiza mediante dos mecanismos determinísticos:
+
+1. Razón social normalizada hacia RUC utilizando las fuentes oficiales integradas en Silver.
+2. Consulta oficial de valores inscritos de la SMV para obtener nemónicos, conservando únicamente aquellos presentes en el histórico de Cotizaciones.
+
+No se utiliza fuzzy matching para asignar identidades no verificadas.
+
+La presencia de un RUC válido no implica necesariamente que la empresa tenga un nemónico disponible en el histórico de Cotizaciones. Por ello se mantienen separados los conceptos de identidad empresarial y vinculación bursátil.
+

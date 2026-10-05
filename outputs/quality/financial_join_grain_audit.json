@@ -1,0 +1,19 @@
+{
+  "cotizaciones_con_ruc": 26557,
+  "ruc_cotizaciones": 85,
+  "ruc_cotizaciones_con_finanzas": 85,
+  "cobertura_ruc_finanzas_pct": 100.0,
+  "periodos_ruc_trimestre_cotizaciones": 1117,
+  "periodos_con_finanzas": 1110,
+  "cobertura_periodos_pct": 99.3733,
+  "grupos_granularidad_completa_repetidos": 3,
+  "dimensiones_granularidad": [
+    "ruc_norm",
+    "ejercicio_join",
+    "trimestre_join",
+    "tipo_informacion",
+    "rpj",
+    "metodo_flujo_efectivo",
+    "moneda"
+  ]
+}

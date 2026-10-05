@@ -1,0 +1,61 @@
+{
+  "principales_a_puente": {
+    "ruc_financieros": 289,
+    "ruc_puente": 148,
+    "ruc_match": 148,
+    "ruc_sin_valores": 141,
+    "cobertura_pct": 51.2111
+  },
+  "puente_a_cotizaciones": {
+    "nemonicos_puente": 831,
+    "valores_cotizaciones": 656,
+    "nemonicos_match": 109,
+    "nemonicos_sin_match": 722
+  },
+  "cotizaciones_con_ruc": {
+    "total": 83130,
+    "con_ruc": 26557,
+    "sin_ruc": 56573,
+    "cobertura_pct": 31.9463,
+    "por_anio": {
+      "2021": {
+        "total": 15878,
+        "con_ruc": 5681,
+        "pct": 35.78
+      },
+      "2022": {
+        "total": 13303,
+        "con_ruc": 5185,
+        "pct": 38.98
+      },
+      "2023": {
+        "total": 13012,
+        "con_ruc": 4824,
+        "pct": 37.07
+      },
+      "2024": {
+        "total": 17016,
+        "con_ruc": 5105,
+        "pct": 30.0
+      },
+      "2025": {
+        "total": 23921,
+        "con_ruc": 5762,
+        "pct": 24.09
+      }
+    }
+  },
+  "cobertura_bcrp": {
+    "fechas_cotizaciones": 1221,
+    "tipo_cambio_match": 1221,
+    "tipo_cambio_pct": 100.0,
+    "embig_match": 1221,
+    "embig_pct": 100.0
+  },
+  "montos_sab": {
+    "registros": 22156,
+    "fechas_distintas": 1221,
+    "fechas_match_cotizaciones": 1221,
+    "cobertura_fecha_pct": 100.0
+  }
+}

@@ -1,0 +1,210 @@
+26/10/05 10:24:12 WARN Utils: Your hostname, bigdata resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/10/05 10:24:12 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/10/05 10:24:15 INFO SparkContext: Running Spark version 3.5.1
+26/10/05 10:24:15 INFO SparkContext: OS info Linux, 6.1.0-53-amd64, amd64
+26/10/05 10:24:15 INFO SparkContext: Java version 17.0.20.1
+26/10/05 10:24:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/05 10:24:15 INFO ResourceUtils: ==============================================================
+26/10/05 10:24:15 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/10/05 10:24:15 INFO ResourceUtils: ==============================================================
+26/10/05 10:24:15 INFO SparkContext: Submitted application: Validate-Hechos-Identidad-Silver
+26/10/05 10:24:16 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 512, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/10/05 10:24:16 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+26/10/05 10:24:16 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/10/05 10:24:16 INFO SecurityManager: Changing view acls to: danielanieve
+26/10/05 10:24:16 INFO SecurityManager: Changing modify acls to: danielanieve
+26/10/05 10:24:16 INFO SecurityManager: Changing view acls groups to: 
+26/10/05 10:24:16 INFO SecurityManager: Changing modify acls groups to: 
+26/10/05 10:24:16 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/10/05 10:24:17 INFO Utils: Successfully started service 'sparkDriver' on port 33373.
+26/10/05 10:24:17 INFO SparkEnv: Registering MapOutputTracker
+26/10/05 10:24:17 INFO SparkEnv: Registering BlockManagerMaster
+26/10/05 10:24:17 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/10/05 10:24:17 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/10/05 10:24:17 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/10/05 10:24:17 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-8a7c4452-2ff1-43ad-94b2-040d045daead
+26/10/05 10:24:17 INFO MemoryStore: MemoryStore started with capacity 127.2 MiB
+26/10/05 10:24:18 INFO SparkEnv: Registering OutputCommitCoordinator
+26/10/05 10:24:18 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/10/05 10:24:18 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/10/05 10:24:19 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+26/10/05 10:24:21 INFO Configuration: resource-types.xml not found
+26/10/05 10:24:21 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/10/05 10:24:21 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (8192 MB per container)
+26/10/05 10:24:21 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/10/05 10:24:21 INFO Client: Setting up container launch context for our AM
+26/10/05 10:24:21 INFO Client: Setting up the launch environment for our AM container
+26/10/05 10:24:21 INFO Client: Preparing resources for our AM container
+26/10/05 10:24:21 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/10/05 10:24:35 INFO Client: Uploading resource file:/tmp/spark-b85c845d-fa2c-4496-9eef-64e686b9f0de/__spark_libs__9357281813842387660.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791160619898_0024/__spark_libs__9357281813842387660.zip
+26/10/05 10:24:44 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/pyspark.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791160619898_0024/pyspark.zip
+26/10/05 10:24:44 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791160619898_0024/py4j-0.10.9.7-src.zip
+26/10/05 10:24:44 INFO Client: Uploading resource file:/tmp/spark-b85c845d-fa2c-4496-9eef-64e686b9f0de/__spark_conf__888075425426017026.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791160619898_0024/__spark_conf__.zip
+26/10/05 10:24:44 INFO SecurityManager: Changing view acls to: danielanieve
+26/10/05 10:24:44 INFO SecurityManager: Changing modify acls to: danielanieve
+26/10/05 10:24:44 INFO SecurityManager: Changing view acls groups to: 
+26/10/05 10:24:44 INFO SecurityManager: Changing modify acls groups to: 
+26/10/05 10:24:44 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/10/05 10:24:44 INFO Client: Submitting application application_1791160619898_0024 to ResourceManager
+26/10/05 10:24:45 INFO YarnClientImpl: Submitted application application_1791160619898_0024
+26/10/05 10:24:46 INFO Client: Application report for application_1791160619898_0024 (state: ACCEPTED)
+26/10/05 10:24:46 INFO Client: 
+	 client token: N/A
+	 diagnostics: [lun oct. 05 10:24:45 -0500 2026] Scheduler has assigned a container for AM, waiting for AM container to be launched
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1791213884962
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1791160619898_0024/
+	 user: danielanieve
+26/10/05 10:25:04 INFO Client: Application report for application_1791160619898_0024 (state: RUNNING)
+26/10/05 10:25:04 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 10.0.2.15
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1791213884962
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1791160619898_0024/
+	 user: danielanieve
+26/10/05 10:25:04 INFO YarnClientSchedulerBackend: Application application_1791160619898_0024 has started running.
+26/10/05 10:25:04 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 33171.
+26/10/05 10:25:04 INFO NettyBlockTransferService: Server created on 10.0.2.15:33171
+26/10/05 10:25:04 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/10/05 10:25:04 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 10.0.2.15, 33171, None)
+26/10/05 10:25:04 INFO BlockManagerMasterEndpoint: Registering block manager 10.0.2.15:33171 with 127.2 MiB RAM, BlockManagerId(driver, 10.0.2.15, 33171, None)
+26/10/05 10:25:04 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 10.0.2.15, 33171, None)
+26/10/05 10:25:04 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 10.0.2.15, 33171, None)
+26/10/05 10:25:05 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> bigdata, PROXY_URI_BASES -> http://bigdata:8088/proxy/application_1791160619898_0024), /proxy/application_1791160619898_0024
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /executors/heapHistogram: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /executors/heapHistogram/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/05 10:25:06 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after waiting maxRegisteredResourcesWaitingTime: 30000000000(ns)
+=====================================================================================
+VALIDACION SILVER - IDENTIDAD EMPRESARIAL DE HECHOS
+=====================================================================================
+
+REGISTROS
+Registros totales       : 338
+Expedientes distintos   : 338
+Identificados           : 292
+Sin identificar         : 46
+
+=====================================================================================
+METODOS DE VINCULACION
+=====================================================================================
++------------------+-----+
+|metodo_vinculacion|count|
++------------------+-----+
+|RUC_EXACTO        |277  |
+|SIN_PUENTE        |46   |
+|NEMONICO_SMV      |15   |
++------------------+-----+
+
+
+=====================================================================================
+CONSISTENCIA DE IDENTIDAD
+=====================================================================================
+RUC_EXACTO con RUC nulo: 0
+NEMONICO_SMV sin nemonico: 0
+SIN_PUENTE con RUC: 0
+SIN_PUENTE con nemonicos: 0
+
+=====================================================================================
+COBERTURA EMPRESARIAL
+=====================================================================================
+Empresas totales      : 129
+Empresas resueltas    : 113
+Empresas sin puente   : 16
+Cobertura empresarial: 87.60%
+
+=====================================================================================
+SCHEMA
+=====================================================================================
+root
+ |-- numero_expediente: string (nullable = true)
+ |-- empresa: string (nullable = true)
+ |-- empresa_norm: string (nullable = true)
+ |-- fecha_presentacion_date: date (nullable = true)
+ |-- anio_presentacion: integer (nullable = true)
+ |-- tipo_hecho: string (nullable = true)
+ |-- sector: string (nullable = true)
+ |-- coherencia_temporal: string (nullable = true)
+ |-- ruc: string (nullable = true)
+ |-- razon_social_smv: string (nullable = true)
+ |-- nemonicos_cotizables: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- metodo_vinculacion: string (nullable = true)
+ |-- identificado: boolean (nullable = true)
+
+
+=====================================================================================
+MUESTRA RUC_EXACTO
+=====================================================================================
++-----------------+--------------------------------------------------------+-----------+--------------------+
+|numero_expediente|empresa                                                 |ruc        |nemonicos_cotizables|
++-----------------+--------------------------------------------------------+-----------+--------------------+
+|2025004107       |BNP PARIBAS CARDIF S.A. COMPAÑIA DE SEGUROS Y REASEGUROS|20513328819|NULL                |
+|2025004342       |BNP PARIBAS CARDIF S.A. COMPAÑIA DE SEGUROS Y REASEGUROS|20513328819|NULL                |
+|2025003991       |AGROINDUSTRIAS SAN JACINTO S.A.A.                       |20116225779|[SNJACIC1]          |
+|2025000902       |AUSTRAL GROUP S.A.A.                                    |20338054115|[AUSTRAC1]          |
+|2025003256       |AI INVERSIONES PALO ALTO S.A.                           |20602150837|NULL                |
++-----------------+--------------------------------------------------------+-----------+--------------------+
+only showing top 5 rows
+
+
+=====================================================================================
+MUESTRA NEMONICO_SMV
+=====================================================================================
++-----------------+---------------------------+----+---------------------------+--------------------+
+|numero_expediente|empresa                    |ruc |razon_social_smv           |nemonicos_cotizables|
++-----------------+---------------------------+----+---------------------------+--------------------+
+|2025002017       |PPX MINING CORP.           |NULL|PPX MINING CORP.           |[PPX]               |
+|2025003761       |PPX MINING CORP.           |NULL|PPX MINING CORP.           |[PPX]               |
+|2025001373       |RIO2 LIMITED               |NULL|RIO2 LIMITED               |[RIO]               |
+|2025002930       |SOUTHERN COPPER CORPORATION|NULL|SOUTHERN COPPER CORPORATION|[SCCO]              |
+|2025003202       |SOUTHERN COPPER CORPORATION|NULL|SOUTHERN COPPER CORPORATION|[SCCO]              |
+|2025002389       |CREDICORP LTD.             |NULL|CREDICORP LTD.             |[BAP]               |
+|2025004012       |CREDICORP LTD.             |NULL|CREDICORP LTD.             |[BAP]               |
+|2025004015       |CREDICORP LTD.             |NULL|CREDICORP LTD.             |[BAP]               |
+|2025001100       |INRETAIL PERU CORP.        |NULL|INRETAIL PERU CORP.        |[INRETC1]           |
+|2025000075       |TELEFONICA S.A.            |NULL|TELEFONICA S.A.            |[TEF]               |
+|2025000308       |TELEFONICA S.A.            |NULL|TELEFONICA S.A.            |[TEF]               |
+|2025001408       |TELEFONICA S.A.            |NULL|TELEFONICA S.A.            |[TEF]               |
+|2025002024       |TELEFONICA S.A.            |NULL|TELEFONICA S.A.            |[TEF]               |
+|2025002257       |TELEFONICA S.A.            |NULL|TELEFONICA S.A.            |[TEF]               |
+|2025002332       |TELEFONICA S.A.            |NULL|TELEFONICA S.A.            |[TEF]               |
++-----------------+---------------------------+----+---------------------------+--------------------+
+
+
+=====================================================================================
+RESULTADO: SILVER IDENTIDAD VALIDADO CORRECTAMENTE
+=====================================================================================
