@@ -1,0 +1,130 @@
+{
+  "temporal": {
+    "cotizaciones": {
+      "min": "2025-01-02",
+      "max": "2025-03-28"
+    },
+    "indices": {
+      "min": "2025-01-06",
+      "max": "2025-01-06"
+    },
+    "tipo_cambio": {
+      "min": "1997-01-02",
+      "max": "2026-09-17"
+    },
+    "embig": {
+      "min": "1998-01-01",
+      "max": "2026-09-03"
+    }
+  },
+  "daily_join_coverage": {
+    "indices": {
+      "matched_dates": 1,
+      "cotizacion_dates": 61,
+      "coverage_percent": 1.64
+    },
+    "tipo_cambio": {
+      "matched_dates": 61,
+      "cotizacion_dates": 61,
+      "coverage_percent": 100.0
+    },
+    "embig": {
+      "matched_dates": 61,
+      "cotizacion_dates": 61,
+      "coverage_percent": 100.0
+    }
+  },
+  "cotizaciones": {
+    "distinct_value_description": 354,
+    "distinct_descriptions": 252
+  },
+  "financial_periods": {
+    "estado_resultados": {
+      "years": [
+        2021
+      ],
+      "companies": 270,
+      "distinct_ruc": 267,
+      "distinct_rpj": 270
+    },
+    "situacion_financiera": {
+      "years": [
+        2024
+      ],
+      "companies": 260,
+      "distinct_ruc": 257,
+      "distinct_rpj": 260
+    },
+    "flujo_efectivo": {
+      "years": [
+        2021
+      ],
+      "companies": 270,
+      "distinct_ruc": 267,
+      "distinct_rpj": 270
+    },
+    "cambios_patrimonio": {
+      "years": [
+        2024
+      ],
+      "companies": 0,
+      "distinct_ruc": 0,
+      "distinct_rpj": 1
+    }
+  },
+  "financial_candidate_keys": {
+    "estado_resultados": {
+      "candidate_key": [
+        "ruc",
+        "ejercicio",
+        "trimestre",
+        "cuenta",
+        "tipo_informacion"
+      ],
+      "rows": 11609,
+      "unique_keys": 11503,
+      "duplicate_key_rows": 106
+    },
+    "situacion_financiera": {
+      "candidate_key": [
+        "ruc",
+        "ejercicio",
+        "trimestre",
+        "cuenta",
+        "tipo_informacion"
+      ],
+      "rows": 18983,
+      "unique_keys": 18831,
+      "duplicate_key_rows": 152
+    },
+    "flujo_efectivo": {
+      "candidate_key": [
+        "ruc",
+        "ejercicio",
+        "trimestre",
+        "cuenta",
+        "tipo_informacion"
+      ],
+      "rows": 16912,
+      "unique_keys": 16822,
+      "duplicate_key_rows": 90
+    },
+    "cambios_patrimonio": {
+      "candidate_key": [
+        "ejercicio",
+        "trimestre",
+        "cuenta",
+        "tipo_informacion"
+      ],
+      "rows": 512,
+      "unique_keys": 32,
+      "duplicate_key_rows": 480
+    }
+  },
+  "bridge_exploratory": {
+    "distinct_values": 354,
+    "matched_values": 40,
+    "coverage_percent": 11.3,
+    "warning": "Coincidencia por nombre normalizado solo exploratoria; no usar como clave definitiva sin validar fuente institucional."
+  }
+}

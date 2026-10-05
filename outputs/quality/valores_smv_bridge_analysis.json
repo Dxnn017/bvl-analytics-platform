@@ -1,0 +1,23 @@
+{
+  "registros_valores_smv": 1008,
+  "ruc_con_valores": 148,
+  "nemonicos_smv_distintos": 831,
+  "pares_ruc_nemonico": 831,
+  "duplicados_par_ruc_nemonico": 177,
+  "nemonicos_asociados_multiples_ruc": 0,
+  "valores_cotizaciones_distintos": 656,
+  "nemonicos_match": 109,
+  "nemonicos_smv_sin_match": 722,
+  "valores_cotizaciones_sin_puente": 547,
+  "cobertura_cotizaciones_pct": 16.6159,
+  "cobertura_nemonicos_smv_pct": 13.1167,
+  "ruc_con_al_menos_un_match": 85,
+  "pares_ruc_nemonico_match": 109,
+  "tipos_valor_match": {
+    "ACCIONES DE INVERSION": 54,
+    "ACCIONES DE CAPITAL": 94,
+    "ACCIONES DE CAPITAL PREF. S/D VOTO": 17,
+    "ACCIONES DE CAPITAL PREFERENCIAL": 2
+  },
+  "nemonicos_ambiguos": {}
+}

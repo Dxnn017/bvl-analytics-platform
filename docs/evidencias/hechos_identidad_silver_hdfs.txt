@@ -1,0 +1,46 @@
+============================================================
+ESTRUCTURA HDFS - IDENTIDAD EMPRESARIAL DE HECHOS
+============================================================
+
+=== BRONZE CONSULTAS SOAP ===
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 10:12 /datalake/bvl/bronze/smv/hechos_valores_consulta/json
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/json/ingestion_date=2026-10-05
+-rw-r--r--   1 danielanieve supergroup       4415 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/json/ingestion_date=2026-10-05/hechos_empresas_valores_smv.json
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 10:12 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/01_CREDISCOTIA_FINANCIERA_S_A.xml
+-rw-r--r--   1 danielanieve supergroup       1467 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/02_TELEFONICA_S_A.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/03_COMPARTAMOS_FINANCIERA_S_A.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/04_FINANCIERA_EFECTIVA_S_A.xml
+-rw-r--r--   1 danielanieve supergroup        498 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/05_SIERRA_METALS_INC.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/06_SECREX_COMPA_IA_DE_SEGUROS_DE_CREDITO_Y_GARANTIAS.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/07_TELEFONICA_DEL_PERU_S_A_A.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/08_GRUPO_BVL_S_A_A_ANTES_BOLSA_DE_VALORES_DE_LIMA_S_A_A.xml
+-rw-r--r--   1 danielanieve supergroup        998 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/09_CREDICORP_LTD.xml
+-rw-r--r--   1 danielanieve supergroup        513 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/10_SILVER_MOUNTAIN_RESOURCES_INC.xml
+-rw-r--r--   1 danielanieve supergroup       1031 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/11_SOUTHERN_COPPER_CORPORATION.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/12_HOLDING_BURSATIL_REGIONAL_S_A.xml
+-rw-r--r--   1 danielanieve supergroup        498 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/13_BEAR_CREEK_MINING_CORPORATION.xml
+-rw-r--r--   1 danielanieve supergroup       1498 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/14_PPX_MINING_CORP.xml
+-rw-r--r--   1 danielanieve supergroup        498 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/15_ALTA_COPPER_CORP.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/16_FINANCIERA_OH_S_A.xml
+-rw-r--r--   1 danielanieve supergroup        498 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/17_TINKA_RESOURCES_LIMITED.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/18_ENGIE_ENERGIA_PERU_S_A.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/19_COMPA_IA_MINERA_PODEROSA_S_A.xml
+-rw-r--r--   1 danielanieve supergroup       1566 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/20_RIO2_LIMITED.xml
+-rw-r--r--   1 danielanieve supergroup        493 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/21_MANUFACTURA_DE_METALES_Y_ALUMINIO_RECORD_S_A.xml
+-rw-r--r--   1 danielanieve supergroup       1014 2026-10-05 10:13 /datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/22_INRETAIL_PERU_CORP.xml
+
+=== METADATA CONSULTAS SOAP ===
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 10:13 /datalake/bvl/metadata/smv/hechos_valores_consulta/ingestion_date=2026-10-05
+-rw-r--r--   1 danielanieve supergroup       1746 2026-10-05 10:13 /datalake/bvl/metadata/smv/hechos_valores_consulta/ingestion_date=2026-10-05/hechos_empresas_valores_smv.csv
+-rw-r--r--   1 danielanieve supergroup       1559 2026-10-05 10:13 /datalake/bvl/metadata/smv/hechos_valores_consulta/ingestion_date=2026-10-05/hechos_empresas_valores_smv_resumen.csv
+
+=== SILVER IDENTIDAD EMPRESARIAL ===
+-rw-r--r--   1 danielanieve supergroup          0 2026-10-05 10:19 /datalake/bvl/silver/hechos_importancia/identidad_empresarial/_SUCCESS
+-rw-r--r--   1 danielanieve supergroup      16937 2026-10-05 10:19 /datalake/bvl/silver/hechos_importancia/identidad_empresarial/part-00000-6d5d83c1-8602-45f0-87c2-c31d040c2e01-c000.snappy.parquet
+
+=== TAMAÑOS ===
+19.5 K  19.5 K  /datalake/bvl/bronze/smv/hechos_valores_consulta
+3.2 K  3.2 K  /datalake/bvl/metadata/smv/hechos_valores_consulta
+16.5 K  16.5 K  /datalake/bvl/silver/hechos_importancia/identidad_empresarial

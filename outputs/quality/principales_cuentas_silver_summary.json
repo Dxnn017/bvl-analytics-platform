@@ -1,0 +1,47 @@
+{
+  "fuente": "SMV",
+  "dataset": "Principales Cuentas Financieras",
+  "fecha_ingesta": "2026-10-04",
+  "bronze": {
+    "archivos": 20,
+    "registros": 5249
+  },
+  "silver": {
+    "registros": 5249,
+    "ids_tecnicos_unicos": 5249,
+    "claves_negocio_distintas": 5246,
+    "grupos_colision": 3,
+    "registros_extra_por_colision": 3,
+    "duplicados_exactos": 0,
+    "ruc_invalidos": 85,
+    "ruc_validos_distintos": 289,
+    "empresas_distintas": 295,
+    "registros_por_anio": {
+      "2021": 1080,
+      "2022": 1065,
+      "2023": 1049,
+      "2024": 1029,
+      "2025": 1026
+    },
+    "registros_por_trimestre": {
+      "1": 1318,
+      "2": 1312,
+      "3": 1310,
+      "4": 1309
+    }
+  },
+  "clave_negocio_base": [
+    "ruc",
+    "ejercicio",
+    "trimestre",
+    "tipo_informacion",
+    "rpj",
+    "metodo_flujo_efectivo",
+    "moneda"
+  ],
+  "nota_clave": "La clave de negocio presenta 3 colisiones reales de la fuente. No se eliminan registros.",
+  "identificador_tecnico": "id_registro",
+  "formato": "Parquet",
+  "compresion": "Snappy",
+  "hdfs": "/datalake/bvl/silver/finanzas_empresariales/principales_cuentas"
+}

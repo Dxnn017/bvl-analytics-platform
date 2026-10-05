@@ -1,0 +1,25 @@
+{
+  "fecha_ingesta": "2026-10-04",
+  "bronze": {
+    "pdf_originales": 990,
+    "txt_fisicos": 989
+  },
+  "silver": {
+    "eventos_total": 346,
+    "eventos_coherentes": 338,
+    "eventos_historicos_regularizacion": 8,
+    "documentos_total": 990,
+    "documentos_coherentes": 428,
+    "documentos_historicos_regularizacion": 562,
+    "contenido_textual_total": 990,
+    "contenido_disponible": 990,
+    "contenido_desde_canonico_duplicado": 1
+  },
+  "format": "Parquet",
+  "compression": "Snappy",
+  "hdfs": {
+    "eventos": "/datalake/bvl/silver/hechos_importancia/eventos",
+    "documentos": "/datalake/bvl/silver/hechos_importancia/documentos",
+    "contenido_textual": "/datalake/bvl/silver/hechos_importancia/contenido_textual"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "maestro_identidad": {
+    "pares_ruc_nombre": 289,
+    "nombres_distintos": 289,
+    "nombres_ambiguos": 0
+  },
+  "hechos": {
+    "eventos_totales": 346,
+    "eventos_principales": 338,
+    "empresas_distintas": 129
+  },
+  "cobertura_eventos": {
+    "con_ruc": 283,
+    "sin_ruc": 63,
+    "pct": 81.7919
+  },
+  "cobertura_eventos_principales": {
+    "con_ruc": 277,
+    "sin_ruc": 61,
+    "pct": 81.9527
+  },
+  "cobertura_empresas": {
+    "total": 129,
+    "con_ruc": 107,
+    "sin_ruc": 22
+  },
+  "cotizaciones": {
+    "ruc_cotizados": 85,
+    "eventos_principales_ruc_cotizado": 121,
+    "ruc_cotizados_con_hechos": 49
+  },
+  "primeras_empresas_sin_match": [
+    {
+      "empresa": "CREDISCOTIA FINANCIERA S.A.",
+      "empresa_norm": "CREDISCOTIA FINANCIERA S A",
+      "eventos": 7
+    },
+    {
+      "empresa": "TELEFONICA S.A.",
+      "empresa_norm": "TELEFONICA S A",
+      "eventos": 6
+    },
+    {
+      "empresa": "COMPARTAMOS FINANCIERA S.A.",
+      "empresa_norm": "COMPARTAMOS FINANCIERA S A",
+      "eventos": 6
+    },
+    {
+      "empresa": "FINANCIERA EFECTIVA S.A.",
+      "empresa_norm": "FINANCIERA EFECTIVA S A",
+      "eventos": 5
+    },
+    {
+      "empresa": "SIERRA METALS INC.",
+      "empresa_norm": "SIERRA METALS INC",
+      "eventos": 5
+    },
+    {
+      "empresa": "SECREX COMPAÑIA DE SEGUROS DE CREDITO Y GARANTIAS",
+      "empresa_norm": "SECREX COMPANIA DE SEGUROS DE CREDITO Y GARANTIAS",
+      "eventos": 4
+    },
+    {
+      "empresa": "TELEFONICA DEL PERU S.A.A.",
+      "empresa_norm": "TELEFONICA DEL PERU S A A",
+      "eventos": 4
+    },
+    {
+      "empresa": "GRUPO BVL S.A.A. (ANTES BOLSA DE VALORES DE LIMA S.A.A.)",
+      "empresa_norm": "GRUPO BVL S A A ANTES BOLSA DE VALORES DE LIMA S A A",
+      "eventos": 3
+    },
+    {
+      "empresa": "CREDICORP LTD.",
+      "empresa_norm": "CREDICORP LTD",
+      "eventos": 3
+    },
+    {
+      "empresa": "SILVER MOUNTAIN RESOURCES INC.",
+      "empresa_norm": "SILVER MOUNTAIN RESOURCES INC",
+      "eventos": 2
+    },
+    {
+      "empresa": "SOUTHERN COPPER CORPORATION",
+      "empresa_norm": "SOUTHERN COPPER CORPORATION",
+      "eventos": 2
+    },
+    {
+      "empresa": "HOLDING BURSATIL REGIONAL S.A.",
+      "empresa_norm": "HOLDING BURSATIL REGIONAL S A",
+      "eventos": 2
+    },
+    {
+      "empresa": "BEAR CREEK MINING CORPORATION",
+      "empresa_norm": "BEAR CREEK MINING CORPORATION",
+      "eventos": 2
+    },
+    {
+      "empresa": "PPX MINING CORP.",
+      "empresa_norm": "PPX MINING CORP",
+      "eventos": 2
+    },
+    {
+      "empresa": "ALTA COPPER CORP.",
+      "empresa_norm": "ALTA COPPER CORP",
+      "eventos": 2
+    },
+    {
+      "empresa": "FINANCIERA OH! S.A.",
+      "empresa_norm": "FINANCIERA OH S A",
+      "eventos": 2
+    },
+    {
+      "empresa": "TINKA RESOURCES LIMITED",
+      "empresa_norm": "TINKA RESOURCES LIMITED",
+      "eventos": 1
+    },
+    {
+      "empresa": "ENGIE ENERGIA PERU S.A.",
+      "empresa_norm": "ENGIE ENERGIA PERU S A",
+      "eventos": 1
+    },
+    {
+      "empresa": "COMPAÑIA MINERA PODEROSA S.A.",
+      "empresa_norm": "COMPANIA MINERA PODEROSA S A",
+      "eventos": 1
+    },
+    {
+      "empresa": "RIO2 LIMITED",
+      "empresa_norm": "RIO2 LIMITED",
+      "eventos": 1
+    },
+    {
+      "empresa": "MANUFACTURA DE METALES Y ALUMINIO RECORD S.A.",
+      "empresa_norm": "MANUFACTURA DE METALES Y ALUMINIO RECORD S A",
+      "eventos": 1
+    },
+    {
+      "empresa": "INRETAIL PERU CORP.",
+      "empresa_norm": "INRETAIL PERU CORP",
+      "eventos": 1
+    }
+  ]
+}

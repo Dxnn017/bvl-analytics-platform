@@ -1,0 +1,197 @@
+{
+  "valores_smv": {
+    "registros_fuente": 1008,
+    "registros_con_ruc_nemonico": 1008,
+    "pares_ruc_nemonico": 831,
+    "grupos_repetidos": 153,
+    "registros_extra": 177,
+    "causas_repeticion": {
+      "MontoInscrito": 153
+    }
+  },
+  "cotizaciones": {
+    "filas_totales": 83130,
+    "filas_con_puente": 26557,
+    "filas_sin_puente": 56573,
+    "cobertura_filas_pct": 31.9463,
+    "cobertura_por_anio": {
+      "2021": {
+        "total": 15878,
+        "match": 5681,
+        "pct": 35.7791
+      },
+      "2022": {
+        "total": 13303,
+        "match": 5185,
+        "pct": 38.9762
+      },
+      "2023": {
+        "total": 13012,
+        "match": 4824,
+        "pct": 37.0735
+      },
+      "2024": {
+        "total": 17016,
+        "match": 5105,
+        "pct": 30.0012
+      },
+      "2025": {
+        "total": 23921,
+        "match": 5762,
+        "pct": 24.0876
+      }
+    }
+  },
+  "top_valores_sin_puente": [
+    {
+      "valor": "BAP",
+      "filas": 1204,
+      "descripcion": "Credicorp Ltd."
+    },
+    {
+      "valor": "BVN",
+      "filas": 1192,
+      "descripcion": "Compañía De Minas Buenaventura S.A.A."
+    },
+    {
+      "valor": "IFS",
+      "filas": 1129,
+      "descripcion": "Intergroup Financial Services Corp."
+    },
+    {
+      "valor": "INRETC1",
+      "filas": 1108,
+      "descripcion": "Inretail Per Corp."
+    },
+    {
+      "valor": "HBM",
+      "filas": 1054,
+      "descripcion": "Hudbay Minerals Inc."
+    },
+    {
+      "valor": "SPY",
+      "filas": 1048,
+      "descripcion": "Standard & Poors Depositary Receipts Spdr Trust Se"
+    },
+    {
+      "valor": "SCCO",
+      "filas": 1031,
+      "descripcion": "Southern Copper Corporation"
+    },
+    {
+      "valor": "TSLA",
+      "filas": 1020,
+      "descripcion": ""
+    },
+    {
+      "valor": "AMZN",
+      "filas": 1008,
+      "descripcion": "Amazon.Com Incorporated"
+    },
+    {
+      "valor": "ETFPERUD",
+      "filas": 970,
+      "descripcion": "Fondo Burs¿Til Van Eck El Dorado Per¿ Etf"
+    },
+    {
+      "valor": "AAPL",
+      "filas": 919,
+      "descripcion": ""
+    },
+    {
+      "valor": "NVDA",
+      "filas": 849,
+      "descripcion": ""
+    },
+    {
+      "valor": "FICOCMP1",
+      "filas": 842,
+      "descripcion": "Coril Instrumentos De Corto Y Mediano Plazo 1 - Fo"
+    },
+    {
+      "valor": "MSFT",
+      "filas": 794,
+      "descripcion": "Microsoft Corporation"
+    },
+    {
+      "valor": "GOOGL",
+      "filas": 757,
+      "descripcion": ""
+    },
+    {
+      "valor": "FICORPS5",
+      "filas": 732,
+      "descripcion": "Coril Renta Prime Soles 5 - Fondo De Inversi¿N"
+    },
+    {
+      "valor": "QQQ",
+      "filas": 711,
+      "descripcion": "Nasdaq-100 Trust"
+    },
+    {
+      "valor": "ENGEPEC1",
+      "filas": 687,
+      "descripcion": "Enel Generacion Peru S.A.A. (Antes Edegel S.A.A.)"
+    },
+    {
+      "valor": "FICORPS4",
+      "filas": 675,
+      "descripcion": "Coril Renta Prime Soles 4 - Fondo De Inversi¿N"
+    },
+    {
+      "valor": "FICORPS",
+      "filas": 646,
+      "descripcion": "Coril Renta Prime Soles - Fondo De Inversi¿N"
+    },
+    {
+      "valor": "PML",
+      "filas": 631,
+      "descripcion": "Panoro Minerals Ltd."
+    },
+    {
+      "valor": "META",
+      "filas": 624,
+      "descripcion": "Meta Platforms, Inc."
+    },
+    {
+      "valor": "FICOCMP5",
+      "filas": 596,
+      "descripcion": "Coril Instrumentos De Corto Y Mediano Plazo 5 - Fondo De Inv"
+    },
+    {
+      "valor": "FICOCMP9",
+      "filas": 590,
+      "descripcion": "Coril Instrumentos De Corto Y Mediano Plazo 9 - Fondo De Inv"
+    },
+    {
+      "valor": "FICORPS2",
+      "filas": 587,
+      "descripcion": "Coril Renta Prime Soles 2 - Fondo De Inversion"
+    },
+    {
+      "valor": "FICORPS3",
+      "filas": 573,
+      "descripcion": "Coril Renta Prime Soles 3 - Fondo De Inversi¿N"
+    },
+    {
+      "valor": "FICCMP10",
+      "filas": 566,
+      "descripcion": "Coril Instrumentos De Corto Y Mediano Plazo 10 - Fondo De In"
+    },
+    {
+      "valor": "FICOCMP2",
+      "filas": 552,
+      "descripcion": "Coril Instrumentos De Corto Y Mediano Plazo 2 - Fo"
+    },
+    {
+      "valor": "ENDISPC1",
+      "filas": 549,
+      "descripcion": "Enel Distribucion Peru S.A.A."
+    },
+    {
+      "valor": "DIS",
+      "filas": 549,
+      "descripcion": "Walt Disney Company"
+    }
+  ]
+}

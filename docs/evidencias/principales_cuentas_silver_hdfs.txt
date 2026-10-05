@@ -1,0 +1,55 @@
+PRINCIPALES CUENTAS FINANCIERAS SMV - HDFS
+
+=== BRONZE ===
+2.6 M  2.6 M  /datalake/bvl/bronze/smv/principales_cuentas
+JSON Bronze: 20
+
+=== SILVER ===
+1.1 M  1.1 M  /datalake/bvl/silver/finanzas_empresariales/principales_cuentas
+
+=== ESTRUCTURA SILVER ===
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=1
+-rw-r--r--   1 danielanieve supergroup      61198 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=1/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=2
+-rw-r--r--   1 danielanieve supergroup      60606 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=2/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=3
+-rw-r--r--   1 danielanieve supergroup      61602 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=3/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=4
+-rw-r--r--   1 danielanieve supergroup      61658 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=4/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=1
+-rw-r--r--   1 danielanieve supergroup      60815 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=1/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=2
+-rw-r--r--   1 danielanieve supergroup      60573 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=2/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=3
+-rw-r--r--   1 danielanieve supergroup      60978 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=3/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=4
+-rw-r--r--   1 danielanieve supergroup      60208 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=4/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=1
+-rw-r--r--   1 danielanieve supergroup      59635 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=1/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=2
+-rw-r--r--   1 danielanieve supergroup      58858 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=2/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=3
+-rw-r--r--   1 danielanieve supergroup      60186 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=3/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=4
+-rw-r--r--   1 danielanieve supergroup      60119 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=4/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=1
+-rw-r--r--   1 danielanieve supergroup      59446 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=1/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=2
+-rw-r--r--   1 danielanieve supergroup      58957 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=2/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=3
+-rw-r--r--   1 danielanieve supergroup      58988 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=3/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=4
+-rw-r--r--   1 danielanieve supergroup      59728 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=4/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=1
+-rw-r--r--   1 danielanieve supergroup      59248 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=1/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=2
+-rw-r--r--   1 danielanieve supergroup      59244 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=2/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=3
+-rw-r--r--   1 danielanieve supergroup      59989 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=3/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=4
+-rw-r--r--   1 danielanieve supergroup      58893 2026-10-04 23:00 /datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=4/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet

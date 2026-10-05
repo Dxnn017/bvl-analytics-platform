@@ -1,0 +1,34 @@
+{
+  "fuente": "SMV ServiceValores consultaValoresRUC",
+  "bronze": {
+    "registros": 1008
+  },
+  "silver_valores_inscritos": {
+    "registros": 1008,
+    "ruc_nulos": 0,
+    "nemonicos_nulos": 0,
+    "pares_ruc_nemonico": 831,
+    "nemonicos_distintos": 831,
+    "tipos_valor": {
+      "ACCIONES DE CAPITAL PREFERENCIAL": 4,
+      "BONOS DE ARRENDAMIENTO FINANCIERO": 39,
+      "PROGRAMA DE BONOS DE ARRENDAMIENTO FINANCIERO": 56,
+      "ACCIONES DE CAPITAL PREF. S/D VOTO": 20,
+      "CERTIFICADOS DE DEPOSITOS": 80,
+      "ACCIONES DE INVERSION": 56,
+      "BONOS SUBORDINADOS": 75,
+      "PROGRAMA DE EMISION DE INSTRUMENTOS FINANCIEROS DE": 73,
+      "CERTIFICADOS DE SUSCRIPCION PREFERENTE": 3,
+      "PROGRAMA DE BONOS CORPORATIVOS": 410,
+      "BONOS CORPORATIVOS": 14,
+      "BONOS HIPOTECARIOS": 13,
+      "ACCIONES DE CAPITAL": 165
+    }
+  },
+  "silver_puente": {
+    "registros": 831,
+    "nemonicos_multiples_ruc": 0,
+    "pares_atributos_ambiguos": 0
+  },
+  "observacion_monto_inscrito": "MontoInscrito se conserva en valores_inscritos pero se excluye del puente RUC+nemonico debido al patron de repeticion detectado en la auditoria."
+}
