@@ -32,6 +32,12 @@ echo
 echo "===== HADOOP / YARN PROCESSES ====="
 jps
 
+echo "===== HADOOP_CONF_DIR ====="
+echo "$HADOOP_CONF_DIR"
+
+echo "===== YARN_CONF_DIR ====="
+echo "$YARN_CONF_DIR"
+
 echo
 echo "===================================="
 echo " FIN DE LA VERIFICACION"

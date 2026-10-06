@@ -1,0 +1,79 @@
+============================================================
+CARGA BRONZE - VALORES INSCRITOS SMV
+============================================================
+
+=== VALIDACION FUENTE LOCAL ===
+XML originales : 289
+Registros JSON : 1008
+
+Checksum JSON local:
+6e764fe3a696d586e38b3a090ba97f0c0c20c402bed00b64ba321668d7d78036  /media/sf_bvl_shared/puentes_smv/valores_inscritos_smv.json
+
+=== PREPARANDO BRONZE HDFS ===
+
+=== SUBIENDO 289 RESPUESTAS XML ===
+
+=== SUBIENDO JSON CONSOLIDADO ===
+
+=== SUBIENDO LOG DE EXTRACCION ===
+
+=== REPLICACION 1 ===
+
+============================================================
+VALIDACION BRONZE
+============================================================
+XML en HDFS  : 289
+JSON en HDFS : 1
+
+=== CHECKSUM LOCAL VS HDFS ===
+LOCAL : 6e764fe3a696d586e38b3a090ba97f0c0c20c402bed00b64ba321668d7d78036
+HDFS  : 6e764fe3a696d586e38b3a090ba97f0c0c20c402bed00b64ba321668d7d78036
+
+=== VOLUMEN BRONZE ===
+1.2 M  1.2 M  /datalake/bvl/bronze/smv/valores_inscritos
+
+=== ESTRUCTURA ===
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/json
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/json/ingestion_date=2026-10-05
+-rw-r--r--   1 danielanieve supergroup     656993 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/json/ingestion_date=2026-10-05/valores_inscritos_smv.json
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05
+-rw-r--r--   1 danielanieve supergroup       1003 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100003512.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100004322.xml
+-rw-r--r--   1 danielanieve supergroup      43596 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100017491.xml
+-rw-r--r--   1 danielanieve supergroup       2775 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100017572.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100020956.xml
+-rw-r--r--   1 danielanieve supergroup       8630 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100027292.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100027705.xml
+-rw-r--r--   1 danielanieve supergroup        481 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100030595.xml
+-rw-r--r--   1 danielanieve supergroup        992 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100041953.xml
+-rw-r--r--   1 danielanieve supergroup      19108 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100043140.xml
+-rw-r--r--   1 danielanieve supergroup      31957 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100047218.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100047307.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100049938.xml
+-rw-r--r--   1 danielanieve supergroup       1000 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100051240.xml
+-rw-r--r--   1 danielanieve supergroup      10443 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100053455.xml
+-rw-r--r--   1 danielanieve supergroup       6103 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100055237.xml
+-rw-r--r--   1 danielanieve supergroup       2729 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100055661.xml
+-rw-r--r--   1 danielanieve supergroup       1047 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100074371.xml
+-rw-r--r--   1 danielanieve supergroup       1012 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100077044.xml
+-rw-r--r--   1 danielanieve supergroup       4010 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100079501.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100082391.xml
+-rw-r--r--   1 danielanieve supergroup        984 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100083010.xml
+-rw-r--r--   1 danielanieve supergroup        967 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100087198.xml
+-rw-r--r--   1 danielanieve supergroup       2931 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100094054.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100095450.xml
+-rw-r--r--   1 danielanieve supergroup        466 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100096341.xml
+-rw-r--r--   1 danielanieve supergroup      13305 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100105862.xml
+-rw-r--r--   1 danielanieve supergroup       2741 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100110513.xml
+-rw-r--r--   1 danielanieve supergroup       6233 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100113610.xml
+-rw-r--r--   1 danielanieve supergroup        481 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100115663.xml
+-rw-r--r--   1 danielanieve supergroup      15733 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100116392.xml
+-rw-r--r--   1 danielanieve supergroup       2457 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100116635.xml
+-rw-r--r--   1 danielanieve supergroup        990 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100116988.xml
+-rw-r--r--   1 danielanieve supergroup       1004 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100120314.xml
+-rw-r--r--   1 danielanieve supergroup       5815 2026-10-05 01:09 /datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100123500.xml
+
+============================================================
+BRONZE VALORES INSCRITOS SMV COMPLETADO
+============================================================

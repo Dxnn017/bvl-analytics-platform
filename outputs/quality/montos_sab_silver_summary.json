@@ -1,0 +1,38 @@
+{
+  "fuente": "SMV",
+  "dataset": "Montos Intermediados SAB",
+  "fecha_ingesta": "2026-10-04",
+  "bronze": {
+    "archivos_diarios": 1221,
+    "registros": 22156
+  },
+  "silver": {
+    "registros": 22156,
+    "sab_distintas": 22,
+    "claves_unicas_fecha_codigo_sab": 22156,
+    "duplicados_adicionales": 0,
+    "fecha_minima": "2021-01-04",
+    "fecha_maxima": "2025-12-31",
+    "anios": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "registros_por_anio": {
+      "2021": 4887,
+      "2022": 4454,
+      "2023": 4359,
+      "2024": 4149,
+      "2025": 4307
+    }
+  },
+  "clave_negocio": [
+    "fecha_negociacion",
+    "codigo_sab"
+  ],
+  "formato": "Parquet",
+  "compresion": "Snappy",
+  "hdfs": "/datalake/bvl/silver/mercado_diario/montos_sab"
+}

@@ -1,0 +1,18 @@
+HECHOS DE IMPORTANCIA SMV - ESTADO DE BRONZE
+Fecha de ingesta: 2026-10-04
+
+=== PDF BRONZE ===
+           1          990            299.1 M /datalake/bvl/bronze/smv/hechos_importancia/pdf/ingestion_date=2026-10-04
+299.1 M  299.1 M  /datalake/bvl/bronze/smv/hechos_importancia/pdf/ingestion_date=2026-10-04
+
+=== TXT DERIVADOS ===
+           1          989              8.4 M /datalake/bvl/bronze/smv/hechos_importancia/texto_extraido/ingestion_date=2026-10-04
+8.4 M  8.4 M  /datalake/bvl/bronze/smv/hechos_importancia/texto_extraido/ingestion_date=2026-10-04
+
+=== METADATA ===
+Found 5 items
+-rw-r--r--   1 danielanieve supergroup     543299 2026-10-04 20:12 /datalake/bvl/metadata/smv/hechos_importancia/ingestion_date=2026-10-04/hechos_documentos_2025.csv
+-rw-r--r--   1 danielanieve supergroup     206354 2026-10-04 20:12 /datalake/bvl/metadata/smv/hechos_importancia/ingestion_date=2026-10-04/hechos_eventos_2025.csv
+-rw-r--r--   1 danielanieve supergroup     320675 2026-10-04 20:12 /datalake/bvl/metadata/smv/hechos_importancia/ingestion_date=2026-10-04/manifiesto_pdfs_hechos_importancia.csv
+-rw-r--r--   1 danielanieve supergroup     268507 2026-10-04 20:12 /datalake/bvl/metadata/smv/hechos_importancia/ingestion_date=2026-10-04/mapeo_pdf_expediente.csv
+-rw-r--r--   1 danielanieve supergroup        631 2026-10-04 20:12 /datalake/bvl/metadata/smv/hechos_importancia/ingestion_date=2026-10-04/resumen_estructuracion_hechos_2025.json

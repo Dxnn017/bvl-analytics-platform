@@ -1,0 +1,66 @@
+[
+  {
+    "dataset": "cotizaciones",
+    "bronze_rows": 5101,
+    "silver_rows": 5101,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 0,
+    "processing_seconds": 31.916
+  },
+  {
+    "dataset": "indices",
+    "bronze_rows": 16,
+    "silver_rows": 16,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 0,
+    "processing_seconds": 4.67
+  },
+  {
+    "dataset": "tipo_cambio",
+    "bronze_rows": 7752,
+    "silver_rows": 7751,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 1,
+    "processing_seconds": 38.659
+  },
+  {
+    "dataset": "embig",
+    "bronze_rows": 7482,
+    "silver_rows": 7481,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 1,
+    "processing_seconds": 27.16
+  },
+  {
+    "dataset": "estado_resultados",
+    "bronze_rows": 11609,
+    "silver_rows": 11609,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 0,
+    "processing_seconds": 6.315
+  },
+  {
+    "dataset": "situacion_financiera",
+    "bronze_rows": 18983,
+    "silver_rows": 18983,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 0,
+    "processing_seconds": 11.555
+  },
+  {
+    "dataset": "flujo_efectivo",
+    "bronze_rows": 16912,
+    "silver_rows": 16912,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 0,
+    "processing_seconds": 6.763
+  },
+  {
+    "dataset": "cambios_patrimonio",
+    "bronze_rows": 512,
+    "silver_rows": 512,
+    "duplicates_removed": 0,
+    "invalid_or_filtered_rows": 0,
+    "processing_seconds": 2.904
+  }
+]

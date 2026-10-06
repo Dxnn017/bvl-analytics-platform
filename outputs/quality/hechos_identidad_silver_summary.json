@@ -1,0 +1,14 @@
+{
+  "dataset": "hechos_importancia_identidad_empresarial",
+  "ruta_hdfs": "/datalake/bvl/silver/hechos_importancia/identidad_empresarial",
+  "registros": 338,
+  "expedientes_distintos": 338,
+  "metodos": {
+    "RUC_EXACTO": 277,
+    "NEMONICO_SMV": 15,
+    "SIN_PUENTE": 46
+  },
+  "identificados": 292,
+  "sin_identificar": 46,
+  "cobertura_pct": 86.3905
+}
