@@ -1,0 +1,10 @@
+============================================================
+AUDITORÍA DE UNICIDAD Y CALIDAD - CAPA GOLD
+============================================================
+[mercado_valor_diario] -> Total: 83,130 | Unicos: 83,130 | Duplicados: 0
+[actividad_sab_diaria] -> Total: 22,156 | Unicos: 22,156 | Duplicados: 0
+[empresa_trimestre]    -> Total: 5,181  | Unicos: 5,181  | Duplicados: 0
+[hechos_empresa]       -> Total: 346    | Unicos: 346    | Duplicados: 0
+[impacto_hechos_valor] -> Total: 38     | Unicos: 38     | Duplicados: 0
+============================================================
+Resultado: 100% UNICIDAD - Cumplimiento estricto Regla 9 de Calidad.
