@@ -1,3 +1,4 @@
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
@@ -15,7 +16,7 @@ def main():
     print(">>> Iniciando construccion de Capa Gold...")
 
     # =========================================================================
-    # 1. PRODUCTO: mercado_valor_diario (Granularidad: valor + fecha)
+    # 1. PRODUCTO: mercado_valor_diario (Granularidad: nemonico + fecha)
     # =========================================================================
     print(">>> [1/5] Procesando mercado_valor_diario...")
     df_cotiz = spark.read.parquet(f"{BASE_SILVER}/mercado_diario/cotizaciones") \
@@ -84,7 +85,6 @@ def main():
     print(">>> [3/5] Procesando empresa_trimestre...")
     df_cuentas_raw = spark.read.parquet(f"{BASE_SILVER}/finanzas_empresariales/principales_cuentas")
 
-    # Deduplicación por clave de negocio para eliminar rectificatorias (0 duplicados)
     w_dedup = Window.partitionBy("ruc", "ejercicio", "trimestre").orderBy(F.desc(df_cuentas_raw.columns[0]))
     df_cuentas = df_cuentas_raw.withColumn("_row_num", F.row_number().over(w_dedup)) \
         .filter(F.col("_row_num") == 1) \
@@ -93,9 +93,15 @@ def main():
     df_puente = spark.read.parquet(f"{BASE_SILVER}/referencias_smv/puente_ruc_nemonico") \
         .select(F.col("nemonico_valor").alias("nemonico"), F.col("ruc"))
 
+    # Mapeo exacto al formato texto de SMV para asegurar el JOIN correcto
+    q_expr = F.when(F.quarter("fecha") == 1, "1er Trimestre") \
+              .when(F.quarter("fecha") == 2, "2do Trimestre") \
+              .when(F.quarter("fecha") == 3, "3er Trimestre") \
+              .when(F.quarter("fecha") == 4, "4to Trimestre")
+
     df_cotiz_trim = df_cotiz \
         .withColumn("ejercicio", F.year("fecha")) \
-        .withColumn("trimestre", F.quarter("fecha")) \
+        .withColumn("trimestre", q_expr) \
         .join(df_puente, on="nemonico", how="inner")
 
     df_bursatil_empresa = df_cotiz_trim.groupBy("ruc", "ejercicio", "trimestre").agg(
@@ -138,8 +144,6 @@ def main():
     # 5. PRODUCTO: impacto_hechos_valor (Granularidad: numero_expediente + nemonico)
     # =========================================================================
     print(">>> [5/5] Procesando impacto_hechos_valor...")
-    
-    # Resolver fecha de presentación y RUC
     fecha_col_name = "fecha_presentacion_date" if "fecha_presentacion_date" in df_hechos_emp.columns else (
         "fecha_presentacion" if "fecha_presentacion" in df_hechos_emp.columns else "fecha"
     )
@@ -159,7 +163,6 @@ def main():
         F.col("monto_negociado").alias("monto_negociado_evento")
     )
 
-    # Join consistente por nemonico y fecha
     df_impacto = df_hechos_prep.join(
         df_cotiz_prep,
         (df_hechos_prep["nemonico"] == df_cotiz_prep["nemonico"]) &
@@ -176,7 +179,7 @@ def main():
     df_impacto.write.mode("overwrite").parquet(f"{BASE_GOLD}/eventos/impacto_hechos_valor")
 
     print("\n=======================================================")
-    print("!CAPA GOLD GENERADA CON ÉXITO Y 0 DUPLICADOS EN HDFS!")
+    print("¡CAPA GOLD GENERADA CON ÉXITO Y 0 DUPLICADOS EN HDFS!")
     print("=======================================================")
     spark.stop()
 
