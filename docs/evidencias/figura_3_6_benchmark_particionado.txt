@@ -1,0 +1,49 @@
+
+========================================================================================
+3.6 - OPTIMIZACION DEL RENDIMIENTO
+COMPARACION: PARQUET SIN PARTICIONAR VS PARTICIONADO
+========================================================================================
+
+DATASET REAL
+----------------------------------------------------------------------------------------
+Registros totales               : 83,130
+Periodo evaluado                : 2025-03
+Repeticiones por escenario      : 7
+
+Preparando copia temporal sin particionar...
+
+VALIDACION FUNCIONAL
+----------------------------------------------------------------------------------------
+Filas obtenidas sin particionar : 1,908
+Filas obtenidas particionadas   : 1,908
+Mismo resultado                 : SI
+
+EJECUCIONES MEDIDAS
+----------------------------------------------------------------------------------------
+Prueba 1: sin particionar=0.9074s | particionado=0.3343s
+Prueba 2: sin particionar=0.7861s | particionado=0.6941s
+Prueba 3: sin particionar=0.5506s | particionado=0.3152s
+Prueba 4: sin particionar=0.4962s | particionado=0.6561s
+Prueba 5: sin particionar=0.5100s | particionado=0.3008s
+Prueba 6: sin particionar=0.6137s | particionado=0.4228s
+Prueba 7: sin particionar=0.4653s | particionado=0.2932s
+
+========================================================================================
+RESULTADO DEL BENCHMARK
+========================================================================================
+Mediana SIN particionar         : 0.5506 s
+Mediana PARTICIONADO            : 0.3343 s
+Promedio SIN particionar        : 0.6185 s
+Promedio PARTICIONADO           : 0.4309 s
+Mejora sobre la mediana         : 39.27%
+Factor de aceleracion           : 1.65x
+
+OPTIMIZACION EVALUADA
+----------------------------------------------------------------------------------------
+Antes   : Parquet sin particionado.
+Despues : Parquet particionado por anio y mes.
+Filtro   : anio=2025, mes=3
+
+========================================================================================
+RESULTADO: EL PARTICIONAMIENTO REDUJO EL TIEMPO DE CONSULTA
+========================================================================================

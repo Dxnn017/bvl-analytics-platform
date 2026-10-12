@@ -1,0 +1,44 @@
+
+==========================================================================================
+3.3 - VALIDACION DEL PUENTE EMPRESARIAL RUC - NEMONICO
+==========================================================================================
+
+REGISTROS
+------------------------------------------------------------
+Registros del puente             : 831
+RUC distintos                    : 148
+Nemonicos distintos              : 831
+Pares RUC + nemonico distintos   : 831
+
+VALIDACION DE UNICIDAD
+------------------------------------------------------------
+Pares duplicados                  : 0
+Nemonicos asociados a >1 RUC     : 0
+
+VALIDACION DE COMPLETITUD
+------------------------------------------------------------
+RUC nulos/vacios                  : 0
+Nemonicos nulos/vacios            : 0
+
+MUESTRA DEL PUENTE
+------------------------------------------------------------
++-----------+--------------------------------------+--------------+-----------+------------------------------+
+|ruc        |razon_social                          |nemonico_valor|codigo_isin|tipo_valor                    |
++-----------+--------------------------------------+--------------+-----------+------------------------------+
+|20100003512|INDUSTRIAS ELECTRO QUIMICAS S.A. IEQSA|IEQSAI1       |37400500   |ACCIONES DE INVERSION         |
+|20100017491|INTEGRATEL PERU S.A.A.                |ATEL5BC22A    |70500M56   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATEL5BC25A    |70500M59   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATEL5BC25B    |70500M61   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATEL5BC29A    |70500M64   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATEL5BC31A    |70500M62   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATEL5BC33A    |70500M63   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATELE5BC1A    |70500M55   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATELE5BC1B    |70500M57   |PROGRAMA DE BONOS CORPORATIVOS|
+|20100017491|INTEGRATEL PERU S.A.A.                |ATELE5BC3A    |70500M58   |PROGRAMA DE BONOS CORPORATIVOS|
++-----------+--------------------------------------+--------------+-----------+------------------------------+
+only showing top 10 rows
+
+
+==========================================================================================
+RESULTADO: PUENTE RUC-NEMONICO VALIDADO CORRECTAMENTE
+==========================================================================================

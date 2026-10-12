@@ -1,0 +1,100 @@
+
+==========================================================================================
+3.3 - VERIFICACION DE ESQUEMAS DESPUES DEL PROCESAMIENTO
+==========================================================================================
+
+==========================================================================================
+TIPO DE CAMBIO BCRP
+==========================================================================================
+Ruta Silver: /datalake/bvl/silver/macroeconomia/tipo_cambio
+Registros: 7,751
+
+ESQUEMA RESULTANTE
+root
+ |-- fecha: date (nullable = true)
+ |-- tipo_cambio_venta: double (nullable = true)
+ |-- anio: integer (nullable = true)
+ |-- mes: integer (nullable = true)
+
+MUESTRA DE DATOS LIMPIOS
++----------+-----------------+----+---+
+|fecha     |tipo_cambio_venta|anio|mes|
++----------+-----------------+----+---+
+|1997-01-02|2.618            |1997|1  |
+|1997-01-03|2.62             |1997|1  |
+|1997-01-06|2.629            |1997|1  |
+|1997-01-07|2.635            |1997|1  |
+|1997-01-08|2.635            |1997|1  |
++----------+-----------------+----+---+
+only showing top 5 rows
+
+
+==========================================================================================
+EMBIG PERU BCRP
+==========================================================================================
+Ruta Silver: /datalake/bvl/silver/macroeconomia/embig
+Registros: 7,481
+
+ESQUEMA RESULTANTE
+root
+ |-- fecha: date (nullable = true)
+ |-- embig_peru: double (nullable = true)
+ |-- anio: integer (nullable = true)
+ |-- mes: integer (nullable = true)
+
+MUESTRA DE DATOS LIMPIOS
++----------+----------+----+---+
+|fecha     |embig_peru|anio|mes|
++----------+----------+----+---+
+|1998-01-01|421.0     |1998|1  |
+|1998-01-02|411.0     |1998|1  |
+|1998-01-05|433.0     |1998|1  |
+|1998-01-06|459.0     |1998|1  |
+|1998-01-07|459.0     |1998|1  |
++----------+----------+----+---+
+only showing top 5 rows
+
+
+==========================================================================================
+COTIZACIONES HISTORICAS SMV
+==========================================================================================
+Ruta Silver: /datalake/bvl/silver/mercado_diario/cotizaciones
+Registros: 83,130
+
+ESQUEMA RESULTANTE
+root
+ |-- fecha_cotizacion_raw: string (nullable = true)
+ |-- valor: string (nullable = true)
+ |-- descripcion: string (nullable = true)
+ |-- fecha_anterior_raw: string (nullable = true)
+ |-- cierre_anterior: double (nullable = true)
+ |-- cierre_actual: double (nullable = true)
+ |-- apertura_actual: double (nullable = true)
+ |-- maxima_actual: double (nullable = true)
+ |-- minima_actual: double (nullable = true)
+ |-- promedio_actual: double (nullable = true)
+ |-- monto_negociado: double (nullable = true)
+ |-- fecha_registro_raw: string (nullable = true)
+ |-- fecha_cotizacion: date (nullable = true)
+ |-- fecha_anterior: date (nullable = true)
+ |-- fuente: string (nullable = true)
+ |-- fecha_ingesta: date (nullable = true)
+ |-- anio: integer (nullable = true)
+ |-- mes: integer (nullable = true)
+
+MUESTRA DE DATOS LIMPIOS
++--------+-------------+----------------+----+---+
+|valor   |cierre_actual|monto_negociado |anio|mes|
++--------+-------------+----------------+----+---+
+|ALICORC1|9.2          |9080850.75      |2025|10 |
+|AMZN    |246.1        |1.354997864322E7|2025|10 |
+|ARKK    |89.3         |78498.8078      |2025|10 |
+|AUNA    |5.9          |245758.72544    |2025|10 |
+|BBVAC1  |1.47         |506735.93       |2025|10 |
++--------+-------------+----------------+----+---+
+only showing top 5 rows
+
+
+==========================================================================================
+RESULTADO: ESQUEMAS SILVER VERIFICADOS
+==========================================================================================
