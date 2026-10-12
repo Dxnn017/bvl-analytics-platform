@@ -1,0 +1,29 @@
+============================================================
+CAPA GOLD IMPLEMENTADA EN HDFS
+============================================================
+
+=== PRODUCTOS GOLD ===
+/datalake/bvl/gold/empresas
+/datalake/bvl/gold/empresas/empresa_trimestre
+/datalake/bvl/gold/eventos
+/datalake/bvl/gold/eventos/hechos_empresa
+/datalake/bvl/gold/eventos/impacto_hechos_valor
+/datalake/bvl/gold/mercado
+/datalake/bvl/gold/mercado/actividad_sab_diaria
+/datalake/bvl/gold/mercado/mercado_valor_diario
+
+=== TAMAÑO GOLD ===
+5.6 M  5.6 M  /datalake/bvl/gold
+
+=== ARCHIVOS PARQUET GOLD ===
+-rw-r--r--   1 danielanieve supergroup     852755 2026-10-11 21:46 /datalake/bvl/gold/empresas/empresa_trimestre/part-00000-c6fc921f-acdc-4918-859c-979d3ccc3ef8-c000.snappy.parquet
+-rw-r--r--   1 danielanieve supergroup      62636 2026-10-11 21:46 /datalake/bvl/gold/eventos/hechos_empresa/part-00000-25ce4721-6f20-4e1f-91ed-5f09db9c78fd-c000.snappy.parquet
+-rw-r--r--   1 danielanieve supergroup      18796 2026-10-11 21:46 /datalake/bvl/gold/eventos/hechos_empresa/part-00001-25ce4721-6f20-4e1f-91ed-5f09db9c78fd-c000.snappy.parquet
+-rw-r--r--   1 danielanieve supergroup       2692 2026-10-11 21:46 /datalake/bvl/gold/eventos/impacto_hechos_valor/part-00000-1ed93342-5629-4a0f-9b00-80b358c0bfef-c000.snappy.parquet
+-rw-r--r--   1 danielanieve supergroup     609127 2026-10-11 21:46 /datalake/bvl/gold/mercado/actividad_sab_diaria/part-00000-e02d3f8d-80f4-438d-8c30-f7aefd20e6e9-c000.snappy.parquet
+-rw-r--r--   1 danielanieve supergroup    2132922 2026-10-11 21:45 /datalake/bvl/gold/mercado/mercado_valor_diario/part-00000-217eed90-02c9-4d74-8307-12c7f525ec8c-c000.snappy.parquet
+-rw-r--r--   1 danielanieve supergroup    2229647 2026-10-11 21:45 /datalake/bvl/gold/mercado/mercado_valor_diario/part-00001-217eed90-02c9-4d74-8307-12c7f525ec8c-c000.snappy.parquet
+
+============================================================
+GOLD VALIDADA FISICAMENTE EN HDFS
+============================================================
