@@ -495,5 +495,9 @@ Los datos de gran volumen no se almacenan directamente en GitHub. El repositorio
 ---
 
 ## Autores
-
-Proyecto desarrollado por el equipo del curso de **Big Data y Analítica de Datos – UPAO**.
+| Nombres y apellidos | Rol |
+|---|---:|
+| Mendoza Santos, Piero | Análisis de modelado |
+| Nieve Viera, Daniela | Ingeniería de datos |
+| Ramirez Castillo, Lizeth | Calidad y documentación |
+| Tandaypan Segura, Matthew | Coordinación |
