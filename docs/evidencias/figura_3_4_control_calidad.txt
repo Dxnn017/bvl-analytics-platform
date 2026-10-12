@@ -1,0 +1,59 @@
+
+==========================================================================================
+3.4 - CONTROL DE CALIDAD DE LOS DATOS
+==========================================================================================
+
+1. SERIES MACROECONOMICAS
+------------------------------------------------------------------------------------------
+Tipo Cambio - observaciones Silver    : 7,751
+  Fechas nulas                        : 0
+  Valores nulos                       : 352
+  Completitud fecha                   : 100.00%
+  Completitud valor                   : 95.46%
+  Fechas duplicadas                   : 0
+  Valores <= 0                        : 0
+
+EMBIG Peru - observaciones Silver     : 7,481
+  Fechas nulas                        : 0
+  Valores nulos                       : 0
+  Completitud fecha                   : 100.00%
+  Completitud valor                   : 100.00%
+  Fechas duplicadas                   : 0
+  Valores < 0                         : 0
+
+2. PUENTE RUC - NEMONICO
+------------------------------------------------------------------------------------------
+Registros                             : 831
+Pares RUC-nemonico unicos             : 831
+Pares duplicados                      : 0
+Campos criticos nulos/vacios          : 0
+Nemonicos asociados a >1 RUC          : 0
+
+3. COHERENCIA TEMPORAL COTIZACIONES - BCRP
+------------------------------------------------------------------------------------------
+Fechas distintas de Cotizaciones      : 1,221
+Fechas cubiertas por Tipo de Cambio   : 1,216 (99.59%)
+Fechas sin Tipo de Cambio valido      : 5
+Fechas cubiertas por EMBIG            : 1,221 (100.00%)
+Fechas sin EMBIG valido               : 0
+
+4. IDENTIDAD DE HECHOS DE IMPORTANCIA
+------------------------------------------------------------------------------------------
+Eventos principales                   : 338
+Identificados por RUC_EXACTO          : 277
+Identificados por NEMONICO_SMV        : 15
+Eventos identificados                 : 292
+Eventos SIN_PUENTE                    : 46
+Cobertura de identidad                 : 86.39%
+Inconsistencias de identidad           : 0
+
+==========================================================================================
+RESUMEN DE VERACIDAD
+==========================================================================================
+✓ Unicidad RUC-nemonico validada
+✓ Identidad no forzada: SIN_PUENTE conservados
+✓ Cobertura temporal Tipo Cambio: 99.59%
+✓ Cobertura temporal EMBIG: 100.00%
+✓ Cobertura identidad Hechos: 86.39%
+! Tipo Cambio contiene 352 valores ausentes en su serie historica
+==========================================================================================

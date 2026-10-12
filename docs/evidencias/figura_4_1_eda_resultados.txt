@@ -1,0 +1,149 @@
+26/10/11 19:27:54 WARN Utils: Your hostname, bigdata resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/10/11 19:27:54 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/10/11 19:27:58 INFO SparkContext: Running Spark version 3.5.1
+26/10/11 19:27:58 INFO SparkContext: OS info Linux, 6.1.0-53-amd64, amd64
+26/10/11 19:27:58 INFO SparkContext: Java version 17.0.20.1
+26/10/11 19:27:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/11 19:27:59 INFO ResourceUtils: ==============================================================
+26/10/11 19:27:59 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/10/11 19:27:59 INFO ResourceUtils: ==============================================================
+26/10/11 19:27:59 INFO SparkContext: Submitted application: EDA_BVL_Semana7
+26/10/11 19:27:59 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 512, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/10/11 19:27:59 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+26/10/11 19:27:59 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/10/11 19:27:59 INFO SecurityManager: Changing view acls to: danielanieve
+26/10/11 19:27:59 INFO SecurityManager: Changing modify acls to: danielanieve
+26/10/11 19:27:59 INFO SecurityManager: Changing view acls groups to: 
+26/10/11 19:27:59 INFO SecurityManager: Changing modify acls groups to: 
+26/10/11 19:27:59 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/10/11 19:27:59 INFO Utils: Successfully started service 'sparkDriver' on port 35399.
+26/10/11 19:28:00 INFO SparkEnv: Registering MapOutputTracker
+26/10/11 19:28:00 INFO SparkEnv: Registering BlockManagerMaster
+26/10/11 19:28:00 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/10/11 19:28:00 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/10/11 19:28:00 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/10/11 19:28:00 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-8c7e262b-1d7d-47f0-a52a-af8df7a3a164
+26/10/11 19:28:00 INFO MemoryStore: MemoryStore started with capacity 127.2 MiB
+26/10/11 19:28:00 INFO SparkEnv: Registering OutputCommitCoordinator
+26/10/11 19:28:00 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/10/11 19:28:01 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/10/11 19:28:01 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /0.0.0.0:8032
+26/10/11 19:28:02 INFO Configuration: resource-types.xml not found
+26/10/11 19:28:02 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/10/11 19:28:02 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (8192 MB per container)
+26/10/11 19:28:02 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/10/11 19:28:02 INFO Client: Setting up container launch context for our AM
+26/10/11 19:28:02 INFO Client: Setting up the launch environment for our AM container
+26/10/11 19:28:02 INFO Client: Preparing resources for our AM container
+26/10/11 19:28:02 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/10/11 19:28:09 INFO Client: Uploading resource file:/tmp/spark-3f94dec6-832a-486b-87d2-0d7aab5482c8/__spark_libs__9352376695055606231.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791745047067_0012/__spark_libs__9352376695055606231.zip
+26/10/11 19:28:12 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/pyspark.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791745047067_0012/pyspark.zip
+26/10/11 19:28:12 INFO Client: Uploading resource file:/opt/spark-3.5.1-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791745047067_0012/py4j-0.10.9.7-src.zip
+26/10/11 19:28:13 INFO Client: Uploading resource file:/tmp/spark-3f94dec6-832a-486b-87d2-0d7aab5482c8/__spark_conf__15866935168570457382.zip -> hdfs://localhost:9000/user/danielanieve/.sparkStaging/application_1791745047067_0012/__spark_conf__.zip
+26/10/11 19:28:13 INFO SecurityManager: Changing view acls to: danielanieve
+26/10/11 19:28:13 INFO SecurityManager: Changing modify acls to: danielanieve
+26/10/11 19:28:13 INFO SecurityManager: Changing view acls groups to: 
+26/10/11 19:28:13 INFO SecurityManager: Changing modify acls groups to: 
+26/10/11 19:28:13 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: danielanieve; groups with view permissions: EMPTY; users with modify permissions: danielanieve; groups with modify permissions: EMPTY
+26/10/11 19:28:13 INFO Client: Submitting application application_1791745047067_0012 to ResourceManager
+26/10/11 19:28:13 INFO YarnClientImpl: Submitted application application_1791745047067_0012
+26/10/11 19:28:14 INFO Client: Application report for application_1791745047067_0012 (state: ACCEPTED)
+26/10/11 19:28:14 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1791764893479
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1791745047067_0012/
+	 user: danielanieve
+26/10/11 19:28:22 INFO Client: Application report for application_1791745047067_0012 (state: RUNNING)
+26/10/11 19:28:22 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 10.0.2.15
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1791764893479
+	 final status: UNDEFINED
+	 tracking URL: http://bigdata:8088/proxy/application_1791745047067_0012/
+	 user: danielanieve
+26/10/11 19:28:22 INFO YarnClientSchedulerBackend: Application application_1791745047067_0012 has started running.
+26/10/11 19:28:22 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> bigdata, PROXY_URI_BASES -> http://bigdata:8088/proxy/application_1791745047067_0012), /proxy/application_1791745047067_0012
+26/10/11 19:28:22 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 45067.
+26/10/11 19:28:22 INFO NettyBlockTransferService: Server created on 10.0.2.15:45067
+26/10/11 19:28:22 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/10/11 19:28:23 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 10.0.2.15, 45067, None)
+26/10/11 19:28:23 INFO BlockManagerMasterEndpoint: Registering block manager 10.0.2.15:45067 with 127.2 MiB RAM, BlockManagerId(driver, 10.0.2.15, 45067, None)
+26/10/11 19:28:23 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 10.0.2.15, 45067, None)
+26/10/11 19:28:23 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 10.0.2.15, 45067, None)
+26/10/11 19:28:24 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /executors/heapHistogram: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /executors/heapHistogram/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:24 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/10/11 19:28:29 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (10.0.2.15:33870) with ID 1,  ResourceProfileId 0
+26/10/11 19:28:29 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.8
+26/10/11 19:28:29 INFO BlockManagerMasterEndpoint: Registering block manager bigdata:40461 with 127.2 MiB RAM, BlockManagerId(1, bigdata, 40461, None)
+
+==========================================================================================
+4.1 - ANALISIS EXPLORATORIO DE DATOS
+==========================================================================================
+Cotizaciones cargadas : 83,130
+EMBIG cargado         : 7,481
+
+1. EVOLUCION MENSUAL
+------------------------------------------------------------------------------------------
+Mayor monto mensual : 2024-05 -> 6470692281.72
+Menor monto mensual : 2022-08 -> 313152874.93
+
+2. RETORNO VS EMBIG
+------------------------------------------------------------------------------------------
+Observaciones emparejadas : 1,220
+Correlacion Pearson       : -0.1876
+
+3. TOP 10 VALORES POR MONTO NEGOCIADO
+------------------------------------------------------------------------------------------
+01. ENGEPEC1        Monto=5480402468.90 | Cotizaciones=687
+02. BAP             Monto=4506342050.12 | Cotizaciones=1,204
+03. ALICORC1        Monto=4386410522.75 | Cotizaciones=1,172
+04. INRETC1         Monto=4194861742.14 | Cotizaciones=1,108
+05. CVERDEC1        Monto=3268338999.76 | Cotizaciones=1,133
+06. LUSURC1         Monto=2234715772.70 | Cotizaciones=762
+07. MINSURI1        Monto=2069203044.27 | Cotizaciones=1,139
+08. PLUZENC1        Monto=2034558873.14 | Cotizaciones=159
+09. FERREYC1        Monto=2005128562.24 | Cotizaciones=1,211
+10. VOLCABC1        Monto=1731905251.06 | Cotizaciones=1,212
+
+==========================================================================================
+FIGURAS GENERADAS
+==========================================================================================
+outputs/figures/eda_01_monto_mensual.png
+outputs/figures/eda_02_retorno_embig.png
+outputs/figures/eda_03_top_valores.png
+==========================================================================================
