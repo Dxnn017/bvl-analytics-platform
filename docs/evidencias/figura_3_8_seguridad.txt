@@ -1,0 +1,28 @@
+======================================================================
+3.8 - SEGURIDAD DE LA PLATAFORMA
+======================================================================
+
+=== PERMISOS DE LAS PRINCIPALES ZONAS HDFS ===
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 23:06 /datalake/bvl
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 19:51 /datalake/bvl/bronze
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:15 /datalake/bvl/silver
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:12 /datalake/bvl/metadata
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 20:54 /datalake/bvl/quarantine
+
+=== MECANISMOS IMPLEMENTADOS ===
+Integridad            : checksum SHA-256 en procesos de ingesta
+Trazabilidad          : metadata y registros de auditoria
+Aislamiento           : zona quarantine
+Versionado            : Git / GitHub
+Credenciales en datos : NO
+
+=== CONTROLES PREVISTOS PARA PRODUCCION ===
+Autenticacion         : Kerberos / LDAP
+Autorizacion          : RBAC y minimo privilegio
+Cifrado en reposo     : HDFS Encryption Zones / cifrado de disco
+Cifrado en transito   : TLS / HTTPS
+Secretos              : gestor de secretos / variables de entorno
+
+======================================================================
+ENTORNO: RUTA A - ON-PREMISE
+======================================================================

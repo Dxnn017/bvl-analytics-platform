@@ -1,0 +1,133 @@
+================================================================================
+ESTRUCTURA REAL DEL DATA LAKE BVL
+================================================================================
+
+=== NIVEL RAIZ ===
+Found 4 items
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 19:51 /datalake/bvl/bronze
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-04 20:12 /datalake/bvl/metadata
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 20:54 /datalake/bvl/quarantine
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:15 /datalake/bvl/silver
+
+================================================================================
+BRONZE - DIRECTORIOS
+================================================================================
+
+================================================================================
+SILVER - DIRECTORIOS
+================================================================================
+
+================================================================================
+GOLD - DIRECTORIOS
+================================================================================
+
+================================================================================
+TAMAÑO POR CAPA
+================================================================================
+375.4 M  375.4 M  /datalake/bvl/bronze
+13.8 M  13.8 M  /datalake/bvl/silver
+1.3 M  1.3 M  /datalake/bvl/metadata
+14  14  /datalake/bvl/quarantine
+
+================================================================================
+EJEMPLOS DE PARTICIONES SILVER
+================================================================================
+/datalake/bvl/silver/macroeconomia/embig/anio=1998
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=1
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=1/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=10
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=10/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=11
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=11/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=12
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=12/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=2
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=2/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=3
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=3/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=4
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=4/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=5
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=5/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=6
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=6/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=7
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=7/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=8
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=8/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=9
+/datalake/bvl/silver/macroeconomia/embig/anio=1998/mes=9/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=1
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=1/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=10
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=10/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=11
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=11/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=12
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=12/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=2
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=2/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=3
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=3/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=4
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=4/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=5
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=5/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=6
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=6/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=7
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=7/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=8
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=8/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=9
+/datalake/bvl/silver/macroeconomia/embig/anio=1999/mes=9/part-00000-84cf69b1-47c8-423f-acbf-ea0343bdbfc7.c000.snappy.parquet
+
+================================================================================
+ARCHIVOS PARQUET SILVER
+================================================================================
+/datalake/bvl/silver/finanzas_empresariales/cambios_patrimonio/ejercicio=2024/part-00000-e64f6e66-ab8c-4d99-9936-a6971220b4d3.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/estado_resultados/ejercicio=2021/part-00000-dfb66db0-e768-417a-aca8-f75ab1ca8ddb.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/flujo_efectivo/ejercicio=2021/part-00000-37e308dd-7896-4d18-a01d-bd2e97eb116f.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/flujo_efectivo/ejercicio=2021/part-00001-37e308dd-7896-4d18-a01d-bd2e97eb116f.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=1/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=2/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=3/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2021/trimestre_num=4/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=1/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=2/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=3/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2022/trimestre_num=4/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=1/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=2/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=3/part-00000-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2023/trimestre_num=4/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=1/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=2/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=3/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2024/trimestre_num=4/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=1/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=2/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=3/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas/ejercicio=2025/trimestre_num=4/part-00001-86633dbe-ce98-42b3-a1bb-cef54e867b9a.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/situacion_financiera/ejercicio=2024/part-00000-77f34c8d-72e6-476f-b81f-ce7ffbd875f9.c000.snappy.parquet
+/datalake/bvl/silver/finanzas_empresariales/situacion_financiera/ejercicio=2024/part-00001-77f34c8d-72e6-476f-b81f-ce7ffbd875f9.c000.snappy.parquet
+/datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=COHERENTE/part-00000-23007424-993c-4fab-a3d2-85961930ea6d.c000.snappy.parquet
+/datalake/bvl/silver/hechos_importancia/contenido_textual/coherencia_temporal=HISTORICO_REGULARIZACION/part-00000-23007424-993c-4fab-a3d2-85961930ea6d.c000.snappy.parquet
+/datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=COHERENTE/part-00000-031c4b68-e8a6-45b8-ac35-c9b39ff462c8.c000.snappy.parquet
+/datalake/bvl/silver/hechos_importancia/documentos/coherencia_temporal=HISTORICO_REGULARIZACION/part-00000-031c4b68-e8a6-45b8-ac35-c9b39ff462c8.c000.snappy.parquet
+
+================================================================================
+ARCHIVOS PARQUET GOLD
+================================================================================
+
+================================================================================
+PERMISOS HDFS
+================================================================================
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 23:06 /datalake/bvl
+drwxr-xr-x   - danielanieve supergroup          0 2026-09-27 19:51 /datalake/bvl/bronze
+drwxr-xr-x   - danielanieve supergroup          0 2026-10-05 01:15 /datalake/bvl/silver
+
+================================================================================
+FIN
+================================================================================

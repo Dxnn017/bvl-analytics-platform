@@ -1,0 +1,43 @@
+============================================================
+ESTRUCTURA DEL DATA LAKE - BRONZE Y SILVER
+============================================================
+
+=== BRONZE - FUENTES ACTIVAS ===
+/datalake/bvl/bronze/bcrp
+/datalake/bvl/bronze/bcrp/embig
+/datalake/bvl/bronze/bcrp/tipo_cambio
+/datalake/bvl/bronze/smv
+/datalake/bvl/bronze/smv/cotizaciones
+/datalake/bvl/bronze/smv/hechos_importancia
+/datalake/bvl/bronze/smv/hechos_importancia/pdf
+/datalake/bvl/bronze/smv/hechos_importancia/texto_extraido
+/datalake/bvl/bronze/smv/hechos_valores_consulta
+/datalake/bvl/bronze/smv/hechos_valores_consulta/json
+/datalake/bvl/bronze/smv/hechos_valores_consulta/xml
+/datalake/bvl/bronze/smv/montos_sab
+/datalake/bvl/bronze/smv/principales_cuentas
+/datalake/bvl/bronze/smv/valores_inscritos
+/datalake/bvl/bronze/smv/valores_inscritos/json
+/datalake/bvl/bronze/smv/valores_inscritos/xml
+
+=== SILVER - DATASETS ACTIVOS ===
+/datalake/bvl/silver/finanzas_empresariales
+/datalake/bvl/silver/finanzas_empresariales/principales_cuentas
+/datalake/bvl/silver/hechos_importancia
+/datalake/bvl/silver/hechos_importancia/contenido_textual
+/datalake/bvl/silver/hechos_importancia/documentos
+/datalake/bvl/silver/hechos_importancia/eventos
+/datalake/bvl/silver/hechos_importancia/identidad_empresarial
+/datalake/bvl/silver/macroeconomia
+/datalake/bvl/silver/macroeconomia/embig
+/datalake/bvl/silver/macroeconomia/tipo_cambio
+/datalake/bvl/silver/mercado_diario
+/datalake/bvl/silver/mercado_diario/cotizaciones
+/datalake/bvl/silver/mercado_diario/montos_sab
+/datalake/bvl/silver/referencias_smv
+/datalake/bvl/silver/referencias_smv/puente_ruc_nemonico
+/datalake/bvl/silver/referencias_smv/valores_inscritos
+
+============================================================
+FIN ESTRUCTURA
+============================================================
