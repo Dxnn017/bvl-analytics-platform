@@ -26,12 +26,6 @@ DATASETS = [
     },
     {
         "source": "smv",
-        "dataset": "indices",
-        "file": RAW_DIR / "smv" / "Indices.json",
-        "extension": ".json",
-    },
-    {
-        "source": "smv",
         "dataset": "estado_resultados",
         "file": RAW_DIR / "smv" / "EstadoResultadosSMV.json",
         "extension": ".json",

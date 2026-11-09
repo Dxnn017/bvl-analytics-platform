@@ -15,11 +15,6 @@ datasets = [
         "fecha_cotizacion"
     ),
     (
-        "indices",
-        "/datalake/bvl/silver/mercado_diario/indices",
-        "fecha"
-    ),
-    (
         "tipo_cambio",
         "/datalake/bvl/silver/macroeconomia/tipo_cambio",
         "fecha"
