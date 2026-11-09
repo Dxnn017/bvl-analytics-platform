@@ -296,70 +296,6 @@ def process_cotizaciones(spark):
     )
 
 
-def process_indices(spark):
-
-    start = time.time()
-
-    df = read_smv_json(
-        spark,
-        f"{BRONZE}/smv/indices",
-        "Resultado"
-    )
-
-    before = df.count()
-
-    df = (
-        df
-        .withColumnRenamed("Fecha", "fecha")
-        .withColumnRenamed("Clase", "clase")
-        .withColumnRenamed("Tipo", "tipo")
-        .withColumnRenamed("Indice", "indice")
-        .withColumnRenamed("ClaseIndice", "clase_indice")
-        .withColumnRenamed("anterior", "anterior")
-        .withColumnRenamed("apertura", "apertura")
-        .withColumnRenamed("maxima", "maxima")
-        .withColumnRenamed("minima", "minima")
-        .withColumnRenamed("ultimo", "ultimo")
-        .withColumnRenamed("variacion", "variacion")
-    )
-
-    df = (
-        df
-        .withColumn(
-            "fecha",
-            normalize_smv_date(F.col("fecha"))
-        )
-    )
-
-    dedup = df.dropDuplicates()
-
-    after_dedup = dedup.count()
-
-    duplicates = before - after_dedup
-
-    dedup = (
-        dedup
-        .withColumn("anio", F.year("fecha"))
-        .withColumn("mes", F.month("fecha"))
-    )
-
-    write_silver(
-        dedup,
-        f"{SILVER}/mercado_diario/indices",
-        ["anio", "mes"]
-    )
-
-    return quality_record(
-        "indices",
-        before,
-        after_dedup,
-        duplicates,
-        0,
-        time.time() - start
-    )
-
-
-# ============================================================
 # MACROECONOMÍA BCRP
 # ============================================================
 
@@ -639,7 +575,7 @@ def main():
 
     processors = [
         ("cotizaciones", lambda: process_cotizaciones(spark)),
-        ("indices", lambda: process_indices(spark)),
+        # Índices archivados: excluidos del procesamiento activo.
         ("tipo_cambio", lambda: process_tipo_cambio(spark)),
         ("embig", lambda: process_embig(spark)),
 

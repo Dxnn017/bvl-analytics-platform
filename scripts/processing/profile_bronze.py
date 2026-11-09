@@ -25,13 +25,6 @@ DATASETS = [
         "path": "/datalake/bvl/bronze/smv/cotizaciones",
     },
     {
-        "name": "indices",
-        "source": "SMV",
-        "format": "json",
-        "record_field": "Resultado",
-        "path": "/datalake/bvl/bronze/smv/indices",
-    },
-    {
         "name": "estado_resultados",
         "source": "SMV",
         "format": "json",

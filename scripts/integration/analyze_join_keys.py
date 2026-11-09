@@ -85,9 +85,6 @@ def main():
         f"{SILVER}/mercado_diario/cotizaciones"
     )
 
-    indices = spark.read.parquet(
-        f"{SILVER}/mercado_diario/indices"
-    )
 
     tc = spark.read.parquet(
         f"{SILVER}/macroeconomia/tipo_cambio"
@@ -125,8 +122,6 @@ def main():
         "cotizaciones":
             date_stats(cot, "fecha_cotizacion"),
 
-        "indices":
-            date_stats(indices, "fecha"),
 
         "tipo_cambio":
             date_stats(tc, "fecha"),
@@ -157,11 +152,6 @@ def main():
         .distinct()
     )
 
-    ind_dates = (
-        indices
-        .select("fecha")
-        .distinct()
-    )
 
     tc_dates = (
         tc
@@ -220,8 +210,6 @@ def main():
         }
 
     coverage_results = {
-        "indices":
-            coverage(ind_dates, "Índices"),
 
         "tipo_cambio":
             coverage(tc_dates, "Tipo Cambio"),
