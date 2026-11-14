@@ -1,0 +1,43 @@
+{
+  "version_manifest": "0.1",
+  "entorno": "PRUEBA",
+  "run_id": "simulado_eliminacion_no_autorizada_001",
+  "estado": "SILVER_PUBLICADO_APROBADO",
+  "fecha_publicacion": "2026-11-14T22:40:00Z",
+  "tipo_publicacion": "INCREMENTAL",
+  "validacion_aprobada": true,
+  "datasets": [
+    {
+      "dataset": "tipo_cambio",
+      "ruta_silver": "file:///ruta_de_prueba/macroeconomia/tipo_cambio",
+      "version_esquema": "ejemplo_1",
+      "version_anterior": "simulada_v1",
+      "version_publicada": "simulada_v2_eliminacion",
+      "clave": [
+        "fecha"
+      ],
+      "particiones_afectadas": [
+        {
+          "anio": 2025,
+          "mes": 12
+        }
+      ],
+      "claves_afectadas": [
+        {
+          "operacion": "DELETE",
+          "clave_anterior": {
+            "fecha": "2025-12-30"
+          },
+          "clave_nueva": null
+        }
+      ],
+      "ruta_detalle_cambios": null,
+      "registros_nuevos": 0,
+      "registros_corregidos": 0,
+      "registros_eliminados": 1,
+      "registros_antes": 7751,
+      "registros_despues": 7750,
+      "autorizacion_eliminaciones": false
+    }
+  ]
+}

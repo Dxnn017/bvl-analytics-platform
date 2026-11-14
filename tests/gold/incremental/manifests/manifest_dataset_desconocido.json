@@ -1,0 +1,43 @@
+{
+  "version_manifest": "0.1",
+  "entorno": "PRUEBA",
+  "run_id": "simulado_dataset_desconocido_001",
+  "estado": "SILVER_PUBLICADO_APROBADO",
+  "fecha_publicacion": "2026-11-14T22:30:00Z",
+  "tipo_publicacion": "INCREMENTAL",
+  "validacion_aprobada": true,
+  "datasets": [
+    {
+      "dataset": "dataset_desconocido",
+      "ruta_silver": "file:///ruta_de_prueba/dataset_desconocido",
+      "version_esquema": "ejemplo_1",
+      "version_anterior": "simulada_v1",
+      "version_publicada": "simulada_v2",
+      "clave": [
+        "fecha"
+      ],
+      "particiones_afectadas": [
+        {
+          "anio": 2026,
+          "mes": 9
+        }
+      ],
+      "claves_afectadas": [
+        {
+          "operacion": "INSERT",
+          "clave_anterior": null,
+          "clave_nueva": {
+            "fecha": "2026-09-18"
+          }
+        }
+      ],
+      "ruta_detalle_cambios": null,
+      "registros_nuevos": 1,
+      "registros_corregidos": 0,
+      "registros_eliminados": 0,
+      "registros_antes": 100,
+      "registros_despues": 101,
+      "autorizacion_eliminaciones": false
+    }
+  ]
+}
