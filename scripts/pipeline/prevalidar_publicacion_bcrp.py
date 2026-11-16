@@ -45,6 +45,16 @@ def validar(manifest):
 
     bronze = manifest.get("bronze", "")
 
+    if not isinstance(bronze, str):
+        raise ValueError("Origen Bronze invalido")
+
+    if any(c in bronze for c in "*?[]{}\\"):
+        raise ValueError("ORIGEN_CON_COMODINES")
+
+    if any(p in (".", "..") for p in bronze.split("/")):
+        raise ValueError("ORIGEN_CON_TRAVERSAL")
+
+
     if not re.fullmatch(ORIGEN_PERMITIDO, bronze):
         raise ValueError(
             "ORIGEN_NO_OFICIAL_O_SINTETICO"
