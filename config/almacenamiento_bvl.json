@@ -1,0 +1,19 @@
+{
+  "proyecto": "bvl-analytics-2026",
+  "region_propuesta": "southamerica-east1",
+  "modo_actual": "hdfs",
+  "hdfs": {
+    "bronze": "/datalake/bvl/bronze",
+    "silver": "/datalake/bvl/silver",
+    "gold": "/datalake/bvl/gold",
+    "staging": "/datalake/bvl/staging",
+    "control": "/datalake/bvl/metadata"
+  },
+  "gcs": {
+    "bronze": null,
+    "silver": null,
+    "gold": null,
+    "staging": null,
+    "control": null
+  }
+}
