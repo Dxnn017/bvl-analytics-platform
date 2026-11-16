@@ -1,0 +1,45 @@
+{
+    "version_manifest": "0.1",
+    "entorno": "PRUEBA",
+    "run_id": "prueba_bcrp_correccion_001",
+    "estado": "SILVER_PUBLICADO_APROBADO",
+    "fecha_publicacion": "2026-11-14T23:49:48.735546+00:00",
+    "tipo_publicacion": "INCREMENTAL",
+    "validacion_aprobada": true,
+    "datasets": [
+        {
+            "dataset": "tipo_cambio",
+            "ruta_silver": "file:///home/piero/bvl_entregas/incremental_pruebas_20261114/silver_versiones/bcrp_correccion_v1/macroeconomia/tipo_cambio",
+            "version_esquema": "tipo_cambio_prueba_v1",
+            "version_anterior": "snapshot_20261109",
+            "version_publicada": "bcrp_correccion_v1",
+            "clave": [
+                "fecha"
+            ],
+            "particiones_afectadas": [
+                {
+                    "anio": 2025,
+                    "mes": 12
+                }
+            ],
+            "claves_afectadas": [
+                {
+                    "operacion": "UPDATE",
+                    "clave_anterior": {
+                        "fecha": "2025-12-30"
+                    },
+                    "clave_nueva": {
+                        "fecha": "2025-12-30"
+                    }
+                }
+            ],
+            "ruta_detalle_cambios": null,
+            "registros_nuevos": 0,
+            "registros_corregidos": 1,
+            "registros_eliminados": 0,
+            "registros_antes": 7751,
+            "registros_despues": 7751,
+            "autorizacion_eliminaciones": false
+        }
+    ]
+}

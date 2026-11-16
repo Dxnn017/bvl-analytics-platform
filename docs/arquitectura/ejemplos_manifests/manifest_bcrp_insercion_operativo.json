@@ -1,0 +1,43 @@
+{
+    "version_manifest": "0.1",
+    "entorno": "PRUEBA",
+    "run_id": "prueba_bcrp_insercion_001",
+    "estado": "SILVER_PUBLICADO_APROBADO",
+    "fecha_publicacion": "2026-11-14T23:49:48.735546+00:00",
+    "tipo_publicacion": "INCREMENTAL",
+    "validacion_aprobada": true,
+    "datasets": [
+        {
+            "dataset": "tipo_cambio",
+            "ruta_silver": "file:///home/piero/bvl_entregas/incremental_pruebas_20261114/silver_versiones/bcrp_insercion_v1/macroeconomia/tipo_cambio",
+            "version_esquema": "tipo_cambio_prueba_v1",
+            "version_anterior": "snapshot_20261109",
+            "version_publicada": "bcrp_insercion_v1",
+            "clave": [
+                "fecha"
+            ],
+            "particiones_afectadas": [
+                {
+                    "anio": 2026,
+                    "mes": 9
+                }
+            ],
+            "claves_afectadas": [
+                {
+                    "operacion": "INSERT",
+                    "clave_anterior": null,
+                    "clave_nueva": {
+                        "fecha": "2026-09-18"
+                    }
+                }
+            ],
+            "ruta_detalle_cambios": null,
+            "registros_nuevos": 1,
+            "registros_corregidos": 0,
+            "registros_eliminados": 0,
+            "registros_antes": 7751,
+            "registros_despues": 7752,
+            "autorizacion_eliminaciones": false
+        }
+    ]
+}
