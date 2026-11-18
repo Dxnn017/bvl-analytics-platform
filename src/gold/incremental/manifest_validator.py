@@ -30,6 +30,25 @@ from datetime import date, datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
+if __package__:
+    from .storage_config import (
+        BACKEND_GCS,
+        validar_uri_gcs,
+        uri_bajo_raiz,
+        StorageConfigError,
+        cargar_configuracion,
+    )
+    from .storage_backend import crear_backend
+else:
+    from storage_config import (
+        BACKEND_GCS,
+        validar_uri_gcs,
+        uri_bajo_raiz,
+        StorageConfigError,
+        cargar_configuracion,
+    )
+    from storage_backend import crear_backend
+
 
 # ============================================================
 # 1. CONFIGURACION
@@ -457,13 +476,22 @@ def validar_compatibilidad_json(manifest):
 # ============================================================
 # 6. LECTURA DEL MANIFEST Y HUELLA SHA-256
 # ============================================================
-def cargar_manifest(ruta):
-    archivo = Path(ruta)
+def cargar_manifest(ruta, backend=None):
 
     try:
-        contenido = archivo.read_bytes()
+        if backend is not None:
+            contenido = backend.leer_bytes(str(ruta))
+        elif str(ruta).startswith("gs://"):
+            config = cargar_configuracion()
+            if config.backend != BACKEND_GCS:
+                raise ManifestError(
+                    "La lectura GCS requiere configuracion GCS."
+                )
+            contenido = crear_backend(config).leer_bytes(str(ruta))
+        else:
+            contenido = Path(ruta).read_bytes()
 
-    except OSError as exc:
+    except Exception as exc:
         raise ManifestError(
             f"No se pudo leer el manifest: {exc}"
         ) from exc
@@ -514,6 +542,7 @@ def validar_ruta(
     contexto,
     errores,
     sufijo_esperado=None,
+    config=None,
 ):
     if not texto_valido(ruta):
         errores.append(
@@ -565,7 +594,29 @@ def validar_ruta(
 
     if entorno == "PRUEBA":
 
-        if esquema != "file":
+        if config is not None and config.backend == BACKEND_GCS:
+
+            try:
+                validar_uri_gcs(ruta)
+
+                raices = (
+                    config.raices_autorizadas_silver
+                    if sufijo_esperado
+                    else (config.control, config.manifests)
+                )
+
+                if not any(
+                    uri_bajo_raiz(ruta, raiz, BACKEND_GCS)
+                    for raiz in raices
+                ):
+                    errores.append(
+                        f"{contexto}: ruta GCS no autorizada."
+                    )
+
+            except StorageConfigError as exc:
+                errores.append(f"{contexto}: {exc}")
+
+        elif esquema != "file":
             errores.append(
                 f"{contexto}: PRUEBA solo acepta "
                 "rutas locales file://."
@@ -997,6 +1048,7 @@ def validar_dataset(
     entorno,
     errores,
     advertencias,
+    config=None,
 ):
     contexto = f"datasets[{indice}]"
 
@@ -1037,6 +1089,7 @@ def validar_dataset(
         contexto + ".ruta_silver",
         errores,
         sufijo_esperado=configuracion["ruta"],
+        config=config,
     )
 
     for campo in (
@@ -1193,6 +1246,7 @@ def validar_dataset(
             entorno,
             contexto + ".ruta_detalle_cambios",
             errores,
+            config=config,
         )
 
         advertencias.append(
@@ -1228,6 +1282,7 @@ def validar_dataset(
 def validar_manifest(
     manifest,
     entorno_esperado="PRUEBA",
+    config=None,
 ):
     errores = []
     advertencias = []
@@ -1374,6 +1429,7 @@ def validar_manifest(
             entorno,
             errores,
             advertencias,
+            config=config,
         )
 
     return errores, advertencias
@@ -1386,6 +1442,7 @@ def validar_manifest(
 def procesar_manifest(
     ruta,
     entorno_esperado="PRUEBA",
+    backend=None,
 ):
     resultado = {
         "archivo": str(ruta),
@@ -1403,7 +1460,21 @@ def procesar_manifest(
     }
 
     try:
-        manifest, huella = cargar_manifest(ruta)
+        if backend is None and str(ruta).startswith("gs://"):
+            try:
+                config = cargar_configuracion()
+                if config.backend != BACKEND_GCS:
+                    raise ManifestError(
+                        "Se requiere configuracion GCS."
+                    )
+                backend = crear_backend(config)
+            except Exception as exc:
+                raise ManifestError(str(exc)) from exc
+
+        manifest, huella = cargar_manifest(
+            ruta,
+            backend=backend,
+        )
 
         resultado["huella_sha256"] = huella
 
@@ -1422,6 +1493,7 @@ def procesar_manifest(
         errores, advertencias = validar_manifest(
             manifest,
             entorno_esperado,
+            config=backend.config if backend is not None else None,
         )
 
         resultado["errores"] = errores
