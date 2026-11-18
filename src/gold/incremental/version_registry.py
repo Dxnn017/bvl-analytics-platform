@@ -37,6 +37,30 @@ from pathlib import Path
 
 if __package__:
 
+    from .storage_config import (
+        HOME,
+        DIRECTORIO_ENTREGAS,
+        DIRECTORIO_PRUEBAS,
+        SILVER_ORIGINAL,
+        SILVER_VERSIONES,
+        RAICES_AUTORIZADAS,
+        RUTA_REGISTRO_ORIGINAL,
+    )
+
+else:
+
+    from storage_config import (
+        HOME,
+        DIRECTORIO_ENTREGAS,
+        DIRECTORIO_PRUEBAS,
+        SILVER_ORIGINAL,
+        SILVER_VERSIONES,
+        RAICES_AUTORIZADAS,
+        RUTA_REGISTRO_ORIGINAL,
+    )
+
+if __package__:
+
     from .manifest_validator import (
         CATALOGO_DATASETS,
         ManifestError,
@@ -68,36 +92,7 @@ ESTADO_VERSION = "VERSION_PRUEBA_REGISTRADA"
 
 ESTADO_REGISTRO = "REGISTRO_VERSIONES_PRUEBA"
 
-HOME = Path.home()
-
-DIRECTORIO_ENTREGAS = HOME / "bvl_entregas"
-
-SILVER_ORIGINAL = (
-    DIRECTORIO_ENTREGAS
-    / "silver_20261109"
-    / "silver"
-)
-
-DIRECTORIO_PRUEBAS = (
-    DIRECTORIO_ENTREGAS
-    / "incremental_pruebas_20261114"
-)
-
-SILVER_VERSIONES = (
-    DIRECTORIO_PRUEBAS
-    / "silver_versiones"
-)
-
-RUTA_REGISTRO = (
-    DIRECTORIO_PRUEBAS
-    / "control"
-    / "registro_versiones_silver.json"
-)
-
-RAICES_AUTORIZADAS = (
-    SILVER_ORIGINAL,
-    SILVER_VERSIONES,
-)
+RUTA_REGISTRO = RUTA_REGISTRO_ORIGINAL
 
 PATRON_IDENTIFICADOR = re.compile(
     r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}"

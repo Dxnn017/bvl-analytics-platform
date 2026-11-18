@@ -23,6 +23,19 @@ import shutil
 import sys
 
 from pathlib import Path
+
+if __package__:
+
+    from .storage_config import (
+        RAIZ_CANDIDATAS,
+    )
+
+else:
+
+    from storage_config import (
+        RAIZ_CANDIDATAS,
+    )
+
 from datetime import date, datetime, timezone
 
 from pyspark.sql import functions as F
@@ -95,10 +108,6 @@ from build_impacto_hechos_valor import (
 # ============================================================
 
 VERSION_EJECUTOR = "0.1"
-
-RAIZ_CANDIDATAS = (
-    RAIZ_PRUEBAS / "gold_candidatas"
-)
 
 CLAVE_MERCADO = [
     "nemonico",

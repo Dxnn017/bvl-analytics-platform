@@ -27,6 +27,28 @@ import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 
+if __package__:
+
+    from .storage_config import (
+        DIRECTORIO_ENTREGAS,
+        DIRECTORIO_PRUEBAS,
+        RAIZ_REPORTES,
+        SILVER_ORIGINAL,
+        GOLD_HISTORICO,
+        RUTA_REGISTRO_INTEGRACION,
+    )
+
+else:
+
+    from storage_config import (
+        DIRECTORIO_ENTREGAS,
+        DIRECTORIO_PRUEBAS,
+        RAIZ_REPORTES,
+        SILVER_ORIGINAL,
+        GOLD_HISTORICO,
+        RUTA_REGISTRO_INTEGRACION,
+    )
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
@@ -60,34 +82,11 @@ else:
 
 VERSION_RESOLVEDOR = "0.1"
 
-RAIZ_ENTREGAS = (
-    Path.home() / "bvl_entregas"
-)
+RAIZ_ENTREGAS = DIRECTORIO_ENTREGAS
 
-RAIZ_PRUEBAS = (
-    RAIZ_ENTREGAS
-    / "incremental_pruebas_20261114"
-)
+RAIZ_PRUEBAS = DIRECTORIO_PRUEBAS
 
-RAIZ_REPORTES = (
-    RAIZ_PRUEBAS / "reportes"
-)
-
-SILVER_ORIGINAL = (
-    RAIZ_ENTREGAS
-    / "silver_20261109/silver"
-)
-
-GOLD_HISTORICO = (
-    RAIZ_ENTREGAS
-    / "gold_staging_20261114"
-)
-
-RUTA_REGISTRO = (
-    RAIZ_PRUEBAS
-    / "control"
-    / "registro_versiones_silver_integracion.json"
-)
+RUTA_REGISTRO = RUTA_REGISTRO_INTEGRACION
 
 PRODUCTOS_GOLD = {
 
