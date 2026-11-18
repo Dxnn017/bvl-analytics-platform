@@ -327,7 +327,8 @@ def validar_uri_local(uri):
     )
 
     exigir(
-        Path(ruta).as_uri() == uri,
+
+        Path(ruta).as_uri().replace("%3D", "=") == uri,
         "La URI local no es canonica.",
     )
 
@@ -412,9 +413,8 @@ def uri_local(ruta):
     )
 
     return validar_uri_local(
-        ruta.as_uri()
+        ruta.as_uri().replace("%3D", "=")
     )
-
 
 def unir_uri(raiz, *componentes):
 
