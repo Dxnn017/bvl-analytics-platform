@@ -1,0 +1,3 @@
+# Dependencias para el futuro entorno de Ingestion GCS.
+# No habilita transferencias ni reservas.
+google-cloud-storage==3.17.2

@@ -8,6 +8,8 @@ import tempfile
 from pathlib import Path
 from urllib.parse import urlsplit
 
+TRANSFERENCIAS_HABILITADAS = False
+
 BUCKET = "bvl26-bronze-7f3a9c"
 IDENTIDAD = (
     "sa-bvl-ingestion@bvl-analytics-2026.iam.gserviceaccount.com"
@@ -104,6 +106,11 @@ def transferir_archivo(op, cliente_gcs):
 
     No crea reservas ni publica Bronze oficial.
     """
+    if not TRANSFERENCIAS_HABILITADAS:
+        raise PermissionError(
+            "BLOQUEADO|PASO_101_7|QUALITY_NO_AUTORIZO"
+        )
+
     from google.api_core.exceptions import PreconditionFailed, NotFound
 
     objeto = validar_operacion(op)
