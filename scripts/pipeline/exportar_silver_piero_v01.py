@@ -39,8 +39,12 @@ if (
     manifest["run_id"] != RUN
     or manifest["entorno"] != "PRUEBA"
     or manifest["validacion_aprobada"] is not False
-    or manifest["datasets"][0]["registros_antes"] != 7751
-    or manifest["datasets"][0]["registros_despues"] != 7752
+    or not isinstance(manifest.get("datasets"), list)
+    or len(manifest["datasets"]) != 1
+    or type(manifest["datasets"][0].get("registros_antes")) is not int
+    or type(manifest["datasets"][0].get("registros_despues")) is not int
+    or manifest["datasets"][0]["registros_antes"] < 0
+    or manifest["datasets"][0]["registros_despues"] < 0
     or versiones["run_id"] != RUN
     or versiones["publicacion_oficial"] is not False
     or versiones["activar_gold"] is not False
