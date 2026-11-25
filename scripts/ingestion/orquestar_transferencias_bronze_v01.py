@@ -77,7 +77,7 @@ def seleccionar_lote(plan_bytes, alcance, piloto=None, evidencia_hdfs=None):
     }
 
 
-def validar_recibo(op, recibo):
+def validar_recibo(op, recibo, contexto=None):
     """Valida recibos del nucleo, no solo su estado nominal."""
     exigir(isinstance(recibo, dict), 'RECIBO_TIPO')
     campos = {
@@ -96,6 +96,19 @@ def validar_recibo(op, recibo):
            'RECIBO_ESTADO')
     exigir(type(recibo.get('generacion_gcs')) is int and
            recibo['generacion_gcs'] > 0, 'RECIBO_GENERACION')
+    if contexto is not None:
+        # Solo cotejo de trazabilidad: NO autentica a Quality ni el release.
+        _, referencias = nucleo.validar_trazabilidad(op, contexto)
+        adicionales = {
+            'plan_sha256': contexto['plan_sha256'],
+            'quality_release_id': contexto['release_id'],
+            'alcance': contexto['alcance'],
+            'reserva': referencias['reservation'],
+            'aprobacion': referencias['approval'],
+        }
+        for campo, esperado in adicionales.items():
+            exigir(recibo.get(campo) == esperado,
+                   'RECIBO_TRAZABILIDAD:' + campo)
     return dict(recibo)
 
 
@@ -106,13 +119,13 @@ def registrar_evento(archivo_abierto, evento):
     os.fsync(archivo_abierto.fileno())
 
 
-def transferir_mediante_nucleo(op, cliente_gcs):
+def transferir_mediante_nucleo(op, cliente_gcs, contexto=None):
     """Adaptador al nucleo real, tambien bloqueado por Paso 101.7.
 
     NUNCA invocado por el CLI ni por el ensayo local. Solo podra utilizarse
     desde un futuro gateway de Quality debidamente autenticado.
     """
-    return nucleo.transferir_archivo(op, cliente_gcs)
+    return nucleo.transferir_archivo(op, cliente_gcs, contexto=contexto)
 
 
 def es_error_transitorio(exc):
