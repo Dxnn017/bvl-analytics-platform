@@ -1,0 +1,115 @@
+{
+  "batch_identity_sha256": "e4a3fb69f25ee87a26e71a40506017c199d43cd13735bef3330462c906205a2c",
+  "batch_type": "INICIAL",
+  "canonicalization": "JSON UTF-8, ensure_ascii=False, sort_keys=True, separators=(comma,colon)",
+  "dataset_count": 12,
+  "datasets": [
+    {
+      "dataset": "bcrp/embig",
+      "expected_file_count": 1,
+      "expected_size_bytes": 89858,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_bcrp_embig.json",
+      "manifest_sha256": "e310a333f5bbf8d6de108da94263c7dff0ba8b4f0e5b6112c372b84474c320ba"
+    },
+    {
+      "dataset": "bcrp/tipo_cambio",
+      "expected_file_count": 1,
+      "expected_size_bytes": 154221,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_bcrp_tipo_cambio.json",
+      "manifest_sha256": "cb28bf348de917a74101670ce790d86df5c8e7bf014ebab1ff4e31794b572112"
+    },
+    {
+      "dataset": "smv/cambios_patrimonio",
+      "expected_file_count": 1,
+      "expected_size_bytes": 160953,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_cambios_patrimonio.json",
+      "manifest_sha256": "0b1e310a43750ddb093b8e7e70ee852ee001ffe1bed1a2e7da7f3b46b7960e91"
+    },
+    {
+      "dataset": "smv/cotizaciones",
+      "expected_file_count": 60,
+      "expected_size_bytes": 37360244,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_cotizaciones.json",
+      "manifest_sha256": "b8ef34d4b2ece3741cf62f4361b88d8006b76e5bdb67b938c034e0eae77aca69"
+    },
+    {
+      "dataset": "smv/estado_resultados",
+      "expected_file_count": 1,
+      "expected_size_bytes": 5686254,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_estado_resultados.json",
+      "manifest_sha256": "ac8419f5ad60e25d518d1d23f35c1644053dee471b5ae7f9eaa8773c4776d40d"
+    },
+    {
+      "dataset": "smv/flujo_efectivo",
+      "expected_file_count": 1,
+      "expected_size_bytes": 7890131,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_flujo_efectivo.json",
+      "manifest_sha256": "1ea6cb3c680d16bb829c14c1aa6f847e496a061c1e4ed4bff9c46c305855f42f"
+    },
+    {
+      "dataset": "smv/hechos_importancia",
+      "expected_file_count": 1979,
+      "expected_size_bytes": 322432612,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_hechos_importancia.json",
+      "manifest_sha256": "dff3070180412165abf3daa99ddd41d4a0813a27de2d0c97233941f841dbc0d2"
+    },
+    {
+      "dataset": "smv/hechos_valores_consulta",
+      "expected_file_count": 23,
+      "expected_size_bytes": 19917,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_hechos_valores_consulta.json",
+      "manifest_sha256": "667d0f4bb400551659864fe1e2294f47a80234713f90258823571cddb02756d1"
+    },
+    {
+      "dataset": "smv/montos_sab",
+      "expected_file_count": 1221,
+      "expected_size_bytes": 7227879,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_montos_sab.json",
+      "manifest_sha256": "5562d7d2f0e526a744f5f83a6b67037a6766ec560b31bb4507437955dab73b3b"
+    },
+    {
+      "dataset": "smv/principales_cuentas",
+      "expected_file_count": 20,
+      "expected_size_bytes": 2750808,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_principales_cuentas.json",
+      "manifest_sha256": "3b7aa1bb9cd5284415acebc302d1529be968e317c63e0ea8d9ccbe6ce1ecc03c"
+    },
+    {
+      "dataset": "smv/situacion_financiera",
+      "expected_file_count": 1,
+      "expected_size_bytes": 8569828,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_situacion_financiera.json",
+      "manifest_sha256": "c4a40fcfa395136052aaad2d0cd816fdb21888cd05ad520bcd5cf66b452b51e3"
+    },
+    {
+      "dataset": "smv/valores_inscritos",
+      "expected_file_count": 290,
+      "expected_size_bytes": 1280935,
+      "manifest_file": "BVL_MANIFESTS_BRONZE_10352/manifest_bronze_smv_valores_inscritos.json",
+      "manifest_sha256": "8cb92ff026b8f31c897f32d759154b231a1f179d61445acacd68f81112cb25bb"
+    }
+  ],
+  "file_count": 3599,
+  "inventory_file": "BVL_BRONZE_SHA256_VERIFICADOS.csv",
+  "inventory_sha256": "a9cf30aa23db967cf592957eb5e77502baeed91f4b24ec0bb6a9308fc78d0d43",
+  "pilot": {
+    "file_count": 12,
+    "operational_approval": false,
+    "total_size_bytes": 23052390
+  },
+  "publication_status": "NO_PUBLICADO",
+  "record_type": "BRONZE_RUN_RESERVATION",
+  "record_validation": "REGISTRO_RESERVA_OPERATIVO",
+  "reservation_context": {
+    "authorized_by": "fixture de prueba offline",
+    "created_at_utc": "2026-11-25T00:00:00Z",
+    "identity_to_write": "sa-bvl-quality@bvl-analytics-2026.iam.gserviceaccount.com",
+    "write_condition": "if_generation_match=0"
+  },
+  "reservation_status": "RESERVADO",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "schema_version": "1.0-proposed-329A",
+  "status": "CANDIDATO",
+  "total_size_bytes": 393623640,
+  "validation_approved": false
+}

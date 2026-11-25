@@ -1,0 +1,27 @@
+{
+  "schema_version": "329C-proposal-2026-11-25",
+  "record_type": "BRONZE_QUALITY_APPROVAL_DRAFT",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "scope": "PILOT_12",
+  "batch_identity_sha256": "e4a3fb69f25ee87a26e71a40506017c199d43cd13735bef3330462c906205a2c",
+  "reservation_ref": {
+    "uri": "gs://bvl26-control-7f3a9c/reservations/bronze/bvl-bronze-inicial-20261125-001.json",
+    "generation": "1795640338029794",
+    "sha256": "80cb92939b975659d32514fff3a64a30e02148434222f1391b1afd675913c232"
+  },
+  "plan_sha256": "1397f92911b159e8df257fc82a7dd01593fce0d2e898e796a82efc77ae35d90e",
+  "pilot_sha256": "82f384ab19231d89b4f4487ab7424eb24250943b4bdd40c85e88e8e08b5d16b7",
+  "selected_destinations_sha256": "acf864e31fc403faec3bf67ba13555474e4fa185c3475763781ca88fb0b1d923",
+  "selected_files": 12,
+  "selected_bytes": 23052390,
+  "accepted_exceptions": [
+    "EXCEPCION_SEMANTICA_0C",
+    "EXCEPCION_RESPUESTA_ERROR_SMV"
+  ],
+  "preflight_hdfs_reported": "PASS_12_OF_12",
+  "approval_state": "PENDING_AUTHENTICATED_QUALITY_ISSUANCE",
+  "verified_writer_identity": false,
+  "transfer_allowed": false,
+  "draft_only": true,
+  "warning": "NO_PUBLICAR; NO ES QUALITY_APPROVED OPERATIVO"
+}

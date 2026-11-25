@@ -1,0 +1,39 @@
+{
+  "config_type": "REVISION_CODIGO_NO_OPERATIVA",
+  "project_id": "bvl-analytics-2026",
+  "region": "southamerica-west1",
+  "run_id_oficial_declarado_por_quality": "bvl-bronze-inicial-20261125-001",
+  "run_id_de_plan_anterior": "bvl-bronze-inicial-20261124-001",
+  "bronze_bucket": "bvl26-bronze-7f3a9c",
+  "control_bucket": "bvl26-control-7f3a9c",
+  "ingestion_service_account": "sa-bvl-ingestion@bvl-analytics-2026.iam.gserviceaccount.com",
+  "quality_service_account": "sa-bvl-quality@bvl-analytics-2026.iam.gserviceaccount.com",
+  "authentication_mode_expected": "IMPERSONATION_SIN_JSON_KEYS_PENDIENTE_DE_VALIDACION_OPERATIVA",
+  "reservation_uri": "gs://bvl26-control-7f3a9c/reservations/bronze/bvl-bronze-inicial-20261125-001.json",
+  "approval_uri": "gs://bvl26-control-7f3a9c/approvals/bronze/bvl-bronze-inicial-20261125-001.json",
+  "target_base_prefix": "gs://bvl26-bronze-7f3a9c/landing/",
+  "target_path_template_descriptiva": "gs://bvl26-bronze-7f3a9c/landing/{source}/{dataset}/run_id={run_id}/{manifest_relative_path}",
+  "routing_authority": "12_MANIFESTS_ORIGINALES_APROBADOS",
+  "pilot": {
+    "expected_files": 12,
+    "expected_bytes": 23052390,
+    "status": "EVIDENCIA_LOCAL_PLAN_20261124_PENDIENTE_VINCULACION_OFICIAL"
+  },
+  "full": {
+    "expected_datasets": 12,
+    "expected_files": 3599,
+    "expected_bytes": 393623640
+  },
+  "upload_creation_precondition": {
+    "if_generation_match": 0
+  },
+  "reservation_generation": null,
+  "reservation_sha256": null,
+  "approval_generation": null,
+  "approval_sha256": null,
+  "release_id": null,
+  "quality_release_verified": false,
+  "transfer_allowed": false,
+  "cloud_operations_authorized": false,
+  "note": "No aporta credenciales ni habilita operaciones. Los hashes, generaciones y release deben provenir del canal autenticado de Quality; no inventar ni completar manualmente."
+}

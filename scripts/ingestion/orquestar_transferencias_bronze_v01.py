@@ -197,6 +197,19 @@ def _procesar_ensayo_con_inyeccion(lote, transferidor_falso, journal, reintentos
     }
 
 
+
+def revisar_quality_329c_desde_coordinador_local(plan_bytes, piloto_bytes, borrador_bytes):
+    """Unico acoplamiento Quality 329C -> coordinador; SIN Cloud ni despacho.
+
+    La salida es exclusivamente de auditoria local: transfer_allowed=False.
+    """
+    from puerta_quality_bronze_v01 import auditar_integracion_quality_329c_local
+    informe = auditar_integracion_quality_329c_local(
+        plan_bytes, piloto_bytes, borrador_bytes)
+    exigir(informe['transfer_allowed'] is False and informe['operaciones_gcs'] == 0,
+           'QUALITY_NO_PUEDE_ABRIR_GATE_OFFLINE')
+    return informe
+
 def ejecutar_operativo(*_args, **_kwargs):
     """Barreras definitivas: no se acepta habilitacion por argumento ni JSON.
 
