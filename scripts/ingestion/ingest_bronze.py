@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+import argparse
 import hashlib
+import re
 import json
 import subprocess
 import sys
@@ -380,7 +382,24 @@ def main():
 
     now = datetime.now()
 
-    run_id = now.strftime("RUN_%Y%m%d_%H%M%S")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--run-id", required=True)
+    args = parser.parse_args()
+
+    match = re.fullmatch(
+        r"bvl-bronze-inicial-(\d{8})-(\d{3})",
+        args.run_id
+    )
+
+    if not match:
+        parser.error("run_id no cumple la convencion aprobada")
+
+    try:
+        datetime.strptime(match.group(1), "%Y%m%d")
+    except ValueError:
+        parser.error("Fecha invalida en run_id")
+
+    run_id = args.run_id
     ingestion_date = now.strftime("%Y-%m-%d")
 
     print("=" * 65)

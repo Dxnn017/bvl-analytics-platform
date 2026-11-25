@@ -33,10 +33,12 @@ class TestRutasBVL(unittest.TestCase):
             rutas_bvl.ruta("desconocida")
 
     def test_gcs_sin_configurar(self):
-        with self.assertRaises(ValueError):
-            rutas_bvl.ruta(
-                "silver", entorno="gcs"
-            )
+        cfg = rutas_bvl.cargar()
+        cfg["gcs"]["silver"] = None
+
+        with patch.object(rutas_bvl, "cargar", return_value=cfg):
+            with self.assertRaises(ValueError):
+                rutas_bvl.ruta("silver", entorno="gcs")
 
     def test_gcs_simulado(self):
         cfg = rutas_bvl.cargar()

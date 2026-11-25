@@ -15,6 +15,7 @@ sys.path.insert(
     0, str(Path(__file__).resolve().parents[2])
 )
 from scripts.pipeline.rutas_bvl import ruta
+from scripts.pipeline.registro_silver_bvl import obtener_registro_vigente_gcs
 
 CONFIG = {
     "tipo_cambio": {
@@ -91,7 +92,24 @@ raiz_staging = ruta(
     "staging", entorno=a.entorno
 )
 
-current = a.current or cfg["silver"]
+if a.entorno == "gcs":
+    if a.current:
+        p.error("GCS no permite --current manual; se usa Quality")
+
+    try:
+        current, generacion_registro = obtener_registro_vigente_gcs(
+            rel_silver
+        )
+    except Exception as error:
+        p.error(f"No se pudo validar current.json: {error}")
+
+    print(
+        f"REGISTRO_SILVER_GENERACION|{generacion_registro}",
+        flush=True
+    )
+else:
+    current = a.current or cfg["silver"]
+
 
 if not (
     a.bronze.rstrip("/") == cfg["bronze_root"].rstrip("/")
@@ -380,11 +398,18 @@ try:
             + uuid4().hex[:6]
         )
 
-        staging = (
-            f"{raiz_staging.rstrip('/')}/"
-            f"bcrp_{a.dataset}_incremental/"
-            f"run_{run}"
-        )
+        if a.entorno == "gcs":
+            staging = ruta(
+                "staging",
+                f"{rel_silver}/run_id={run}",
+                entorno="gcs"
+            )
+        else:
+            staging = (
+                f"{raiz_staging.rstrip('/')}/"
+                f"bcrp_{a.dataset}_incremental/"
+                f"run_{run}"
+            )
 
         particiones = (
             nuevos_df
@@ -494,6 +519,75 @@ try:
             ),
             encoding="utf-8"
         )
+
+        # Manifest candidato: no autoriza publicar Silver ni ejecutar Gold.
+        claves_nuevas = [
+            {
+                "operacion": "INSERT",
+                "clave_anterior": None,
+                "clave_nueva": {"fecha": fila["fecha"].isoformat()}
+            }
+            for fila in nuevos_df.select("fecha").orderBy("fecha").collect()
+        ]
+
+        candidato = {
+            "version_manifest": "0.1",
+            "entorno": "PRUEBA",
+            "run_id": run,
+            "estado": "SILVER_CANDIDATO",
+            "fecha_publicacion": None,
+            "tipo_publicacion": "INCREMENTAL",
+            "validacion_aprobada": False,
+            "ruta_staging": staging,
+            "datasets": [{
+                "dataset": a.dataset,
+                "ruta_silver": None,
+                "version_esquema": None,
+                "version_anterior": None,
+                "version_publicada": None,
+                "clave": ["fecha"],
+                "particiones_afectadas": [
+                    {"anio": p["anio"], "mes": p["mes"]}
+                    for p in manifest["particiones"]
+                ],
+                "claves_afectadas": claves_nuevas,
+                "ruta_detalle_cambios": None,
+                "registros_nuevos": nuevos,
+                "registros_corregidos": 0,
+                "registros_eliminados": 0,
+                "registros_antes": silver_total,
+                "registros_despues": silver_total + nuevos,
+                "autorizacion_eliminaciones": False
+            }]
+        }
+
+        candidato_path = (
+            out / f"candidato_silver_{a.dataset}_{run}.json"
+        )
+
+        candidato_path.write_text(
+            json.dumps(candidato, ensure_ascii=False, indent=2),
+            encoding="utf-8"
+        )
+
+        print(
+            f"CANDIDATO_SILVER_LOCAL|{candidato_path}",
+            flush=True
+        )
+
+        # Ruta de entrega futura. No realiza cargas a GCS.
+        if a.entorno == "gcs":
+            destino_candidato = ruta(
+                "control",
+                f"manifests/silver/candidates/{rel_silver}/run_id={run}.json",
+                entorno="gcs"
+            )
+
+            print(
+                f"CANDIDATO_GCS_PENDIENTE|{destino_candidato}",
+                flush=True
+            )
+
 
         print(
             f"STAGING_VALIDADO|{staging}",

@@ -25,7 +25,7 @@ if (
 dependencias = {
     "tipo_cambio": [
         ("mercado_valor_diario", "DIRECTA"),
-        ("empresa_trimestre", "INDIRECTA")
+        ("impacto_hechos_valor", "INDIRECTA")
     ],
     "embig": [
         ("mercado_valor_diario", "DIRECTA"),
