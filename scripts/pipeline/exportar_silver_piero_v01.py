@@ -6,7 +6,22 @@ import subprocess
 import tarfile
 from pathlib import Path
 
-RUN = "20261116T003053Z_78127719"
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--run-id", required=True)
+args = parser.parse_args()
+
+RUN = args.run_id
+
+if not (
+    1 <= len(RUN) <= 96
+    and RUN.isascii()
+    and RUN[0].isalnum()
+    and all(c.isalnum() or c in "_-" for c in RUN)
+):
+    parser.error("run_id contiene caracteres no permitidos")
+
 
 ROOT = Path("outputs/quality/incremental")
 OUT = Path("entregas") / f"piero_silver_{RUN}"
