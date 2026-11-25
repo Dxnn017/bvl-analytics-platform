@@ -1,0 +1,58 @@
+{
+  "authorization_policy": {
+    "execution_authorization": "REQUIRED_INDEPENDENT",
+    "full_batch_authorized": false,
+    "human_approval": "REQUIRED_EXTERNAL_AUTHENTICATED_EXACT_PAYLOAD_SHA256",
+    "scope": "QUALITY_ONLY_PILOT_12",
+    "transfer_allowed": "REQUIRED_INDEPENDENT"
+  },
+  "document_type": "QUALITY_APPROVED",
+  "issuer": "sa-bvl-quality@bvl-analytics-2026.iam.gserviceaccount.com",
+  "preflight_evidence": {
+    "archive_sha256": "36a74b1b33849668246e266faf48128a55a860021ab6deef30c2114457d76503",
+    "independent_hdfs_verification": false,
+    "issuer_authentication_verified": false,
+    "reported_fail_count": 0,
+    "reported_gcp_operations": 0,
+    "reported_gcs_transfers": 0,
+    "reported_pass_count": 12,
+    "reported_result": "HDFS_PREFLIGHT_PASS",
+    "reports_sha256": {
+      "resumen_preflight.txt": "98492cc5d5de01e561b41216e657db5e98aa9de39efbbdd03d42a87098b9c16d",
+      "salida_preflight_hdfs.txt": "3080b8d0cc0924b06762b4dd51e7b020cb44224716329bd233db6a8494896222"
+    },
+    "sum_reported_bytes": 23052390
+  },
+  "project_id": "bvl-analytics-2026",
+  "reservation": {
+    "business_status": "CANDIDATO",
+    "generation": "1795640338029794",
+    "reservation_status": "RESERVADO",
+    "sha256": "80cb92939b975659d32514fff3a64a30e02148434222f1391b1afd675913c232",
+    "uri": "gs://bvl26-control-7f3a9c/reservations/bronze/bvl-bronze-inicial-20261125-001.json"
+  },
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "schema_version": "329C-PROPUESTA-PAYLOAD-1",
+  "scope": {
+    "batch_identity_sha256": "e4a3fb69f25ee87a26e71a40506017c199d43cd13735bef3330462c906205a2c",
+    "canonical_destination_list_sha256": "acf864e31fc403faec3bf67ba13555474e4fa185c3475763781ca88fb0b1d923",
+    "destination_prefix": "gs://bvl26-bronze-7f3a9c/landing/",
+    "file_count": 12,
+    "full_plan_sha256": "1397f92911b159e8df257fc82a7dd01593fce0d2e898e796a82efc77ae35d90e",
+    "mode": "PILOTO_12_ARCHIVOS",
+    "pilot_json_sha256": "82f384ab19231d89b4f4487ab7424eb24250943b4bdd40c85e88e8e08b5d16b7",
+    "total_bytes": 23052390,
+    "unique_destination_count": 12
+  },
+  "semantic_exceptions": {
+    "policy": "Conservar bytes y hashes sin reinterpretar como datos de negocio válidos",
+    "smv_error_xml_count": 2,
+    "txt_0c_count": 88
+  },
+  "signature": {
+    "algorithm": "EC_SIGN_P256_SHA256",
+    "format": "detached",
+    "kms_key_version": "projects/bvl-analytics-2026/locations/southamerica-west1/keyRings/bvl-bronze-release-329c/cryptoKeys/quality-approved-signer/cryptoKeyVersions/1"
+  },
+  "status": "QUALITY_APPROVED"
+}

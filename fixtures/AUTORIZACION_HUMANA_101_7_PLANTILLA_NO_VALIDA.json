@@ -1,0 +1,14 @@
+{
+  "schema_version": "329C-HUMAN-APPROVAL-PROPUESTA-1",
+  "approval_id": null,
+  "project_id": "bvl-analytics-2026",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "reservation_generation": "1795640338029794",
+  "document_type": "QUALITY_APPROVED",
+  "action": "AUTHORIZE_QUALITY_SIGN",
+  "payload_sha256": "7a8c98a32e141b6e759755f137948bd33ffe192f696d5fc886334bf61aa6df6f",
+  "decision": "PENDING_NOT_AUTHORIZED",
+  "approver_principal": null,
+  "approved_at": null,
+  "expires_at": null
+}
