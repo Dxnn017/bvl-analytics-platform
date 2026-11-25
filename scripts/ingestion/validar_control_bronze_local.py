@@ -12,7 +12,7 @@ from collections import Counter
 from pathlib import Path
 
 BUCKET = 'gs://bvl26-bronze-7f3a9c/landing/'
-TEMPLATE = BUCKET + '{source}/{dataset}/run_id={run_id}/ingestion_date={ingestion_date}/{filename}'
+TEMPLATE = BUCKET + '{source}/{dataset}/run_id={run_id}/{manifest_relative_path}'
 QUALITY = 'sa-bvl-quality@bvl-analytics-2026.iam.gserviceaccount.com'
 RUN_PATTERN = r'bvl-bronze-inicial-\d{8}-\d{3}'
 HEX = r'[0-9a-f]{64}'
