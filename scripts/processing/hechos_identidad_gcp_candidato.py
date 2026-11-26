@@ -380,28 +380,24 @@ nemonicos_por_ruc = (
 # LEER SEGUNDA VIA DESDE BRONZE HDFS
 # ============================================================
 
-soap_text = (
-    spark.read.text(
-        SOAP_BRONZE
-    )
-    .agg(
-        F.concat_ws(
-            "",
-            F.collect_list(
-                "value"
-            )
-        ).alias(
-            "json_text"
-        )
-    )
-    .first()["json_text"]
+# Leer exactamente los bytes del unico JSON consolidado.
+# La integridad debe verificarse previamente contra el manifest autorizado.
+archivos_json = (
+    spark.read.format("binaryFile")
+    .load(SOAP_BRONZE)
+    .select("content")
+    .collect()
 )
 
+if len(archivos_json) != 1:
+    raise RuntimeError("Se requiere exactamente un JSON consolidado")
 
 soap_data = json.loads(
-    soap_text
+    bytes(archivos_json[0]["content"]).decode("utf-8")
 )
 
+if not isinstance(soap_data, list):
+    raise RuntimeError("El JSON consolidado debe contener un arreglo")
 
 soap_rows = []
 
