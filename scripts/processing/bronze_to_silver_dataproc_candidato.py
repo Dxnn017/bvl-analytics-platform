@@ -137,7 +137,9 @@ def normalize_bcrp_date(column):
 
     day = F.substring(c, 1, 2)
     month_text = F.substring(c, 3, 3)
-    year_2 = F.substring(c, 6, 2).cast("int")
+    # Evitar CAST ANSI sobre anios malformados (p.ej. 'xxEneAB').
+    token_year = F.substring(c, 6, 2)
+    year_2 = F.when(token_year.rlike(r"^[0-9]{2}$"), token_year.cast("int"))
 
     month_number = None
 
@@ -172,7 +174,9 @@ def normalize_bcrp_date(column):
         day
     )
 
-    return F.to_date(normalized, "yyyy-MM-dd")
+    # TRY_TO_TIMESTAMP devuelve NULL aun con spark.sql.ansi.enabled=true.
+    # Un 31Feb97, 32Ene97 o mes desconocido NO debe abortar el batch.
+    return F.try_to_timestamp(normalized, F.lit("yyyy-MM-dd")).cast("date")
 
 def write_silver(df, path, partitions=None):
     """
@@ -313,7 +317,11 @@ def transform_tipo_cambio_bcrp(raw_df):
         raise ValueError("BCRP tipo_cambio: columnas requeridas ausentes")
 
     before = raw_df.count()
-    records = raw_df.filter(F.col("_c0").isNotNull())
+    # csv.reader representa los campos vacios como "", Spark CSV puede
+    # representarlos como NULL. Ambos casos descriptivos deben contar igual.
+    records = raw_df.filter(
+        F.col("_c0").isNotNull() & (F.trim(F.col("_c0")) != "")
+    )
     descriptive = before - records.count()
 
     raw = (

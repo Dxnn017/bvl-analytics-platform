@@ -151,7 +151,7 @@ def upload_partitioned_candidate(client, prefix: str, groups: dict, pa, pq):
     return output
 
 
-def encode_candidate_manifest(run_id, attempt_id, fingerprint, source, output, metrics, commit):
+def encode_candidate_manifest(run_id, attempt_id, fingerprint, source, output, metrics, commit, *, launch_evidence=None):
     require(isinstance(output, list) and output,
             "No hay archivos Silver staging")
     doc = {
@@ -165,6 +165,7 @@ def encode_candidate_manifest(run_id, attempt_id, fingerprint, source, output, m
         "dataset": BRONZE_DATASET,
         "product": SILVER_PRODUCT,
         "processor_commit": commit,
+        "launch_evidence": launch_evidence,
         "source_bronze": source,
         "records": metrics,
         "files_count": len(output),

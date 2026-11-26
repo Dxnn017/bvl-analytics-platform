@@ -35,7 +35,10 @@ def parser():
     ap.add_argument("--contract", type=Path)
     ap.add_argument("--quality-public-pem", type=Path)
     ap.add_argument("--trusted-refs", type=Path, help="Referencias independientes entregadas por Quality")
-    ap.add_argument("--processor-commit", help="Nuevo commit del procesador F6 ratificado por Quality")
+    ap.add_argument("--processor-commit", help="Commit completo, vinculado a firma de Quality")
+    ap.add_argument("--launch-refs", type=Path, help="Referencias externas del lanzamiento firmadas por Quality")
+    ap.add_argument("--attempt-id", help="Intento ratificado por Quality, nunca creado por Spark")
+    ap.add_argument("--batch-id", help="Batch Dataproc fijado por contexto Quality")
     return ap
 
 
@@ -50,7 +53,8 @@ def main():
         return
     if not args.ack_supervised:
         raise SystemExit("BLOQUEADO: falta confirmacion de lanzamiento supervisado")
-    if not all((args.contract, args.quality_public_pem, args.trusted_refs)):
+    if not all((args.contract, args.quality_public_pem, args.trusted_refs,
+                args.launch_refs, args.attempt_id, args.batch_id)):
         raise SystemExit("BLOQUEADO: faltan referencias y contrato Quality")
     if (not isinstance(args.processor_commit, str) or len(args.processor_commit) != 40 or
             any(c not in "0123456789abcdef" for c in args.processor_commit) or
@@ -66,16 +70,43 @@ def main():
     import adaptador_gcs_silver_v1 as gcs
     import puerta_silver_operativa_v1_candidata as gate
     import puerta_silver_v1_candidata as core
+    import bronze_to_silver_dataproc_candidato as processor
     from bronze_to_silver_dataproc_candidato import transform_tipo_cambio_bcrp
+    import fase6_contexto_lanzamiento as launch
 
     contract_raw = args.contract.read_bytes()
     pem = args.quality_public_pem.read_bytes()
     refs = json.loads(args.trusted_refs.read_text(encoding="utf-8"))
     client = storage.Client(project="bvl-analytics-2026")
 
-    # Comprobacion de firmas, generaciones, hashes, identidad efectiva y
+    # Paso F6 adicional, firmado por Quality: codigo, commit, archivos exactos,
+    # intento, entorno y batch. No sustituye la autorizacion F5.
+    launch_refs = json.loads(args.launch_refs.read_text(encoding="utf-8"))
+    context, launch_sha = launch.verify_signed_launch(
+        client, launch_refs, pem,
+        expected_run="bvl-bronze-inicial-20261125-001",
+        expected_attempt=args.attempt_id,
+    )
+    runtime = launch.verify_runtime_libs()  # Python, Spark, Arrow, GCS y Snappy
+    loaded_zip = launch.verify_runtime_artifacts(
+        context, __file__, (piloto, launch, processor, gcs, gate, core))
+    # Verificacion independiente de generaciones RELEASE que Quality firmo.
+    dep_bucket = "bvl26-dataproc-staging-7f3a9c"
+    for which in ("entrypoint", "dependencies"):
+        release_bytes = gcs.read_exact_current_bytes(
+            client, context[which + "_uri"], context[which + "_generation"],
+            context[which + "_sha256"], allowed_bucket=dep_bucket,
+        )
+        expected = Path(__file__).read_bytes() if which == "entrypoint" else Path(loaded_zip).read_bytes()
+        piloto.require(release_bytes == expected,
+                       "Artefacto runtime difiere de release fijado por Quality")
+
+    # Comprobacion F5: firmas, generaciones, hashes, identidad efectiva y
     # archivos Bronze oficiales. Solo lectura y SIN reclamo.
     plan = gate.check_gcs_signed_bundle(client, refs, pem, contract_raw)
+    launch.bind_launch_to_plan(
+        context, plan, processor_commit=args.processor_commit,
+        batch_id=args.batch_id)
     auth = plan.authorization
     prefix = piloto.stage_prefix_from_authorization(auth)
     contract = gate.check_base(contract_raw)
@@ -124,6 +155,13 @@ def main():
              "manifest_uri": ds["bronze_manifest_uri"],
              "manifest_generation": str(ds["bronze_manifest_generation"])},
             files, metrics, args.processor_commit,
+            launch_evidence={
+                "signed_context_sha256": launch_sha,
+                "entrypoint_sha256": context["entrypoint_sha256"],
+                "dependencies_sha256": context["dependencies_sha256"],
+                "runtime": runtime,
+                "batch_id": args.batch_id,
+            },
         )
         report = piloto.upload_create_only(
             client, prefix + "_quality/manifest_candidate.json", candidate,

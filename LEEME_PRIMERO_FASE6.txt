@@ -1,0 +1,12 @@
+BVL FASE6 — SEGUNDA REVISION QUALITY (PILOTO TIPO DE CAMBIO)
+
+1) Guardar este ZIP en ~/Descargas (navegador de Debian).
+2) NO ejecutar Dataproc ni cambiar Fase 5; NO hacer push hasta comprobar pruebas.
+3) Este ZIP sobrescribe solo los tres scripts F6 previos y la transformacion
+   bronze_to_silver_dataproc_candidato.py. Agrega dos scripts F6 y pruebas.
+4) Ejecutar las pruebas locales segun las instrucciones del chat, sin set -e
+   en la terminal principal; usar bash <<'BASH' ... BASH.
+5) NO incluye credenciales, autorizaciones ni firmas.
+6) El paquete real de ejecucion se generara DESPUES del commit nuevo desde Git
+   con fase6_preparar_release.py y se dejara en Descargas.
+7) Revisar docs/PROPUESTA_LANZAMIENTO_FASE6.md. El comando cloud es SOLO propuesta.
