@@ -1,4 +1,6 @@
 import importlib.util
+import hashlib
+import json
 import pathlib
 import sys
 import threading
@@ -16,7 +18,76 @@ class TestE7Semantics(unittest.TestCase):
         self.marker=m.claim_name(m.semantic_sha256(self.intent))
         self.files=[f'archivo_{i:02}' for i in range(12)]
     def test_core_scope_12(self):
-        self.assertEqual(self.intent['action'],'INGEST_PILOT_12')
+        self.assertEqual(self.intent['operation_type'],'BRONZE_PILOT_TRANSFER')
+    def test_canonical_exact_494_bytes_and_quality_fingerprint(self):
+        raw=m.semantic_canonical_bytes(self.intent)
+        self.assertEqual(len(self.intent),8)
+        self.assertEqual(set(self.intent),{
+            'schema_version','project_id','run_id','operation_type',
+            'reservation_generation','reservation_sha256','pilot_json_sha256',
+            'canonical_destination_list_sha256'})
+        self.assertEqual(len(raw),494)
+        self.assertNotIn(b'\n',raw)
+        self.assertEqual(raw,json.dumps(self.intent,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode('utf-8'))
+        self.assertTrue(all(type(v) is str for v in self.intent.values()))
+        self.assertEqual(self.intent['reservation_generation'],'1795640338029794')
+        # La huella esperada solo existe como asercion de prueba, NO en el calculador.
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+            '87f93d0d1d84cdc4b346dee64e4c9a3a69f24e53ed94006d2f2fc0b7c6b56382')
+        self.assertEqual(m.semantic_sha256(self.intent),hashlib.sha256(raw).hexdigest())
+
+    def test_real_pilot_fixture_bytes_match_approved_reference(self):
+        pilot=pathlib.Path(__file__).resolve().parents[1]/'fixtures/piloto_12_CANDIDATO_LOCAL.json'
+        self.assertTrue(pilot.is_file(),f'Falta evidencia local del piloto: {pilot}')
+        raw=pilot.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),self.intent['pilot_json_sha256'])
+        content=json.loads(raw)
+        self.assertEqual(content['run_id'],m.RUN_ID)
+        self.assertEqual(content['archivos'],12)
+        self.assertEqual(content['bytes_esperados'],23052390)
+        self.assertFalse(content['quality_approved'])
+        self.assertFalse(content['transfer_allowed'])
+
+    def test_exact_official_claim_path(self):
+        self.assertEqual(self.marker,
+            'authorizations/consumed/bronze/run_id=bvl-bronze-inicial-20261125-001/'
+            '87f93d0d1d84cdc4b346dee64e4c9a3a69f24e53ed94006d2f2fc0b7c6b56382.json')
+        self.assertNotIn('/sem-',self.marker)
+
+    def test_non_string_reservation_generation_rejected(self):
+        with self.assertRaises(m.Blocked):m.pilot_intent(reservation_generation=1795640338029794)
+
+    def test_wrong_layer_rejected_outside_fingerprint(self):
+        with self.assertRaises(m.Blocked):m.pilot_intent(layer='gold')
+
+    def test_wrong_reservation_uri_rejected_outside_fingerprint(self):
+        with self.assertRaises(m.Blocked):m.pilot_intent(reservation_uri='gs://otro/registro')
+
+    def test_modified_operation_and_schema_rejected(self):
+        for k,v in [('schema_version','INVALID'),('operation_type','FULL_TRANSFER')]:
+            intent=self.intent.copy();intent[k]=v
+            with self.subTest(k=k), self.assertRaises(m.Blocked):m.semantic_sha256(intent)
+
+    def test_newline_payload_and_nonstring_rejected(self):
+        intent=self.intent.copy();intent['reservation_generation']=int(intent['reservation_generation'])
+        with self.assertRaises(m.Blocked):m.semantic_sha256(intent)
+        intent=self.intent.copy();intent['extra']='x'
+        with self.assertRaises(m.Blocked):m.semantic_sha256(intent)
+
+    def test_changed_uuid_timestamp_signature_stable_and_claim_collides(self):
+        c=m.OfflineClaims()
+        for uuid,timestamp,signature in [('aaa','2026-11-25','s1'),('bbb','2026-11-26','s2')]:
+            outer={'intent':self.intent,'uuid':uuid,'issued_at':timestamp,'signature':signature}
+            fingerprint=m.semantic_sha256(outer['intent'])
+            marker=m.claim_name(fingerprint)
+            self.assertEqual(marker,self.marker)
+            if uuid=='aaa':c.try_claim(marker)
+            else:
+                with self.assertRaises(m.Blocked):c.try_claim(marker)
+
+    def test_wrong_fingerprint_cannot_claim(self):
+        with self.assertRaises(m.Blocked):m.claim_name('0'*64)
+
     def test_stable_semantic_hash_independent_of_metadata(self):
         # UUID, timestamps and signature aren't keys of the frozen operation intent.
         for uuid in ['aaa','bbb']:
