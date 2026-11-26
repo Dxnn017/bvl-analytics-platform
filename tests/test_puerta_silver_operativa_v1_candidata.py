@@ -7,6 +7,7 @@ import sys
 import unittest
 from datetime import datetime,timezone
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch, Mock
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -24,7 +25,9 @@ if not FIX.is_file():
     raise RuntimeError(f'Contrato no encontrado: {FIX}')
 
 class FakeClaimStore:
-    def __init__(self):self.objects={}
+    def __init__(self, client=None):
+        self.objects={}
+        self.client=client
     def create_exclusive(self, uri,payload):
         if uri in self.objects:raise ValueError('PreconditionFailed 412')
         self.objects[uri]=payload
@@ -191,18 +194,30 @@ class Phase5GateTest(unittest.TestCase):
         with self.assertRaisesRegex(gate.OperationalError,'Version'):
             self.plan()
 
+    def _operational_plan(self, credential_email=None):
+        refs,contents=self._trusted_refs_and_contents()
+        client=Mock()
+        client._credentials=SimpleNamespace(service_account_email=(
+            credential_email or self.contract['consumer']['service_account']))
+        with patch.object(gate.gcs,'read_exact_current_bytes',
+                          side_effect=lambda _client,uri,*a,**k:contents[uri]), \
+             patch.object(gate.gcs,'read_official_manifest',
+                          return_value=(b'{}',[{'uri':'fake'}])), \
+             patch.object(gate.gcs,'verify_official_inputs',return_value=1):
+            plan=gate.check_gcs_signed_bundle(
+                client,refs,self.pem,self.raw_contract,now=self.now)
+        return plan, client
+
     def test_14_claim_atomic_and_no_reuse(self):
-        p=self.plan()
-        store=FakeClaimStore()
-        principal=self.contract['consumer']['service_account']
-        self.assertEqual(gate.consume_once(p,store,effective_principal=principal,now=self.now),999)
-        with self.assertRaises(ValueError):gate.consume_once(p,store,effective_principal=principal,now=self.now)
+        p,client=self._operational_plan()
+        store=FakeClaimStore(client)
+        self.assertEqual(gate.consume_once(p,store,now=self.now),999)
+        with self.assertRaises(ValueError):gate.consume_once(p,store,now=self.now)
         self.assertEqual(len(store.objects),1)
 
     def test_15_wrong_runtime_identity_denied(self):
-        p=self.plan()
-        with self.assertRaisesRegex(gate.OperationalError,'Identidad'):
-            gate.consume_once(p,FakeClaimStore(),effective_principal='attacker',now=self.now)
+        with self.assertRaisesRegex(gate.OperationalError,'Identidad efectiva'):
+            self._operational_plan(credential_email='attacker@example.invalid')
 
     def test_16_new_expiry_same_attempt_same_fingerprint(self):
         old=gate.fingerprint(self.auth)
@@ -235,7 +250,7 @@ class Phase5GateTest(unittest.TestCase):
 
     def test_20_cannot_claim_unverified_object(self):
         with self.assertRaisesRegex(gate.OperationalError,'no verificado'):
-            gate.consume_once({'fake':True},FakeClaimStore(),effective_principal='x',now=self.now)
+            gate.consume_once({'fake':True},FakeClaimStore(),now=self.now)
 
     def test_21_exact_auth_paths_both_modes(self):
         c=self.contract
@@ -311,7 +326,11 @@ class Phase5GateTest(unittest.TestCase):
              patch.object(gate.gcs,'read_official_manifest',return_value=(b'{}',[{'uri':'fake'}])) as manifests, \
              patch.object(gate.gcs,'verify_official_inputs',return_value=1) as inputs, \
              patch.object(gate.gcs.GCSExclusiveClaimStore,'create_exclusive') as claim:
-            result=gate.check_gcs_signed_bundle(Mock(),refs,self.pem,self.raw_contract,now=self.now)
+            client=Mock()
+            client._credentials=SimpleNamespace(
+                service_account_email=self.contract['consumer']['service_account'])
+            result=gate.check_gcs_signed_bundle(client,refs,self.pem,self.raw_contract,now=self.now)
+            self.assertIsInstance(result,gate.GCSVerifiedPlan)
             self.assertEqual(result.authorization['mode'],'SINGLE_SOURCE')
             self.assertEqual(read.call_count,6)
             manifests.assert_called_once(); inputs.assert_called_once();claim.assert_not_called()
@@ -334,5 +353,60 @@ class Phase5GateTest(unittest.TestCase):
             with self.assertRaisesRegex(gate.OperationalError,'incompleto'):
                 gate.check_gcs_signed_bundle(Mock(),{'authorization':{}},self.pem,self.raw_contract,now=self.now)
             rd.assert_not_called()
+
+    def test_30_offline_signed_plan_never_consumes_even_if_valid(self):
+        offline=self.plan()  # Firma valida, pero sin lecturas GCS
+        self.assertIsInstance(offline,gate.VerifiedPlan)
+        store=FakeClaimStore(Mock())
+        with self.assertRaisesRegex(gate.OperationalError,'offline no puede consumir'):
+            gate.consume_once(offline,store,now=self.now)
+        self.assertEqual(store.objects,{})
+
+    def test_31_operational_plan_must_use_same_gcs_client_for_claim(self):
+        p,_=self._operational_plan()
+        other_client=Mock()
+        other_client._credentials=SimpleNamespace(
+            service_account_email=self.contract['consumer']['service_account'])
+        store=FakeClaimStore(other_client)
+        with self.assertRaisesRegex(gate.OperationalError,'mismo cliente'):
+            gate.consume_once(p,store,now=self.now)
+        self.assertEqual(store.objects,{})
+
+    def test_32_mutating_exposed_authorization_cannot_change_scope(self):
+        p,client=self._operational_plan()
+        p.authorization['silver_outputs'][0]['staging_prefix']='gs://evil/'
+        self.assertEqual(len(p.authorization['silver_outputs']),2)
+        self.assertNotEqual(p.authorization['silver_outputs'][0]['staging_prefix'],'gs://evil/')
+        self.assertEqual(gate.consume_once(p,FakeClaimStore(client),now=self.now),999)
+
+    def test_33_identity_change_between_preflight_and_claim_denied(self):
+        p,client=self._operational_plan()
+        client._credentials.service_account_email='other@example.invalid'
+        store=FakeClaimStore(client)
+        with self.assertRaisesRegex(gate.OperationalError,'Identidad efectiva'):
+            gate.consume_once(p,store,now=self.now)
+        self.assertEqual(store.objects,{})
+
+    def test_34_manually_constructed_offline_plan_denied(self):
+        p=self.plan()
+        forged=gate.VerifiedPlan(gate.TOKEN,p.authorization,p.fingerprint,
+                                 p.consume_uri,p.checked_at)
+        store=FakeClaimStore(Mock())
+        with self.assertRaisesRegex(gate.OperationalError,'offline no puede consumir'):
+            gate.consume_once(forged,store,now=self.now)
+        self.assertEqual(store.objects,{})
+
+    def test_35_gcs_plan_constructed_without_preflight_cannot_claim(self):
+        p=self.plan()
+        client=Mock()
+        client._credentials=SimpleNamespace(
+            service_account_email=self.contract['consumer']['service_account'])
+        fake=gate.GCSVerifiedPlan(gate.TOKEN,gate.canonical(p.authorization),
+                                  p.fingerprint,p.consume_uri,p.checked_at,
+                                  client,self.contract['consumer']['service_account'])
+        store=FakeClaimStore(client)
+        with self.assertRaisesRegex(gate.OperationalError,'sin prueba de emision'):
+            gate.consume_once(fake,store,now=self.now)
+        self.assertEqual(store.objects,{})
 
 if __name__=='__main__':unittest.main()

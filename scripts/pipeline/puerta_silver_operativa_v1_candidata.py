@@ -10,6 +10,7 @@ import hashlib
 import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from weakref import WeakKeyDictionary
 
 import adaptador_gcs_silver_v1 as gcs
 import puerta_silver_v1_candidata as core
@@ -24,6 +25,8 @@ SILVER = 'bvl26-silver-7f3a9c'
 RUN_PATTERN = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_-]{0,90}$')
 PRODUCT_PATTERN = re.compile(r'^[a-z0-9_]+(?:/[a-z0-9_]+)+$')
 TOKEN = object()
+# Registro en memoria: solamente un preflight GCS completo emite capacidades.
+_GCS_ISSUED_PLANS = WeakKeyDictionary()
 
 class OperationalError(ValueError):
     pass
@@ -229,6 +232,41 @@ class VerifiedPlan:
     checked_at: datetime
 
 
+@dataclass(frozen=True, eq=False, slots=True, weakref_slot=True)
+class GCSVerifiedPlan:
+    """Capacidad temporal emitida SOLAMENTE tras preflight read-only completo GCS.
+
+    La autorización se guarda como bytes canónicos inmutables. `authorization`
+    devuelve una COPIA, para impedir mutaciones del alcance firmado.
+    Un VerifiedPlan offline NO pertenece a este tipo y nunca habilita claim.
+    """
+    _proof: object
+    _auth_raw: bytes
+    fingerprint: str
+    consume_uri: str
+    checked_at: datetime
+    _client: object
+    _principal: str
+
+    @property
+    def authorization(self):
+        return core.load_strict(self._auth_raw)
+
+
+def effective_identity_from_client(client):
+    """Identidad de credenciales vinculadas al cliente GCS que lee los datos.
+
+    No se recibe principal por argumento. En despliegue real, Quality debe
+    verificar que las credenciales ADC/runtime reflejen la SA efectiva y
+    las políticas IAM del entorno; si la identidad no es legible, FALLA cerrado.
+    """
+    credentials = getattr(client, '_credentials', None)
+    email = getattr(credentials, 'service_account_email', None)
+    must(isinstance(email, str) and '@' in email and email.strip() == email,
+         'Identidad efectiva GCS no verificable desde las credenciales')
+    return email
+
+
 def validate_signed_bundle(contract_raw, annex_raw, annex_sig, closure_raw, closure_sig,
                            auth_raw, auth_sig, trusted_quality_pem, now=None):
     """Validacion pura en memoria. NO lee GCS ni crea claim."""
@@ -272,6 +310,9 @@ def check_gcs_signed_bundle(client, trusted_refs, trusted_pem, contract_raw, now
     au,sg=authorization_paths(x['mode'],x.get('dataset'),x.get('silver_product'),c['run_id'],x['attempt_id'])
     must(trusted_refs['authorization']['uri']==au and trusted_refs['authorization']['signature_uri']==sg,
          'Ruta de auth no coincide con modalidad/intento')
+    principal = effective_identity_from_client(client)
+    must(principal == x['service_account'],
+         'Identidad efectiva del cliente GCS distinta de la autorizacion firmada')
     # Read-only: verificar manifests y bytes de todas las entradas ANTES de claim.
     for dep in x['bronze_dependencies']:
         ds=next(d for d in c['datasets'] if d['dataset']==dep['dataset'])
@@ -299,25 +340,45 @@ def check_gcs_signed_bundle(client, trusted_refs, trusted_pem, contract_raw, now
             seen.add(uri)
             gcs.read_exact_current_bytes(client, uri, f.get('generation'),
                 f.get('sha256'), expected_size=f.get('size_bytes'),allowed_bucket=SILVER)
-    return plan
+    # La frescura se mide desde el FIN del preflight, no desde el comienzo:
+    # verificar muchos objetos Bronze puede tomar mas de 120 segundos.
+    completed_at = now if now is not None else datetime.now(timezone.utc)
+    start, end = core.utc(x['not_before_utc']), core.utc(x['expires_at_utc'])
+    must(start <= completed_at <= end, 'Autorizacion expiro durante el preflight GCS')
+    issued = GCSVerifiedPlan(TOKEN, canonical(x), plan.fingerprint,
+                             plan.consume_uri, completed_at, client, principal)
+    _GCS_ISSUED_PLANS[issued] = (plan.fingerprint, client, principal)
+    return issued
 
-def consume_once(plan, claim_store, *, effective_principal, now=None):
+def consume_once(plan, claim_store, *, now=None):
     """UNICA escritura GCS. NO llamar hasta Quality autorice acto supervisado.
 
     No expone CLI; el llamador necesita usar plan verificado inmediatamente.
     La condicion GCS if_generation_match=0 la aplica GCSExclusiveClaimStore.
     """
-    must(isinstance(plan,VerifiedPlan) and plan._proof is TOKEN, 'Plan no verificado')
-    must(effective_principal == plan.authorization['service_account'],
-         'Identidad efectiva no coincide con la autorizacion firmada')
+    must(type(plan) is GCSVerifiedPlan and plan._proof is TOKEN,
+         'Plan no verificado operativamente en GCS (offline no puede consumir)')
+    must(_GCS_ISSUED_PLANS.get(plan) == (plan.fingerprint, plan._client, plan._principal),
+         'Plan GCS sin prueba de emision desde preflight completo')
+    must(getattr(claim_store, 'client', None) is plan._client,
+         'El claim debe usar el mismo cliente GCS del preflight')
+    auth=plan.authorization  # Copia del alcance canonicalizado durante preflight
+    must(fingerprint(auth)==plan.fingerprint,
+         'Fingerprint no corresponde al alcance firmado')
+    expected_uri=(f'gs://{CONTROL}/authorizations/consumed/silver/'
+                  f'run_id={auth["run_id"]}/{plan.fingerprint}.json')
+    must(plan.consume_uri==expected_uri, 'URI de consumo no vinculada al fingerprint')
+    must(effective_identity_from_client(plan._client)==plan._principal==auth['service_account'],
+         'Identidad efectiva no coincide con credenciales usadas en preflight')
     now=now or datetime.now(timezone.utc)
-    start,end=core.utc(plan.authorization['not_before_utc']),core.utc(plan.authorization['expires_at_utc'])
-    must(start<=now<=end and (now-plan.checked_at).total_seconds()<=120,
-         'Plan expirado: repetir verificaciones y obtener permiso nuevo cuando proceda')
+    start,end=core.utc(auth['not_before_utc']),core.utc(auth['expires_at_utc'])
+    age=(now-plan.checked_at).total_seconds()
+    must(start<=now<=end and 0<=age<=120,
+         'Plan expirado: repetir preflight GCS antes de consumir')
     payload=canonical({'schema_version':'BVL-SILVER-CLAIM-v1','status':'CONSUMED',
-                      'fingerprint':plan.fingerprint,'run_id':plan.authorization['run_id'],
-                      'attempt_id':plan.authorization['attempt_id'],
-                      'authorization_sha256':digest(canonical(plan.authorization)),
+                      'fingerprint':plan.fingerprint,'run_id':auth['run_id'],
+                      'attempt_id':auth['attempt_id'],
+                      'authorization_sha256':digest(plan._auth_raw),
                       'created_at_utc':now.isoformat()})
     return claim_store.create_exclusive(plan.consume_uri,payload)
 
@@ -328,7 +389,7 @@ def validate_joint_staging_completion(verified_plan, attestations):
     `attestations` deben provenir del verificador de staging/Quality, NO del
     propio Spark. NO publica Silver ni cambia el claim.
     """
-    must(isinstance(verified_plan,VerifiedPlan) and verified_plan._proof is TOKEN,
+    must(type(verified_plan) in (VerifiedPlan, GCSVerifiedPlan) and verified_plan._proof is TOKEN,
          'Plan de cierre no verificado')
     expected={o['name']:o['staging_prefix'] for o in
               verified_plan.authorization['silver_outputs']}
