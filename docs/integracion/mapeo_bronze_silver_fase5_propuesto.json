@@ -1,0 +1,170 @@
+{
+  "document_type": "PROPUESTA_MAPEO_NO_RATIFICADA",
+  "contract_schema": "BVL-BRONZE-SILVER-CONTRACT-v1",
+  "contract_sha256": "6f33f3a88e04b38a5e75863d3ccc67005231f05d474b9916d34fd7030edef20a",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "source_datasets": [
+    {
+      "bronze_dataset": "bcrp/embig",
+      "files": 1,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/bcrp/embig/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680140972893",
+      "bronze_manifest_sha256": "0f4eeb683a62ec577d352b131e8326910a8bc9c14df29d42412169a957609331",
+      "silver_product_proposed": "macroeconomia/embig",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/macroeconomia/embig/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "bcrp/tipo_cambio",
+      "files": 1,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/bcrp/tipo_cambio/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680143113357",
+      "bronze_manifest_sha256": "12056704ba47c158c61460b23d76fab3b10a12e5e3a10602d099bd6f5fea44e6",
+      "silver_product_proposed": "macroeconomia/tipo_cambio",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/macroeconomia/tipo_cambio/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/cambios_patrimonio",
+      "files": 1,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/cambios_patrimonio/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680145231029",
+      "bronze_manifest_sha256": "1755eea75e7b237612d2776d81afdeed350ed27814acbd50f9bea969c0c8e099",
+      "silver_product_proposed": "finanzas_empresariales/cambios_patrimonio",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/finanzas_empresariales/cambios_patrimonio/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/cotizaciones",
+      "files": 60,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/cotizaciones/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680146777825",
+      "bronze_manifest_sha256": "162299c226b81b890e5ae468f9f00ad6aa27258d191916eba9ad0489ebc623ed",
+      "silver_product_proposed": "mercado_diario/cotizaciones",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/mercado_diario/cotizaciones/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/estado_resultados",
+      "files": 1,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/estado_resultados/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680148313710",
+      "bronze_manifest_sha256": "e247374e8d9acebaac40212d1bd398e454e9e2107485cac46a263e39a51f8d9a",
+      "silver_product_proposed": "finanzas_empresariales/estado_resultados",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/finanzas_empresariales/estado_resultados/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/flujo_efectivo",
+      "files": 1,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/flujo_efectivo/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680149779122",
+      "bronze_manifest_sha256": "ac522b51245c9d8f6b601fd071fb27da3b9a973d67f7d910a7a4c41e1cde1d9d",
+      "silver_product_proposed": "finanzas_empresariales/flujo_efectivo",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/finanzas_empresariales/flujo_efectivo/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/hechos_importancia",
+      "files": 1979,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/hechos_importancia/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680153321464",
+      "bronze_manifest_sha256": "d2c5f5d5a363e271a770497b4af6feedde454f999bc2fe7696a5c0ab0784eab0",
+      "silver_product_proposed": "hechos_importancia/eventos",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/hechos_importancia/eventos/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "PROPUESTA_DANIELA"
+    },
+    {
+      "bronze_dataset": "smv/hechos_valores_consulta",
+      "files": 23,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/hechos_valores_consulta/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680156553817",
+      "bronze_manifest_sha256": "c80e648c399be70e119944c4e967e11097b90b7289a4f1f4d134680cbebae820",
+      "silver_product_proposed": "referencias_smv/hechos_valores_consulta",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/referencias_smv/hechos_valores_consulta/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "PROPUESTA_DANIELA"
+    },
+    {
+      "bronze_dataset": "smv/montos_sab",
+      "files": 1221,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/montos_sab/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680159866741",
+      "bronze_manifest_sha256": "a19a2add731fcadf0877cf4680541d35df83282052ba44283d1339d29268f3a2",
+      "silver_product_proposed": "mercado_diario/montos_sab",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/mercado_diario/montos_sab/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/principales_cuentas",
+      "files": 20,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/principales_cuentas/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680162914264",
+      "bronze_manifest_sha256": "5fad664821ee0c06fef0d2600d223d3bee062bd39a0c3fcb15f05718afaea7cb",
+      "silver_product_proposed": "finanzas_empresariales/principales_cuentas",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/finanzas_empresariales/principales_cuentas/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/situacion_financiera",
+      "files": 1,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/situacion_financiera/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680164443706",
+      "bronze_manifest_sha256": "10351f5d7e7649e3d84d8c44e26e138755556358added0f466e9d05569818ce5",
+      "silver_product_proposed": "finanzas_empresariales/situacion_financiera",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/finanzas_empresariales/situacion_financiera/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    },
+    {
+      "bronze_dataset": "smv/valores_inscritos",
+      "files": 290,
+      "bronze_manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/valores_inscritos/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "bronze_manifest_generation": "1795680167133443",
+      "bronze_manifest_sha256": "564224ac50cbd785000dda2bf83c5dd2585f3a425ddb44aad85d343506aff5e2",
+      "silver_product_proposed": "referencias_smv/valores_inscritos",
+      "staging_prefix_proposed": "gs://bvl26-silver-7f3a9c/staging/referencias_smv/valores_inscritos/run_id=bvl-bronze-inicial-20261125-001/attempt_id=<attempt_id>/",
+      "mapping_status": "PENDIENTE_DE_RATIFICACION_QUALITY",
+      "mapping_origin": "CONTRATO_PROPUESTA"
+    }
+  ],
+  "derived_products": [
+    {
+      "silver_product": "referencias_smv/puente_ruc_nemonico",
+      "depends_on_silver": [],
+      "potential_additional_bronze": [],
+      "status": "PROPUESTA_PENDIENTE_DE_RATIFICACION_QUALITY",
+      "note": "El procesador valores_smv_to_silver.py genera ambos productos desde smv/valores_inscritos en un mismo procesamiento. No consume previamente Silver valores_inscritos. Quality debe ratificar el alcance de autorizacion de ambas salidas.",
+      "depends_on_bronze": [
+        "smv/valores_inscritos"
+      ],
+      "produced_together_with": "referencias_smv/valores_inscritos"
+    },
+    {
+      "silver_product": "hechos_importancia/identidad_empresarial",
+      "depends_on_silver": [
+        "hechos_importancia/eventos",
+        "finanzas_empresariales/principales_cuentas",
+        "referencias_smv/puente_ruc_nemonico",
+        "mercado_diario/cotizaciones",
+        "referencias_smv/hechos_valores_consulta"
+      ],
+      "status": "PROPUESTA_PENDIENTE_DE_RATIFICACION_QUALITY",
+      "note": "Cruces HECHOS, FIN, PUENTE, COT y consulta SMV confirmados en el candidato local. Validar granuralidad e integridad de dependencias"
+    }
+  ],
+  "derived_auth_scope_proposed": "SILVER_PRODUCT_AND_RUN_ID",
+  "derived_auth_route_proposed": "gs://bvl26-control-7f3a9c/authorizations/silver/products/<silver_product>/run_id=bvl-bronze-inicial-20261125-001/authorization.json",
+  "derived_auth_route_ratified": false,
+  "recovery_staging_rule_proposed": "Every distinct authorization attempt_id goes to an independent stage prefix; never replace partial previous staging",
+  "status": "PENDIENTE_DE_RATIFICACION_QUALITY"
+}
