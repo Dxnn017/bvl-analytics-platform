@@ -1,0 +1,49 @@
+{
+  "schema_version": "BVL-HUMAN-AUTHORIZATION-329C-v1-DRAFT",
+  "status": "BORRADOR_NO_FIRMAR",
+  "authorization_id": null,
+  "issued_at_utc": null,
+  "expires_at_utc": null,
+  "project_id": "bvl-analytics-2026",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "reservation": {
+    "generation": "1795640338029794",
+    "sha256": "80cb92939b975659d32514fff3a64a30e02148434222f1391b1afd675913c232",
+    "uri": "gs://bvl26-control-7f3a9c/reservations/bronze/bvl-bronze-inicial-20261125-001.json"
+  },
+  "scope": {
+    "batch_identity_sha256": "e4a3fb69f25ee87a26e71a40506017c199d43cd13735bef3330462c906205a2c",
+    "canonical_destination_list_sha256": "acf864e31fc403faec3bf67ba13555474e4fa185c3475763781ca88fb0b1d923",
+    "destination_prefix": "gs://bvl26-bronze-7f3a9c/landing/",
+    "file_count": 12,
+    "full_plan_sha256": "1397f92911b159e8df257fc82a7dd01593fce0d2e898e796a82efc77ae35d90e",
+    "mode": "PILOTO_12_ARCHIVOS",
+    "pilot_json_sha256": "82f384ab19231d89b4f4487ab7424eb24250943b4bdd40c85e88e8e08b5d16b7",
+    "total_bytes": 23052390,
+    "unique_destination_count": 12
+  },
+  "human_identity": {
+    "identity": "Lizeth - Quality 329C",
+    "pem_sha256": "21c2212a5d66f54e76cfd8dd00571dafd49af6984db273f9996473a9487492b6",
+    "spki_sha256": "f37b987739c0fc12e4da1d7bb9192c2e4e1f0dad8e65120f1228c27260b4862a",
+    "trust_record_candidate_sha256": "482795a1d08a61a2b279d4bffc343af23efe5ffa375d6721e085f797cbaddf61"
+  },
+  "signature": {
+    "algorithm": "ECDSA_P256_SHA256",
+    "encoding": "ASN.1 DER",
+    "detached": true
+  },
+  "policy": {
+    "max_validity_seconds": 86400,
+    "single_use": true,
+    "full_batch_authorized": false,
+    "overwrite_allowed": false,
+    "operational_authorization": false
+  },
+  "document_type": "HUMAN_QUALITY_AUTHORIZATION",
+  "action": "ISSUE_QUALITY_ONLY",
+  "target": {
+    "quality_payload_sha256": "7a8c98a32e141b6e759755f137948bd33ffe192f696d5fc886334bf61aa6df6f",
+    "quality_kms_key_version": "projects/bvl-analytics-2026/locations/southamerica-west1/keyRings/bvl-bronze-release-329c/cryptoKeys/quality-approved-signer/cryptoKeyVersions/1"
+  }
+}
