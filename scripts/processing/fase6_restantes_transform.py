@@ -65,7 +65,15 @@ def load_json_records(raw_documents: list[bytes], *, required_wrappers=('Resulta
 def load_bcrp_csv(raw: bytes, required_value: str):
     require(isinstance(raw, bytes) and 0 < len(raw) <= MAX_ITEM_BYTES,
             'CSV BCRP invalido')
-    text = raw.decode('utf-8-sig')
+    # Diagnostico Quality 2026-11-26: EMBIG oficial BCRP PD04709XD
+    # contiene acentos CP1252. No autodetectar ni hacer fallback silencioso.
+    # Los bytes de entrada ya deben estar fijados por generacion/SHA256 Bronze.
+    require(required_value == 'PD04709XD',
+            'Codificacion BCRP no ratificada para esta serie')
+    try:
+        text = raw.decode('cp1252', errors='strict')
+    except UnicodeDecodeError as exc:
+        raise ScopeError('CSV EMBIG no valido para CP1252 explicito') from exc
     reader = csv.DictReader(io.StringIO(text, newline=''), restkey='_EXTRA')
     names = reader.fieldnames or []
     if names and (names[0] is None or names[0].strip() == ''):
