@@ -1,0 +1,141 @@
+{
+  "document_type": "TRANSFER_ALLOWED_DRAFT_NON_OPERATIVE",
+  "schema_version": "329C-TRANSFER-DRAFT-2",
+  "status": "BORRADOR_NO_AUTORIZADO_NO_FIRMAR",
+  "project_id": "bvl-analytics-2026",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "issuer_candidate": "sa-bvl-orchestrator@bvl-analytics-2026.iam.gserviceaccount.com",
+  "reservation": {
+    "generation": "1795640338029794",
+    "sha256": "80cb92939b975659d32514fff3a64a30e02148434222f1391b1afd675913c232",
+    "uri": "gs://bvl26-control-7f3a9c/reservations/bronze/bvl-bronze-inicial-20261125-001.json"
+  },
+  "quality": {
+    "candidate_payload_sha256": "7a8c98a32e141b6e759755f137948bd33ffe192f696d5fc886334bf61aa6df6f",
+    "official_signed_payload_sha256": null,
+    "public_key_spki_sha256": "5c70c40088a680cfd7ced1859c4d6b335652d96991cdcae4268819fb4f90f5ce"
+  },
+  "scope": {
+    "mode": "PILOTO_12_ARCHIVOS",
+    "file_count": 12,
+    "unique_destination_count": 12,
+    "total_bytes": 23052390,
+    "pilot_json_sha256": "82f384ab19231d89b4f4487ab7424eb24250943b4bdd40c85e88e8e08b5d16b7",
+    "full_plan_sha256": "1397f92911b159e8df257fc82a7dd01593fce0d2e898e796a82efc77ae35d90e",
+    "canonical_destination_list_sha256": "acf864e31fc403faec3bf67ba13555474e4fa185c3475763781ca88fb0b1d923",
+    "files": [
+      {
+        "dataset": "bcrp/embig",
+        "origen_hdfs": "/datalake/bvl/bronze/bcrp/embig/ingestion_date=2026-09-27/BCRP_EMBIG_Peru.csv",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/bcrp/embig/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-09-27/BCRP_EMBIG_Peru.csv",
+        "bytes_esperados": 89858,
+        "sha256_esperado": "54de0c388cb6c81f6bbc04fbef953f0f1cd4725fe2ca2158753dc53c22802313"
+      },
+      {
+        "dataset": "bcrp/tipo_cambio",
+        "origen_hdfs": "/datalake/bvl/bronze/bcrp/tipo_cambio/ingestion_date=2026-09-27/BCRP_Tipo_Cambio_Venta.csv",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/bcrp/tipo_cambio/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-09-27/BCRP_Tipo_Cambio_Venta.csv",
+        "bytes_esperados": 154221,
+        "sha256_esperado": "e2e7bbd76d38d059948ab13082d2a450ce213f64ec179f9e36dc3dd08226fbb0"
+      },
+      {
+        "dataset": "smv/cambios_patrimonio",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/cambios_patrimonio/ingestion_date=2026-09-27/CambiosPatrimonioSMV.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/cambios_patrimonio/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-09-27/CambiosPatrimonioSMV.json",
+        "bytes_esperados": 160953,
+        "sha256_esperado": "524cedd7627163dd24a6ef3cb42f5b7b35e6f66b4d12087cbb2c33d79e54856b"
+      },
+      {
+        "dataset": "smv/cotizaciones",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/cotizaciones/ingestion_date=2026-10-04/cotizaciones_2022_12.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/cotizaciones/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-10-04/cotizaciones_2022_12.json",
+        "bytes_esperados": 361962,
+        "sha256_esperado": "61bba1f4c1ae8a8eb79df885d15a8c24301cd89d13bd07b7a53c612dcb7753c2"
+      },
+      {
+        "dataset": "smv/estado_resultados",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/estado_resultados/ingestion_date=2026-09-27/EstadoResultadosSMV.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/estado_resultados/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-09-27/EstadoResultadosSMV.json",
+        "bytes_esperados": 5686254,
+        "sha256_esperado": "2f5cd56b883ad372ab8f035a9f75dca8fa83319cd83918c3f02b57c0fd38f22c"
+      },
+      {
+        "dataset": "smv/flujo_efectivo",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/flujo_efectivo/ingestion_date=2026-09-27/FlujoEfectivoSMV.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/flujo_efectivo/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-09-27/FlujoEfectivoSMV.json",
+        "bytes_esperados": 7890131,
+        "sha256_esperado": "5565134ba713a5ba57e5f0209635f70c2e732cca311ea227aa422a75ae082d46"
+      },
+      {
+        "dataset": "smv/hechos_importancia",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/hechos_importancia/texto_extraido/ingestion_date=2026-10-04/20250109_104AE558-0000-C939-83E6-EA4CA0F95B8E.txt",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/hechos_importancia/run_id=bvl-bronze-inicial-20261125-001/texto_extraido/ingestion_date=2026-10-04/20250109_104AE558-0000-C939-83E6-EA4CA0F95B8E.txt",
+        "bytes_esperados": 1,
+        "sha256_esperado": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977"
+      },
+      {
+        "dataset": "smv/hechos_valores_consulta",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/hechos_valores_consulta/xml/ingestion_date=2026-10-05/01_CREDISCOTIA_FINANCIERA_S_A.xml",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/hechos_valores_consulta/run_id=bvl-bronze-inicial-20261125-001/xml/ingestion_date=2026-10-05/01_CREDISCOTIA_FINANCIERA_S_A.xml",
+        "bytes_esperados": 493,
+        "sha256_esperado": "2d7c20731ee1145a0468291f52cee8723b5a75e0fbfb07cfb8ea3fe5f286519f"
+      },
+      {
+        "dataset": "smv/montos_sab",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/montos_sab/ingestion_date=2026-10-04/montos_sab_20211224.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/montos_sab/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-10-04/montos_sab_20211224.json",
+        "bytes_esperados": 4537,
+        "sha256_esperado": "5d45dbc84b72369655f1882688c36a8a448411c776471a296ae12efe06bc5c95"
+      },
+      {
+        "dataset": "smv/principales_cuentas",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/principales_cuentas/ingestion_date=2026-10-04/principales_2024_T3_I.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/principales_cuentas/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-10-04/principales_2024_T3_I.json",
+        "bytes_esperados": 133686,
+        "sha256_esperado": "382f181369f0cdbad4fdf47f36a46b9db571b1c1eb551150342ffc23565e20d1"
+      },
+      {
+        "dataset": "smv/situacion_financiera",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/situacion_financiera/ingestion_date=2026-09-27/SituacionFinancieraSMV.json",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/situacion_financiera/run_id=bvl-bronze-inicial-20261125-001/ingestion_date=2026-09-27/SituacionFinancieraSMV.json",
+        "bytes_esperados": 8569828,
+        "sha256_esperado": "87459dba7cde4e6bf0d541e66612f1f479102e3bad18399d5e36ac3184893df7"
+      },
+      {
+        "dataset": "smv/valores_inscritos",
+        "origen_hdfs": "/datalake/bvl/bronze/smv/valores_inscritos/xml/ingestion_date=2026-10-05/20100004322.xml",
+        "destino_gcs": "gs://bvl26-bronze-7f3a9c/landing/smv/valores_inscritos/run_id=bvl-bronze-inicial-20261125-001/xml/ingestion_date=2026-10-05/20100004322.xml",
+        "bytes_esperados": 466,
+        "sha256_esperado": "9192a74ac56e706fa8d895475992533c1766bb11ac3e5eba6b43c58482e8e65f"
+      }
+    ]
+  },
+  "policy": {
+    "transfer_allowed": false,
+    "full_batch_authorized": false,
+    "overwrite_allowed": false,
+    "required_create_precondition": "ifGenerationMatch=0",
+    "require_source_hash_and_size_verification": true,
+    "require_destination_hash_and_size_verification": true,
+    "require_independent_human_approval": true,
+    "require_independent_execution_authorization": true,
+    "fail_closed": true
+  },
+  "signature_proposal": {
+    "algorithm": "EC_SIGN_P256_SHA256",
+    "encoding": "ASN.1 DER",
+    "detached": true,
+    "kms_key_version": "projects/bvl-analytics-2026/locations/southamerica-west1/keyRings/bvl-bronze-release-329c/cryptoKeys/transfer-allowed-signer/cryptoKeyVersions/1",
+    "public_key_pem_sha256": "105c7155465d1deaf35e2386fed26a0b17a1dad996520b011f1be11dfdb7abc2",
+    "public_key_spki_sha256": "194eedcdbfc6b09cbf468b434736ef22a14259b83ba5859d5caa8ac6e3ebbb82"
+  },
+  "pending": [
+    "Ratificar esquema y firma con Quality y Orchestrator",
+    "Contrastar huellas KMS con anclas confiables de Daniela; estado GCP no consultado",
+    "Fijar SHA256 del Quality oficial firmado",
+    "Definir vigencia, identificador unico y registro de consumo",
+    "Proteger registro de confianza y verificar identidad ejecutora",
+    "Aprobar separadamente emision, firma, publicacion y ejecucion"
+  ],
+  "semantic_policy": "Preservar bytes y hashes originales; no declarar excepciones como datos de negocio validos"
+}
