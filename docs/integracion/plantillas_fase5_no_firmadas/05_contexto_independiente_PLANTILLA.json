@@ -1,0 +1,26 @@
+{
+  "annex": {
+    "uri": "<URI_CONTEXTO_INDEPENDIENTE_QUALITY>",
+    "generation": "<GENERACION_FIJADA_EXTERNAMENTE>",
+    "sha256": "<SHA_REAL>",
+    "signature_uri": "<URI_FIRMA>",
+    "signature_generation": "<GEN_REAL>",
+    "signature_sha256": "<SHA_REAL>"
+  },
+  "closure": {
+    "uri": "<URI_CONTEXTO_INDEPENDIENTE_QUALITY>",
+    "generation": "<GEN_REAL>",
+    "sha256": "<SHA_REAL>",
+    "signature_uri": "<URI_FIRMA>",
+    "signature_generation": "<GEN_REAL>",
+    "signature_sha256": "<SHA_REAL>"
+  },
+  "authorization": {
+    "uri": "<URI_AUTORIZACION_POR_MODALIDAD_INTENTO>",
+    "generation": "<GEN_REAL>",
+    "sha256": "<SHA_REAL>",
+    "signature_uri": "<URI_FIRMA>",
+    "signature_generation": "<GEN_REAL>",
+    "signature_sha256": "<SHA_REAL>"
+  }
+}

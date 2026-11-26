@@ -1,0 +1,39 @@
+{
+  "project_id": "bvl-analytics-2026",
+  "region": "southamerica-west1",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "base_contract_sha256": "6f33f3a88e04b38a5e75863d3ccc67005231f05d474b9916d34fd7030edef20a",
+  "schema_version": "BVL-SILVER-AUTH-v1",
+  "status": "BORRADOR_NO_AUTORIZADO",
+  "operation": "BUILD_SILVER_STAGING",
+  "service_account": "sa-bvl-silver@bvl-analytics-2026.iam.gserviceaccount.com",
+  "attempt_id": "intento_ejemplo_001",
+  "not_before_utc": "<FECHA_UTC_FIRMADA>",
+  "expires_at_utc": "<FECHA_UTC_FIRMADA_HASTA_4H>",
+  "overwrite_allowed": false,
+  "official_publication_allowed": false,
+  "automatic_retry_allowed": false,
+  "operational_annex_sha256": "<SHA256_ANEXO_FIRMADO>",
+  "phase5_closure_sha256": "<SHA256_ACTA_FIRMADA>",
+  "mode": "SINGLE_SOURCE",
+  "dataset": "smv/valores_inscritos",
+  "bronze_dependencies": [
+    {
+      "dataset": "smv/valores_inscritos",
+      "manifest_uri": "gs://bvl26-control-7f3a9c/manifests/bronze/smv/valores_inscritos/run_id=bvl-bronze-inicial-20261125-001/manifest.json",
+      "manifest_generation": "1795680167133443",
+      "manifest_sha256": "564224ac50cbd785000dda2bf83c5dd2585f3a425ddb44aad85d343506aff5e2"
+    }
+  ],
+  "silver_dependencies": [],
+  "silver_outputs": [
+    {
+      "name": "referencias_smv/valores_inscritos",
+      "staging_prefix": "gs://bvl26-silver-7f3a9c/staging/referencias_smv/valores_inscritos/run_id=bvl-bronze-inicial-20261125-001/attempt_id=intento_ejemplo_001/"
+    },
+    {
+      "name": "referencias_smv/puente_ruc_nemonico",
+      "staging_prefix": "gs://bvl26-silver-7f3a9c/staging/referencias_smv/puente_ruc_nemonico/run_id=bvl-bronze-inicial-20261125-001/attempt_id=intento_ejemplo_001/"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "project_id": "bvl-analytics-2026",
+  "region": "southamerica-west1",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "base_contract_sha256": "6f33f3a88e04b38a5e75863d3ccc67005231f05d474b9916d34fd7030edef20a",
+  "schema_version": "BVL-SILVER-OPERATIONAL-ANNEX-v1",
+  "status": "PLANTILLA_NO_RATIFICADA",
+  "quality_approved": false,
+  "automatic_retry_allowed": false,
+  "overwrite_allowed": false,
+  "direct_processes": [
+    {
+      "bronze_dataset": "bcrp/embig",
+      "silver_products": [
+        "macroeconomia/embig"
+      ]
+    },
+    {
+      "bronze_dataset": "bcrp/tipo_cambio",
+      "silver_products": [
+        "macroeconomia/tipo_cambio"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/cambios_patrimonio",
+      "silver_products": [
+        "finanzas_empresariales/cambios_patrimonio"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/cotizaciones",
+      "silver_products": [
+        "mercado_diario/cotizaciones"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/estado_resultados",
+      "silver_products": [
+        "finanzas_empresariales/estado_resultados"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/flujo_efectivo",
+      "silver_products": [
+        "finanzas_empresariales/flujo_efectivo"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/hechos_importancia",
+      "silver_products": [
+        "hechos_importancia/eventos"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/hechos_valores_consulta",
+      "silver_products": [
+        "referencias_smv/hechos_valores_consulta"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/montos_sab",
+      "silver_products": [
+        "mercado_diario/montos_sab"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/principales_cuentas",
+      "silver_products": [
+        "finanzas_empresariales/principales_cuentas"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/situacion_financiera",
+      "silver_products": [
+        "finanzas_empresariales/situacion_financiera"
+      ]
+    },
+    {
+      "bronze_dataset": "smv/valores_inscritos",
+      "silver_products": [
+        "referencias_smv/valores_inscritos",
+        "referencias_smv/puente_ruc_nemonico"
+      ]
+    }
+  ],
+  "derived_processes": [
+    {
+      "silver_product": "hechos_importancia/identidad_empresarial",
+      "bronze_dependencies": [],
+      "silver_dependencies": [
+        "hechos_importancia/eventos",
+        "finanzas_empresariales/principales_cuentas",
+        "referencias_smv/puente_ruc_nemonico",
+        "mercado_diario/cotizaciones",
+        "referencias_smv/hechos_valores_consulta"
+      ]
+    }
+  ]
+}

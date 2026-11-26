@@ -1,0 +1,64 @@
+{
+  "project_id": "bvl-analytics-2026",
+  "region": "southamerica-west1",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "base_contract_sha256": "6f33f3a88e04b38a5e75863d3ccc67005231f05d474b9916d34fd7030edef20a",
+  "schema_version": "BVL-SILVER-AUTH-v1",
+  "status": "BORRADOR_NO_AUTORIZADO",
+  "operation": "BUILD_SILVER_STAGING",
+  "service_account": "sa-bvl-silver@bvl-analytics-2026.iam.gserviceaccount.com",
+  "attempt_id": "intento_ejemplo_001",
+  "not_before_utc": "<FECHA_UTC_FIRMADA>",
+  "expires_at_utc": "<FECHA_UTC_FIRMADA_HASTA_4H>",
+  "overwrite_allowed": false,
+  "official_publication_allowed": false,
+  "automatic_retry_allowed": false,
+  "operational_annex_sha256": "<SHA256_ANEXO_FIRMADO>",
+  "phase5_closure_sha256": "<SHA256_ACTA_FIRMADA>",
+  "mode": "MULTI_SOURCE",
+  "silver_product": "hechos_importancia/identidad_empresarial",
+  "bronze_dependencies": [],
+  "silver_dependencies": [
+    {
+      "product": "hechos_importancia/eventos",
+      "version_id": "<VERSION_OFICIAL_SILVER>",
+      "manifest_uri": "gs://bvl26-control-7f3a9c/manifests/silver/hechos_importancia/eventos/version_id=<VERSION_OFICIAL_SILVER>/manifest.json",
+      "manifest_generation": "<GENERACION_OFICIAL>",
+      "manifest_sha256": "<SHA256_REAL>"
+    },
+    {
+      "product": "finanzas_empresariales/principales_cuentas",
+      "version_id": "<VERSION_OFICIAL_SILVER>",
+      "manifest_uri": "gs://bvl26-control-7f3a9c/manifests/silver/finanzas_empresariales/principales_cuentas/version_id=<VERSION_OFICIAL_SILVER>/manifest.json",
+      "manifest_generation": "<GENERACION_OFICIAL>",
+      "manifest_sha256": "<SHA256_REAL>"
+    },
+    {
+      "product": "referencias_smv/puente_ruc_nemonico",
+      "version_id": "<VERSION_OFICIAL_SILVER>",
+      "manifest_uri": "gs://bvl26-control-7f3a9c/manifests/silver/referencias_smv/puente_ruc_nemonico/version_id=<VERSION_OFICIAL_SILVER>/manifest.json",
+      "manifest_generation": "<GENERACION_OFICIAL>",
+      "manifest_sha256": "<SHA256_REAL>"
+    },
+    {
+      "product": "mercado_diario/cotizaciones",
+      "version_id": "<VERSION_OFICIAL_SILVER>",
+      "manifest_uri": "gs://bvl26-control-7f3a9c/manifests/silver/mercado_diario/cotizaciones/version_id=<VERSION_OFICIAL_SILVER>/manifest.json",
+      "manifest_generation": "<GENERACION_OFICIAL>",
+      "manifest_sha256": "<SHA256_REAL>"
+    },
+    {
+      "product": "referencias_smv/hechos_valores_consulta",
+      "version_id": "<VERSION_OFICIAL_SILVER>",
+      "manifest_uri": "gs://bvl26-control-7f3a9c/manifests/silver/referencias_smv/hechos_valores_consulta/version_id=<VERSION_OFICIAL_SILVER>/manifest.json",
+      "manifest_generation": "<GENERACION_OFICIAL>",
+      "manifest_sha256": "<SHA256_REAL>"
+    }
+  ],
+  "silver_outputs": [
+    {
+      "name": "hechos_importancia/identidad_empresarial",
+      "staging_prefix": "gs://bvl26-silver-7f3a9c/staging/hechos_importancia/identidad_empresarial/run_id=bvl-bronze-inicial-20261125-001/attempt_id=intento_ejemplo_001/"
+    }
+  ]
+}

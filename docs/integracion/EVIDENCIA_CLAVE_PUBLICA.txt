@@ -1,0 +1,4 @@
+Clave publica oficial local BVL Quality (solo clave PUBLICA):
+SPKI SHA256 comprobada: 5c70c40088a680cfd7ced1859c4d6b335652d96991cdcae4268819fb4f90f5ce
+Protocolo: ECDSA P-256 SHA-256, firma DER.
+Se verifico unicamente la identidad de la clave publica recibida. NO se emitio ninguna firma real Quality ni autorizacion SILVER_AUTORIZADO.

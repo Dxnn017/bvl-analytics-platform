@@ -1,0 +1,12 @@
+{
+  "project_id": "bvl-analytics-2026",
+  "region": "southamerica-west1",
+  "run_id": "bvl-bronze-inicial-20261125-001",
+  "base_contract_sha256": "6f33f3a88e04b38a5e75863d3ccc67005231f05d474b9916d34fd7030edef20a",
+  "schema_version": "BVL-PHASE5-CLOSURE-v1",
+  "status": "PLANTILLA_NO_CERRADA",
+  "phase_5_closed": false,
+  "quality_approved": false,
+  "closed_at_utc": null,
+  "operational_annex_sha256": "<SHA256_DEL_ANEXO_FIRMADO_POR_QUALITY>"
+}
