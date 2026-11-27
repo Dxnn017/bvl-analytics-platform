@@ -1,0 +1,13 @@
+{
+  "schema_version": "BVL-F6-HECHOS-DOCUMENTAL-RESTRINGIDO-v1-CANDIDATO",
+  "status": "PROPUESTO_NO_AUTORIZA",
+  "producto_silver_propuesto": "smv/hechos_importancia/documentos_restringidos",
+  "granularidad": "pdf_uri + generation (1 fila por PDF)",
+  "conteos_objetivo": {"pdf": 990, "txt": 989, "filas_documentales": 990, "copias_no_canonicas_sha256": 1, "eventos_historicos_sin_pdf_cuarentena": 27},
+  "upstream": {"manifest_sha256": "d2c5f5d5a363e271a770497b4af6feedde454f999bc2fe7696a5c0ab0784eab0", "manifest_generation": "1795680153321464", "run_id": "bvl-bronze-inicial-20261125-001"},
+  "fuente_campos": "EXCLUSIVAMENTE_NOMBRES_Y_METADATOS_DEL_MANIFEST_BRONZE_Y_BYTES_TXT_VERIFICADOS",
+  "campos_restringidos_no_consumibles": ["numero_expediente", "empresa", "ruc", "fecha_presentacion", "fecha_acuerdo", "fecha_consulta_portal", "tipo_hecho", "sector", "descripcion", "relacion_guid_expediente"],
+  "calidad_texto": {"umbral_caracteres_minimos_propuesto": 100, "estado": "PENDIENTE_RATIFICACION_QUALITY"},
+  "parquet": {"destino": "SOLO_LOCAL", "compresion": "snappy", "publicacion_autorizada": false},
+  "dependencias": {"identidad_empresarial": "BLOQUEADA_SIN_EVENTO_EMPRESA_ACREDITADOS", "impacto_hechos_valor": "NO_CALCULABLE_FUENTE_NO_ACREDITADA", "gold_independiente": "NO_SE_MODIFICA"}
+}
