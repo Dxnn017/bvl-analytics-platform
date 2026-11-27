@@ -108,6 +108,18 @@ def procesar_batch(
                 fila, sort_keys=True, ensure_ascii=False
             )
 
+            anterior = db.execute(
+                "SELECT contenido FROM datos WHERE product=? AND clave=?",
+                (producto, clave)
+            ).fetchone()
+
+            if anterior is not None:
+                from src.gold.bigquery.comparador_negocio_local import cambio_negocio
+                if not cambio_negocio(
+                    producto, json.loads(anterior[0]), fila
+                ):
+                    continue
+
             db.execute("""
                 INSERT INTO datos(product, clave, contenido)
                 VALUES (?, ?, ?)

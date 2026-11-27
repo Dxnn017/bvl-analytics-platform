@@ -1,0 +1,29 @@
+test_tres_productos (test_batch_idempotencia.TestBatchIdempotencia.test_tres_productos) ... ok
+test_dos_procesos_tres_productos (test_concurrencia_reproducible.TestConcurrenciaReproducible.test_dos_procesos_tres_productos) ... mercado_valor_diario: BATCH_IDEMPOTENTE_OK
+actividad_sab_diaria: BATCH_IDEMPOTENTE_OK
+empresa_trimestre: BATCH_IDEMPOTENTE_OK
+mercado_valor_diario: CONCURRENCIA_REPRODUCIBLE_OK
+actividad_sab_diaria: CONCURRENCIA_REPRODUCIBLE_OK
+ok
+test_metadata_no_es_update (test_conteos_negocio.TestConteosNegocio.test_metadata_no_es_update) ... ok
+test_incremental_por_producto (test_merge_local.TestMergeLocal.test_incremental_por_producto) ... ok
+test_rechazos_sin_mutaciones (test_seguridad_atomica.TestSeguridadAtomica.test_rechazos_sin_mutaciones) ... ok
+test_rollback_por_fallo_auditoria (test_seguridad_atomica.TestSeguridadAtomica.test_rollback_por_fallo_auditoria) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.769s
+
+OK
+empresa_trimestre: CONCURRENCIA_REPRODUCIBLE_OK
+mercado_valor_diario: METADATA_NOOP_NEGOCIO_UPDATE_OK
+actividad_sab_diaria: METADATA_NOOP_NEGOCIO_UPDATE_OK
+empresa_trimestre: METADATA_NOOP_NEGOCIO_UPDATE_OK
+mercado_valor_diario: INCREMENTAL_LOCAL_OK
+actividad_sab_diaria: INCREMENTAL_LOCAL_OK
+empresa_trimestre: INCREMENTAL_LOCAL_OK
+mercado_valor_diario: RECHAZOS_SIN_MUTACIONES_OK
+actividad_sab_diaria: RECHAZOS_SIN_MUTACIONES_OK
+empresa_trimestre: RECHAZOS_SIN_MUTACIONES_OK
+mercado_valor_diario: ROLLBACK_ATOMICO_OK
+actividad_sab_diaria: ROLLBACK_ATOMICO_OK
+empresa_trimestre: ROLLBACK_ATOMICO_OK

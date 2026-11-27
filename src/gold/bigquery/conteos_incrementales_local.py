@@ -3,6 +3,8 @@
 import json
 import sqlite3
 
+from src.gold.bigquery.comparador_negocio_local import cambio_negocio
+
 CLAVES = {
     "mercado_valor_diario": ("nemonico", "fecha"),
     "actividad_sab_diaria": ("fecha", "codigo_sab"),
@@ -50,10 +52,12 @@ def contar_cambios(conexion, producto, filas):
 
         if anterior is None:
             insertados += 1
-        elif anterior[0] == contenido:
-            sin_cambios += 1
-        else:
+        elif cambio_negocio(
+            producto, json.loads(anterior[0]), fila
+        ):
             actualizados += 1
+        else:
+            sin_cambios += 1
 
     return {
         "inserted_rows": insertados,
@@ -64,7 +68,7 @@ def contar_cambios(conexion, producto, filas):
 
 
 if __name__ == "__main__":
-    from adaptador_incremental_local import aplicar_batch
+    from src.gold.bigquery.adaptador_incremental_local import aplicar_batch
 
     casos = {
         "mercado_valor_diario": {
@@ -87,6 +91,14 @@ if __name__ == "__main__":
             "valor": 100,
         }
 
+        campo_medida = {
+            "mercado_valor_diario": "precio_cierre",
+            "actividad_sab_diaria": "monto_total",
+            "empresa_trimestre": "activo_total",
+        }[producto]
+
+        fila[campo_medida] = fila.pop("valor")
+
         aplicar_batch(
             db, producto, "batch-1", "run-1", "v1", [fila]
         )
@@ -95,6 +107,8 @@ if __name__ == "__main__":
             **clave,
             "valor": 200,
         }
+
+        nueva[campo_medida] = nueva.pop("valor")
 
         otra = dict(nueva)
         ultima_clave = list(CLAVES[producto])[-1]
