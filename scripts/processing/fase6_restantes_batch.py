@@ -58,6 +58,7 @@ def parser():
     ap.add_argument('--quality-public-pem', type=Path)
     ap.add_argument('--trusted-refs', type=Path)
     ap.add_argument('--launch-refs', type=Path)
+    ap.add_argument('--partial-scope-refs', type=Path, help='REFERENCIAS EXTERNAS firmadas Quality, solo Montos SAB')
     return ap
 
 
@@ -66,6 +67,9 @@ def validate_cli(args):
         return False
     require(args.ack_supervised is True, 'Sin confirmación de supervisión')
     require(args.dataset in SUPPORTED, 'Hechos/derivado u otro dataset no autorizado')
+    require((args.dataset != 'smv/montos_sab' or args.partial_scope_refs is not None) and
+            (args.dataset == 'smv/montos_sab' or args.partial_scope_refs is None),
+            'Montos SAB requiere scope parcial independiente; no autoriza otros datasets')
     require(all((args.attempt_id, args.processor_commit, args.batch_id,
                  args.contract, args.quality_public_pem, args.trusted_refs,
                  args.launch_refs)), 'Faltan documentos/referencias externas Quality')
@@ -90,11 +94,14 @@ def check_manifest_capacity(dataset, entries):
     return sum(f['size_bytes'] for f in entries)
 
 
-def _upload_candidate_manifest(client, prefix, payload):
+def _upload_candidate_manifest(client, prefix, payload, *, filename='manifest_candidate_restantes.json'):
     require(prefix.startswith(f'gs://{SILVER_BUCKET}/staging/') and
             '/run_id=' in prefix and '/attempt_id=' in prefix and prefix.endswith('/'),
             'Prefijo de Quality fuera de staging autorizado')
-    uri = prefix + '_quality/manifest_candidate_restantes.json'
+    require(filename in ('manifest_candidate_restantes.json',
+                         'montos_sab_quarantine_audit.json'),
+            'Artefacto fuera de contrato')
+    uri = prefix + '_quality/' + filename
     key = uri[len(f'gs://{SILVER_BUCKET}/'):]
     raw = json.dumps(payload, ensure_ascii=False, sort_keys=True,
                      separators=(',', ':'), allow_nan=False).encode('utf-8')
@@ -136,6 +143,10 @@ def main(argv=None):
     import fase6_especializados_hechos_valores as hechos_valores
     import fase6_especializados_hechos_metadata as hechos_metadata
     import fase6_valores_conciliacion as conciliacion
+    import fase6_montos_sab_quarantine as cuarentena
+    import fase6_montos_sab_scope_quality as partial
+    import fase6_hechos_documental_restringido as hechos_doc
+    import fase6_hechos_documental_cloud_candidato as hechos_cloud
     import bronze_to_silver_dataproc_candidato as historical
 
     client = storage.Client(project='bvl-analytics-2026')
@@ -152,7 +163,7 @@ def main(argv=None):
     zip_path = launch.verify_runtime_artifacts(context, __file__, (
         gate, gate_core, gcs, old_launch, launch, writer, transform, preflight,
         cat, integrator, valores, hechos_valores, hechos_metadata,
-        conciliacion, historical))
+        conciliacion, historical, cuarentena, partial, hechos_doc, hechos_cloud))
     for label in ('entrypoint', 'dependencies'):
         blob_bytes = gcs.read_exact_current_bytes(
             client, context[label+'_uri'], context[label+'_generation'],
@@ -171,6 +182,13 @@ def main(argv=None):
     require(len(found) == 1, 'Contrato Bronze no incluye el dataset')
     _, entries = gcs.read_official_manifest(client, found[0], gate_core.verify_manifest)
     total_bytes = check_manifest_capacity(args.dataset, entries)
+    partial_scope = None
+    if args.dataset == 'smv/montos_sab':
+        # Separate Quality KMS signature, exact 14 excluded pins, before claim.
+        partial_scope = partial.verify_signed_scope(
+            client, json.loads(args.partial_scope_refs.read_text(encoding='utf-8')),
+            pub, entries, attempt_id=args.attempt_id,
+            fingerprint=plan.fingerprint, launch_sha256=context_sha)
     require((datetime.now(timezone.utc) - plan.checked_at).total_seconds() <= 100,
             'Preflight demasiado antiguo antes de consumir claim')
 
@@ -189,7 +207,29 @@ def main(argv=None):
                 expected_size=f['size_bytes'], allowed_bucket=BRONZE_BUCKET)
             objects.append({**{k:f[k] for k in ('uri','generation','size_bytes','sha256')},
                             'data': raw})
-        candidate = integrator.local_transform_from_snapshot(spark, args.dataset, objects)
+        quarantine_rows = None
+        coverage = None
+        if args.dataset == 'smv/montos_sab':
+            # Full 1221 pinned bytes were verified above by exact GCS read.
+            normal, quarantine_rows, metrics = cuarentena.partition_montos_sab(
+                [({k:o[k] for k in ('uri','generation','size_bytes','sha256')}, o['data'])
+                 for o in objects], expected=cuarentena.OFFICIAL_EXPECTED)
+            partial.check_actual_quarantine(partial_scope['excluded'],
+                                            quarantine_rows,metrics)
+            frame = integrator._records_to_frame(spark, normal)
+            output_df, tmetrics = transform.dispatch_transform(args.dataset,frame)
+            candidate = integrator.LocalCandidate(
+                args.dataset, {SOURCES[args.dataset][0]:output_df},
+                {'source': {'dataset':args.dataset,'objects':[
+                    {k:o[k] for k in ('uri','generation','size_bytes','sha256')}
+                    for o in objects], 'object_count':len(objects),
+                    'total_bytes':sum(len(o['data']) for o in objects)},
+                 'transformation': {'transform':tmetrics,'coverage':metrics},
+                 'products':list(SOURCES[args.dataset]),
+                 'publish_allowed':False,'claim_consumed':False})
+            # Actual candidate is partial by contract, never mark full.
+        else:
+            candidate = integrator.local_transform_from_snapshot(spark, args.dataset, objects)
         auth = plan.authorization
         require(set(candidate.products) == set(SOURCES[args.dataset]),
                 'Productos incorrectos en batch')
@@ -204,6 +244,19 @@ def main(argv=None):
                 verified_plan=plan, claim_generation=claim_generation,
                 dataset=args.dataset, product=product, df=df,
                 partitions=columns, pa=pa, pq=pq)
+        quarantine_receipt = None
+        if args.dataset == 'smv/montos_sab':
+            # Immutable write, no retry, no overwrite, retains all 245 raw records.
+            quarantine_receipt = _upload_candidate_manifest(
+                client, prefixes[SOURCES[args.dataset][0]],
+                {'status':'CUARENTENA_PARCIAL_PENDIENTE_QUALITY',
+                 'scope_sha256':partial_scope['scope_sha256'],
+                 'metrics':metrics,'files':quarantine_rows,
+                 'gold_consumption_allowed':False},
+                filename='montos_sab_quarantine_audit.json')
+            coverage = partial.coverage_manifest(
+                metrics, quality_scope_sha256=partial_scope['scope_sha256'],
+                quarantine_receipt=quarantine_receipt)
         # Write only AFTER all product writes complete; for two outputs this is
         # ONE joint report with ALL files. Quality independently verifies it.
         output = {
@@ -216,6 +269,8 @@ def main(argv=None):
             'source_object_count': len(entries), 'source_bytes': total_bytes,
             'source': candidate.evidence['source'],
             'quality_metrics': candidate.evidence['transformation'],
+            'partial_coverage':coverage,
+            'quality_scope_sha256':(partial_scope['scope_sha256'] if partial_scope else None),
             'products': [{'name':p, 'staging_prefix':prefixes[p],
                           'files':receipts[p], 'files_count':len(receipts[p]),
                           'rows':sum(i['rows'] for i in receipts[p])}
