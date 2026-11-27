@@ -1,0 +1,260 @@
+{
+  "product": "mercado_valor_diario",
+  "table_proposed": "gold_analytics.mercado_valor_diario",
+  "business_keys": [
+    "nemonico",
+    "fecha"
+  ],
+  "source_partition_columns": [
+    "anio",
+    "mes"
+  ],
+  "coverage": "HISTORICAL_LOCAL",
+  "columns": [
+    {
+      "name": "nemonico",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "descripcion",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha_anterior",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "precio_anterior",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "precio_cierre",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "precio_apertura",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "precio_maximo",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "precio_minimo",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "precio_promedio",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "monto_negociado",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "fuente",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha_ingesta",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "tipo_cambio_venta",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "embig_peru",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "ruc",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "razon_social",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "codigo_isin",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "tipo_valor",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "moneda_referencia",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha_inscripcion",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "precio_anterior_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "precio_cierre_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "rango_intradia_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "tipo_cambio_disponible",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "embig_disponible",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "empresa_vinculada",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "inscripcion_compatible",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "monto_negociado_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "monto_negociado_positivo",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "retorno_calculable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "variacion_precio",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "retorno_diario_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "rango_intradia",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "rango_intradia_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "anio",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "mes",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "trimestre",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "dias_desde_cierre_anterior",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "macro_disponible",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    }
+  ],
+  "production_authorized": false,
+  "bigquery_partition_field": "fecha",
+  "bigquery_clustering_fields": [
+    "nemonico"
+  ]
+}

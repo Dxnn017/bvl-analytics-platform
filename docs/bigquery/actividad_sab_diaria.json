@@ -1,0 +1,218 @@
+{
+  "product": "actividad_sab_diaria",
+  "table_proposed": "gold_analytics.actividad_sab_diaria",
+  "business_keys": [
+    "fecha",
+    "codigo_sab"
+  ],
+  "source_partition_columns": [
+    "anio",
+    "mes"
+  ],
+  "coverage": "PARTIAL",
+  "columns": [
+    {
+      "name": "fecha",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "codigo_sab",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "sociedad_agente_bolsa",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "monto_compras",
+      "spark_type": "decimal(24,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "monto_ventas",
+      "spark_type": "decimal(24,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "monto_total",
+      "spark_type": "decimal(24,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "porcentaje_compras_original",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "porcentaje_ventas_original",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "porcentaje_total_original",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "fuente_datos",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha_ingesta",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "montos_validos",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "diferencia_monetaria",
+      "spark_type": "decimal(26,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "total_consistente",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "saldo_neto",
+      "spark_type": "decimal(25,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "total_compras_diario",
+      "spark_type": "decimal(34,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "total_ventas_diario",
+      "spark_type": "decimal(34,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "total_actividad_diaria",
+      "spark_type": "decimal(34,2)",
+      "bigquery_type": "NUMERIC",
+      "nullable": true
+    },
+    {
+      "name": "cantidad_sab_diaria",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": false
+    },
+    {
+      "name": "registros_invalidos_diarios",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "actividad_diaria_valida",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "participacion_compras_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "participacion_ventas_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "participacion_total_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "diferencia_participacion_compras",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "diferencia_participacion_ventas",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "diferencia_participacion_total",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "ranking_diario",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "aporte_hhi",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "hhi_diario",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "anio",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "mes",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "trimestre",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    }
+  ],
+  "production_authorized": false,
+  "bigquery_partition_field": "fecha",
+  "bigquery_clustering_fields": [
+    "codigo_sab"
+  ]
+}

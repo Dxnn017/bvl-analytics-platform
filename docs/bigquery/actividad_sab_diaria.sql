@@ -1,0 +1,38 @@
+-- PROPUESTA LOCAL. NO EJECUTAR SIN QUALITY.
+CREATE TABLE `gold_analytics.actividad_sab_diaria` (
+  `fecha` DATE,
+  `codigo_sab` STRING,
+  `sociedad_agente_bolsa` STRING,
+  `monto_compras` NUMERIC,
+  `monto_ventas` NUMERIC,
+  `monto_total` NUMERIC,
+  `porcentaje_compras_original` FLOAT64,
+  `porcentaje_ventas_original` FLOAT64,
+  `porcentaje_total_original` FLOAT64,
+  `fuente_datos` STRING,
+  `fecha_ingesta` DATE,
+  `montos_validos` BOOL,
+  `diferencia_monetaria` NUMERIC,
+  `total_consistente` BOOL,
+  `saldo_neto` NUMERIC,
+  `total_compras_diario` NUMERIC,
+  `total_ventas_diario` NUMERIC,
+  `total_actividad_diaria` NUMERIC,
+  `cantidad_sab_diaria` INT64,
+  `registros_invalidos_diarios` INT64,
+  `actividad_diaria_valida` BOOL,
+  `participacion_compras_pct` FLOAT64,
+  `participacion_ventas_pct` FLOAT64,
+  `participacion_total_pct` FLOAT64,
+  `diferencia_participacion_compras` FLOAT64,
+  `diferencia_participacion_ventas` FLOAT64,
+  `diferencia_participacion_total` FLOAT64,
+  `ranking_diario` INT64,
+  `aporte_hhi` FLOAT64,
+  `hhi_diario` FLOAT64,
+  `anio` INT64,
+  `mes` INT64,
+  `trimestre` INT64
+)
+PARTITION BY `fecha`
+CLUSTER BY `codigo_sab`;

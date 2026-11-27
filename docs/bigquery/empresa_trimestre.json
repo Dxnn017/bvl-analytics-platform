@@ -1,0 +1,368 @@
+{
+  "product": "empresa_trimestre",
+  "table_proposed": "gold_analytics.empresa_trimestre",
+  "business_keys": [
+    "id_registro"
+  ],
+  "source_partition_columns": [
+    "anio",
+    "trimestre"
+  ],
+  "coverage": "HISTORICAL_LOCAL",
+  "columns": [
+    {
+      "name": "rpj",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "ejercicio",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "trimestre_num",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "id_registro",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "clave_negocio",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "ruc",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "ruc_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "nombre_empresa",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "tipo_empresa",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "tipo_sector",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "ciiu",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "trimestre_original",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "tipo_informacion",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "metodo_flujo_efectivo",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "moneda_original",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "activo_total",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "pasivo_total",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "patrimonio_total",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "total_ingreso",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "utilidad_neta",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "cantidad_clave_negocio",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "colision_clave_negocio",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "fuente_datos",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha_ingesta",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "moneda",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "anio",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "trimestre",
+      "spark_type": "int",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "periodo_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "periodo",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "fecha_fin_trimestre",
+      "spark_type": "date",
+      "bigquery_type": "DATE",
+      "nullable": true
+    },
+    {
+      "name": "activo_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "pasivo_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "patrimonio_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "patrimonio_positivo",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "ingreso_valido",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "ingreso_positivo",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "utilidad_valida",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "moneda_valida",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "identidad_contable_evaluable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "diferencia_contable",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "identidad_contable_valida",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "cantidad_registros_empresa_periodo",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "colision_financiera",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "sin_incidencias_estructurales",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "apto_kpi_general",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "roa_calculable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "roe_calculable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "endeudamiento_calculable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "margen_neto_calculable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "autonomia_calculable",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": true
+    },
+    {
+      "name": "roa_aproximado_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "roe_aproximado_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "endeudamiento_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "margen_neto_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "autonomia_financiera_pct",
+      "spark_type": "double",
+      "bigquery_type": "FLOAT64",
+      "nullable": true
+    },
+    {
+      "name": "resultado_financiero",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": false
+    },
+    {
+      "name": "patrimonio_negativo",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "motivos_calidad",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": false
+    }
+  ],
+  "production_authorized": false,
+  "bigquery_partition_field": "fecha_fin_trimestre",
+  "bigquery_clustering_fields": [
+    "id_registro",
+    "rpj"
+  ]
+}
