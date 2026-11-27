@@ -1,3 +1,8 @@
+-- BLOQUEO DE SEGURIDAD: SQL INDEPENDIENTE NO AUTORIZADO.
+-- No retirar sin integración del preflight firmado y Quality.
+ASSERT FALSE AS
+  'EJECUCION DIRECTA PROHIBIDA: usar orquestacion autorizada por Quality';
+
 -- SIMULACIÓN LOCAL: NO EJECUTAR EN GCP SIN QUALITY.
 -- El staging debe incluir:
 -- operation: UPSERT | DELETE
