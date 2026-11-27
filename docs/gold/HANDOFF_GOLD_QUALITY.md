@@ -59,3 +59,43 @@ Las pruebas integrales utilizan snapshots locales bajo
 7. Publicación Gold bajo control de Quality.
 
 **Ninguna prueba local concede autorización productiva.**
+
+## Ampliación del consumidor Silver–Gold
+
+Componentes implementados:
+- verificar_firma_quality.py: validación ECDSA-SHA256.
+- verificar_objeto_quality.py: SHA-256, tamaño y generación declarada.
+- marcador_publicacion_conjunta.py: marcador candidato Valores Inscritos/Puente.
+- control_versiones_gold.py: continuidad, idempotencia y conservación.
+
+Evidencia:
+PRUEBAS_CONSOLIDADAS_GOLD_APROBADAS_OK
+
+## Ejecución supervisada propuesta
+
+1. Obtener referencias oficiales Silver y autorización de Quality.
+2. Verificar firma, generación GCS, hash, tamaño y esquema.
+3. Comprobar continuidad y dependencias conjuntas.
+4. Resolver productos Gold afectados.
+5. Ejecutar recálculos en staging autorizado.
+6. Validar candidatas y generar auditoría.
+7. Solicitar aprobación antes de publicar Gold.
+8. Conservar versiones vigentes de productos no afectados.
+
+## Recursos previstos para sa-bvl-gold
+
+- Lectura: Silver/versions.
+- Lectura: Gold/versions.
+- Lectura: Control/manifests y version_registry.
+- Escritura limitada: Gold/staging.
+- Auditoría: Control/audit.
+
+La comprobación de permisos efectivos sigue pendiente.
+
+## Límites actuales
+
+No existe aún una integración operativa verificada con current.json
+y generaciones reales de GCS. Tampoco se dispone de la clave pública
+oficial de Quality ni de autorización productiva Gold.
+
+Los productos hechos_empresa e impacto_hechos_valor permanecen bloqueados.
