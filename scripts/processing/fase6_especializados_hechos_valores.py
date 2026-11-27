@@ -3,7 +3,7 @@
 
 No usa requests/SOAP, no lee GCS, no crea Spark ni escribe Silver.
 Solo aceptar bytes previamente verificados por generacion/SHA contra manifests.
-Error codes SMV 106/107 se registran como incidencias, nunca como registros.
+Codigos 106/107 y 110 documentados se registran sin fabricar registros.
 """
 from __future__ import annotations
 from collections import Counter, defaultdict
@@ -61,6 +61,7 @@ def parse_xml(raw):
         return str(tag).split('}')[-1]
     rows = []
     errors = []
+    error_messages = []
     for elem in root.iter():
         name = loc(elem.tag)
         if name == 'ValorObtenidoBE':
@@ -72,8 +73,17 @@ def parse_xml(raw):
             rows.append(row)
         elif name == 'CodigoError' and normalized(elem.text) not in ('', '0'):
             errors.append(normalized(elem.text))
-    ensure(not errors or (set(errors).issubset({'106', '107'}) and not rows),
-           'Error SMV desconocido o mezcla error/registros')
+        elif name == 'MensajeError':
+            error_messages.append(normalized(elem.text))
+    # Quality INC-F6-SMV-004/005: 110 solo representa la ausencia de valores
+    # para este endpoint, sin filas, con mensaje exacto, nunca exito general.
+    if '110' in errors:
+        ensure(errors == ['110'] and not rows and
+               error_messages == ['Empresa no tiene valores inscritos en SMV'],
+               'SMV 110 contradictorio, incompleto o mezclado con registros')
+    else:
+        ensure(not errors or (set(errors).issubset({'106', '107'}) and not rows),
+               'Error SMV desconocido o mezcla error/registros')
     return rows, errors
 
 
@@ -128,7 +138,8 @@ def reconcile(xml_items, json_bytes):
         'dataset':'smv/hechos_valores_consulta',
         'product':'referencias_smv/hechos_valores_consulta',
         'xml_count':22, 'xml_nonempty_count':valid_xml,
-        'xml_error_106_107':errors,
+        'xml_error_106_107':[e for e in errors if e['codigo_smv'] in ('106','107')],
+        'xml_sin_valores_110':[e for e in errors if e['codigo_smv'] == '110'],
         'json_row_count':len(js), 'xml_row_count':sum(xml_pairs.values()),
         'unique_nemonico_razon':len(xml_pairs),
         'json_sha256':sha256(json_bytes).hexdigest(),
