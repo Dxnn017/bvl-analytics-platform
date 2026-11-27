@@ -1,4 +1,4 @@
-"""Vincula archivos Silver a un manifest previamente verificado."""
+"""Vinculación de archivos al manifest Silver oficial autenticado."""
 
 from validar_archivos_silver import validar_archivos_silver
 
@@ -9,29 +9,35 @@ class VinculacionManifestError(ValueError):
 
 def validar_archivos_del_manifest(cliente, manifest, version_autorizada):
     if not isinstance(manifest, dict):
-        raise VinculacionManifestError("Manifest inválido.")
+        raise VinculacionManifestError("Manifest inválido")
 
-    if not isinstance(version_autorizada, str) or not version_autorizada:
-        raise VinculacionManifestError("Versión autorizada ausente.")
+    if (
+        not isinstance(version_autorizada, str)
+        or not version_autorizada.strip()
+        or manifest.get("version_id") != version_autorizada
+    ):
+        raise VinculacionManifestError("Versión incompatible")
 
-    if manifest.get("version_id") != version_autorizada:
-        raise VinculacionManifestError("Versión incompatible.")
+    files = manifest.get("files")
+    version_prefix = manifest.get("version_prefix")
 
-    archivos = manifest.get("archivos")
+    if not isinstance(files, list) or not files:
+        raise VinculacionManifestError("Manifest sin archivos")
 
-    if not isinstance(archivos, list) or not archivos:
-        raise VinculacionManifestError("Manifest sin archivos.")
+    if (
+        not isinstance(version_prefix, str)
+        or not version_prefix.endswith("/")
+        or "/staging/" in version_prefix
+    ):
+        raise VinculacionManifestError("Prefijo inválido")
 
-    rutas = [a.get("uri") for a in archivos if isinstance(a, dict)]
-
-    if len(rutas) != len(archivos) or len(set(rutas)) != len(rutas):
-        raise VinculacionManifestError("Archivos duplicados o inválidos.")
-
-    resultado = validar_archivos_silver(cliente, archivos)
+    resultado = validar_archivos_silver(
+        cliente, files, version_prefix
+    )
 
     return {
         "version_id": version_autorizada,
         "archivos_validados": resultado["archivos_validados"],
-        "integridad_local_correcta": True,
+        "integridad_verificada": True,
         "consumo_productivo_autorizado": False,
     }

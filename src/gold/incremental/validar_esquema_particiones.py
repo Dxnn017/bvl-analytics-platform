@@ -1,43 +1,60 @@
-"""Validación de metadatos declarados por un manifest Silver autenticado.
+"""Validación preliminar de metadatos Silver oficiales.
 
-No inspecciona el esquema interno de archivos Parquet.
+La comparación física del esquema corresponde al validador Parquet.
 """
+
+import pyarrow as pa
 
 
 class EsquemaParticionesError(ValueError):
     pass
 
 
-def validar_esquema_particiones(manifest, columnas_requeridas, particiones_requeridas):
+def validar_esquema_particiones(
+    manifest, columnas_requeridas, particiones_requeridas
+):
     if not isinstance(manifest, dict):
-        raise EsquemaParticionesError("Manifest inválido.")
+        raise EsquemaParticionesError("Manifest inválido")
 
-    if not isinstance(columnas_requeridas, (list, tuple)) or not columnas_requeridas:
-        raise EsquemaParticionesError("Columnas requeridas inválidas.")
+    schema_texto = manifest.get("schema")
+    particiones = manifest.get("partition_columns")
 
-    if not isinstance(particiones_requeridas, (list, tuple)):
-        raise EsquemaParticionesError("Particiones requeridas inválidas.")
+    if not isinstance(schema_texto, str) or not schema_texto.strip():
+        raise EsquemaParticionesError("Schema Arrow ausente")
 
-    columnas = manifest.get("columnas")
-    particiones = manifest.get("particiones")
+    if not isinstance(particiones, list):
+        raise EsquemaParticionesError("Particiones inválidas")
 
-    if not isinstance(columnas, list) or not isinstance(particiones, list):
-        raise EsquemaParticionesError("Metadatos de esquema ausentes.")
+    if (
+        not isinstance(columnas_requeridas, (list, tuple))
+        or not columnas_requeridas
+        or not isinstance(particiones_requeridas, (list, tuple))
+    ):
+        raise EsquemaParticionesError("Requisitos inválidos")
 
-    if not all(isinstance(c, str) and c for c in columnas + particiones):
-        raise EsquemaParticionesError("Nombres de columnas inválidos.")
-
-    if len(columnas) != len(set(columnas)):
-        raise EsquemaParticionesError("Columnas duplicadas.")
+    if not all(
+        isinstance(x, str) and x.strip()
+        for x in list(columnas_requeridas)
+        + list(particiones_requeridas)
+        + particiones
+    ):
+        raise EsquemaParticionesError("Nombres inválidos")
 
     if len(particiones) != len(set(particiones)):
-        raise EsquemaParticionesError("Particiones duplicadas.")
+        raise EsquemaParticionesError("Particiones duplicadas")
 
-    if not set(columnas_requeridas).issubset(set(columnas)):
-        raise EsquemaParticionesError("Faltan columnas requeridas.")
+    # Se identifican nombres declarados; no se interpreta el texto
+    # Arrow como prueba física del esquema.
+    columnas = []
+    for linea in schema_texto.splitlines():
+        if ": " in linea and not linea.startswith((" ", "\t")):
+            columnas.append(linea.split(": ", 1)[0])
 
-    if not set(particiones_requeridas).issubset(set(particiones)):
-        raise EsquemaParticionesError("Faltan particiones requeridas.")
+    if not set(columnas_requeridas).issubset(columnas):
+        raise EsquemaParticionesError("Faltan columnas requeridas")
+
+    if not set(particiones_requeridas).issubset(particiones):
+        raise EsquemaParticionesError("Faltan particiones requeridas")
 
     return {
         "metadatos_esquema_validos": True,

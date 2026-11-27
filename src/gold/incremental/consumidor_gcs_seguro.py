@@ -20,7 +20,7 @@ def consumir_objeto_verificado(cliente, referencia, clave_publica, firma):
     if not isinstance(referencia, dict):
         raise ConsumidorSeguroError("Referencia inválida.")
 
-    requeridos = {"uri", "generacion", "sha256", "tamano_bytes"}
+    requeridos = {"uri", "generation", "sha256", "size_bytes"}
     if not requeridos.issubset(referencia):
         raise ConsumidorSeguroError("Referencia incompleta.")
 
@@ -36,7 +36,7 @@ def consumir_objeto_verificado(cliente, referencia, clave_publica, firma):
         raise ConsumidorSeguroError("Ruta no autorizada.")
 
     sha = referencia["sha256"]
-    tamano = referencia["tamano_bytes"]
+    tamano = referencia["size_bytes"]
 
     if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
         raise ConsumidorSeguroError("SHA-256 inválido.")
@@ -48,7 +48,7 @@ def consumir_objeto_verificado(cliente, referencia, clave_publica, firma):
         raise ConsumidorSeguroError("Firma o clave de confianza ausente.")
 
     contenido = leer_objeto_gcs(
-        cliente, uri, referencia["generacion"]
+        cliente, uri, referencia["generation"]
     )
 
     if len(contenido) != tamano:

@@ -75,9 +75,9 @@ class TestConsumidorIntegrado(unittest.TestCase):
     def referencia(self, uri, generacion, datos):
         return {
             "uri": uri,
-            "generacion": str(generacion),
+            "generation": str(generacion),
             "sha256": hashlib.sha256(datos).hexdigest(),
-            "tamano_bytes": len(datos),
+            "size_bytes": len(datos),
         }
 
     def firma(self, datos):
@@ -115,6 +115,7 @@ class TestConsumidorIntegrado(unittest.TestCase):
         resultado = validar_archivos_silver(
             self.cliente,
             [self.referencia(self.uri_datos, 300, self.datos)],
+            "gs://bvl26-silver-7f3a9c/versions/fixture/",
         )
         self.assertEqual(resultado["archivos_validados"], 1)
         self.assertFalse(resultado["consumo_productivo_autorizado"])
@@ -123,7 +124,10 @@ class TestConsumidorIntegrado(unittest.TestCase):
         referencia = self.referencia(self.uri_datos, 300, self.datos)
         referencia["sha256"] = "0" * 64
         with self.assertRaises(ArchivoSilverError):
-            validar_archivos_silver(self.cliente, [referencia])
+            validar_archivos_silver(
+                self.cliente, [referencia],
+                "gs://bvl26-silver-7f3a9c/versions/fixture/"
+            )
 
     def test_staging_rechazado(self):
         referencia = self.referencia(self.uri_datos, 300, self.datos)
@@ -131,7 +135,10 @@ class TestConsumidorIntegrado(unittest.TestCase):
             "gs://bvl26-silver-7f3a9c/staging/fixture/data.parquet"
         )
         with self.assertRaises(ArchivoSilverError):
-            validar_archivos_silver(self.cliente, [referencia])
+            validar_archivos_silver(
+                self.cliente, [referencia],
+                "gs://bvl26-silver-7f3a9c/versions/fixture/"
+            )
 
 
 if __name__ == "__main__":

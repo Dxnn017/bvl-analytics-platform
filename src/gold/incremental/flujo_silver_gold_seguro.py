@@ -60,7 +60,7 @@ def preparar_consumo_silver(
     if current.get("manifest_uri") != referencia_manifest["uri"]:
         raise FlujoSilverGoldError("Manifest no vinculado al current.")
 
-    if current.get("manifest_generacion") != referencia_manifest["generacion"]:
+    if current.get("manifest_generacion") != referencia_manifest["generation"]:
         raise FlujoSilverGoldError("Generación del manifest incompatible.")
 
     if current.get("manifest_sha256") != referencia_manifest["sha256"]:
