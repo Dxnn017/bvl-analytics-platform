@@ -7,7 +7,14 @@
 
 ASSERT (
   SELECT COUNT(*) = 0
-  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.mercado_valor_diario_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
   WHERE operation NOT IN ('UPSERT', 'DELETE')
      OR operation IS NULL
      OR run_id IS NULL
@@ -20,7 +27,14 @@ ASSERT (
   SELECT COUNT(*) = 0
   FROM (
     SELECT `nemonico`, `fecha`
+    FROM (
+    SELECT *
     FROM `gold_analytics_staging.mercado_valor_diario_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
     GROUP BY `nemonico`, `fecha`
     HAVING COUNT(*) > 1
   )
@@ -29,7 +43,14 @@ ASSERT (
 -- Controles obligatorios antes del MERGE.
 ASSERT (
   SELECT COUNT(*) = 0
-  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.mercado_valor_diario_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
   WHERE `nemonico` IS NULL OR TRIM(CAST(`nemonico` AS STRING)) = '' OR `fecha` IS NULL OR TRIM(CAST(`fecha` AS STRING)) = ''
 ) AS 'Claves nulas o vacías en staging';
 
@@ -52,19 +73,107 @@ ASSERT (
 -- Bloqueo temporal: DELETE requiere autorización verificable.
 ASSERT (
   SELECT COUNT(*) = 0
-  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.mercado_valor_diario_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
   WHERE operation = 'DELETE'
 ) AS 'DELETE bloqueado hasta autorización oficial de Quality';
 
+-- Integridad de identidad del batch.
+ASSERT (
+  @batch_id IS NOT NULL
+  AND TRIM(@batch_id) != ''
+  AND @run_id IS NOT NULL
+  AND TRIM(@run_id) != ''
+  AND @source_version IS NOT NULL
+  AND TRIM(@source_version) != ''
+  AND @payload_sha256 IS NOT NULL
+  AND REGEXP_CONTAINS(@payload_sha256, r'^[0-9a-fA-F]{64}$')
+) AS 'ERROR: parametros del batch invalidos';
+
+ASSERT (
+  SELECT COUNT(*) > 0
+  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  WHERE batch_id = @batch_id
+    AND run_id = @run_id
+    AND source_version = @source_version
+    AND payload_sha256 = @payload_sha256
+) AS 'ERROR: batch vacio';
+
+ASSERT (
+  SELECT COUNT(*) = 0
+  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  WHERE batch_id = @batch_id
+    AND (
+      run_id IS DISTINCT FROM @run_id
+      OR source_version IS DISTINCT FROM @source_version
+      OR payload_sha256 IS DISTINCT FROM @payload_sha256
+    )
+) AS 'ERROR: batch_id con metadatos inconsistentes';
+
 MERGE `gold_analytics.mercado_valor_diario` T
-USING `gold_analytics_staging.mercado_valor_diario_delta` S
+USING (
+  SELECT *
+  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  WHERE batch_id = @batch_id
+    AND run_id = @run_id
+    AND source_version = @source_version
+    AND payload_sha256 = @payload_sha256
+) S
 ON T.`nemonico` = S.`nemonico` AND T.`fecha` = S.`fecha`
 
 WHEN MATCHED AND S.operation = 'DELETE'
   THEN DELETE
 
 WHEN MATCHED AND S.operation = 'UPSERT'
-  THEN UPDATE SET
+  AND (
+    T.`nemonico` IS DISTINCT FROM S.`nemonico`
+    OR T.`fecha` IS DISTINCT FROM S.`fecha`
+    OR T.`descripcion` IS DISTINCT FROM S.`descripcion`
+    OR T.`fecha_anterior` IS DISTINCT FROM S.`fecha_anterior`
+    OR T.`precio_anterior` IS DISTINCT FROM S.`precio_anterior`
+    OR T.`precio_cierre` IS DISTINCT FROM S.`precio_cierre`
+    OR T.`precio_apertura` IS DISTINCT FROM S.`precio_apertura`
+    OR T.`precio_maximo` IS DISTINCT FROM S.`precio_maximo`
+    OR T.`precio_minimo` IS DISTINCT FROM S.`precio_minimo`
+    OR T.`precio_promedio` IS DISTINCT FROM S.`precio_promedio`
+    OR T.`monto_negociado` IS DISTINCT FROM S.`monto_negociado`
+    OR T.`fuente` IS DISTINCT FROM S.`fuente`
+    OR T.`fecha_ingesta` IS DISTINCT FROM S.`fecha_ingesta`
+    OR T.`tipo_cambio_venta` IS DISTINCT FROM S.`tipo_cambio_venta`
+    OR T.`embig_peru` IS DISTINCT FROM S.`embig_peru`
+    OR T.`ruc` IS DISTINCT FROM S.`ruc`
+    OR T.`razon_social` IS DISTINCT FROM S.`razon_social`
+    OR T.`codigo_isin` IS DISTINCT FROM S.`codigo_isin`
+    OR T.`tipo_valor` IS DISTINCT FROM S.`tipo_valor`
+    OR T.`moneda_referencia` IS DISTINCT FROM S.`moneda_referencia`
+    OR T.`fecha_inscripcion` IS DISTINCT FROM S.`fecha_inscripcion`
+    OR T.`precio_anterior_valido` IS DISTINCT FROM S.`precio_anterior_valido`
+    OR T.`precio_cierre_valido` IS DISTINCT FROM S.`precio_cierre_valido`
+    OR T.`rango_intradia_valido` IS DISTINCT FROM S.`rango_intradia_valido`
+    OR T.`tipo_cambio_disponible` IS DISTINCT FROM S.`tipo_cambio_disponible`
+    OR T.`embig_disponible` IS DISTINCT FROM S.`embig_disponible`
+    OR T.`empresa_vinculada` IS DISTINCT FROM S.`empresa_vinculada`
+    OR T.`inscripcion_compatible` IS DISTINCT FROM S.`inscripcion_compatible`
+    OR T.`monto_negociado_valido` IS DISTINCT FROM S.`monto_negociado_valido`
+    OR T.`monto_negociado_positivo` IS DISTINCT FROM S.`monto_negociado_positivo`
+    OR T.`retorno_calculable` IS DISTINCT FROM S.`retorno_calculable`
+    OR T.`variacion_precio` IS DISTINCT FROM S.`variacion_precio`
+    OR T.`retorno_diario_pct` IS DISTINCT FROM S.`retorno_diario_pct`
+    OR T.`rango_intradia` IS DISTINCT FROM S.`rango_intradia`
+    OR T.`rango_intradia_pct` IS DISTINCT FROM S.`rango_intradia_pct`
+    OR T.`anio` IS DISTINCT FROM S.`anio`
+    OR T.`mes` IS DISTINCT FROM S.`mes`
+    OR T.`trimestre` IS DISTINCT FROM S.`trimestre`
+    OR T.`dias_desde_cierre_anterior` IS DISTINCT FROM S.`dias_desde_cierre_anterior`
+    OR T.`macro_disponible` IS DISTINCT FROM S.`macro_disponible`
+  )
+THEN UPDATE SET
     `descripcion` = S.`descripcion`,
     `fecha_anterior` = S.`fecha_anterior`,
     `precio_anterior` = S.`precio_anterior`,

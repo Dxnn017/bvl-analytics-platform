@@ -7,7 +7,14 @@
 
 ASSERT (
   SELECT COUNT(*) = 0
-  FROM `gold_analytics_staging.empresa_trimestre_delta`
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.empresa_trimestre_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
   WHERE operation NOT IN ('UPSERT', 'DELETE')
      OR operation IS NULL
      OR run_id IS NULL
@@ -20,7 +27,14 @@ ASSERT (
   SELECT COUNT(*) = 0
   FROM (
     SELECT `id_registro`
+    FROM (
+    SELECT *
     FROM `gold_analytics_staging.empresa_trimestre_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
     GROUP BY `id_registro`
     HAVING COUNT(*) > 1
   )
@@ -29,7 +43,14 @@ ASSERT (
 -- Controles obligatorios antes del MERGE.
 ASSERT (
   SELECT COUNT(*) = 0
-  FROM `gold_analytics_staging.empresa_trimestre_delta`
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.empresa_trimestre_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
   WHERE `id_registro` IS NULL OR TRIM(CAST(`id_registro` AS STRING)) = ''
 ) AS 'Claves nulas o vacías en staging';
 
@@ -52,19 +73,154 @@ ASSERT (
 -- Bloqueo temporal: DELETE requiere autorización verificable.
 ASSERT (
   SELECT COUNT(*) = 0
-  FROM `gold_analytics_staging.empresa_trimestre_delta`
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.empresa_trimestre_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
   WHERE operation = 'DELETE'
 ) AS 'DELETE bloqueado hasta autorización oficial de Quality';
 
+-- Validación de campos obligatorios para UPSERT.
+ASSERT (
+  SELECT COUNT(*) = 0
+  FROM (
+    SELECT *
+    FROM `gold_analytics_staging.empresa_trimestre_delta`
+    WHERE batch_id = @batch_id
+      AND run_id = @run_id
+      AND source_version = @source_version
+      AND payload_sha256 = @payload_sha256
+  )
+  WHERE operation = 'UPSERT'
+    AND (
+      `periodo_valido` IS NULL OR
+      `patrimonio_valido` IS NULL OR
+      `ingreso_valido` IS NULL OR
+      `utilidad_valida` IS NULL OR
+      `moneda_valida` IS NULL OR
+      `identidad_contable_evaluable` IS NULL OR
+      `identidad_contable_valida` IS NULL OR
+      `colision_financiera` IS NULL OR
+      `sin_incidencias_estructurales` IS NULL OR
+      `apto_kpi_general` IS NULL OR
+      `resultado_financiero` IS NULL OR
+      `patrimonio_negativo` IS NULL OR
+      `motivos_calidad` IS NULL
+    )
+) AS 'UPSERT rechazado: campos obligatorios nulos';
+
+-- Integridad de identidad del batch.
+ASSERT (
+  @batch_id IS NOT NULL
+  AND TRIM(@batch_id) != ''
+  AND @run_id IS NOT NULL
+  AND TRIM(@run_id) != ''
+  AND @source_version IS NOT NULL
+  AND TRIM(@source_version) != ''
+  AND @payload_sha256 IS NOT NULL
+  AND REGEXP_CONTAINS(@payload_sha256, r'^[0-9a-fA-F]{64}$')
+) AS 'ERROR: parametros del batch invalidos';
+
+ASSERT (
+  SELECT COUNT(*) > 0
+  FROM `gold_analytics_staging.empresa_trimestre_delta`
+  WHERE batch_id = @batch_id
+    AND run_id = @run_id
+    AND source_version = @source_version
+    AND payload_sha256 = @payload_sha256
+) AS 'ERROR: batch vacio';
+
+ASSERT (
+  SELECT COUNT(*) = 0
+  FROM `gold_analytics_staging.empresa_trimestre_delta`
+  WHERE batch_id = @batch_id
+    AND (
+      run_id IS DISTINCT FROM @run_id
+      OR source_version IS DISTINCT FROM @source_version
+      OR payload_sha256 IS DISTINCT FROM @payload_sha256
+    )
+) AS 'ERROR: batch_id con metadatos inconsistentes';
+
 MERGE `gold_analytics.empresa_trimestre` T
-USING `gold_analytics_staging.empresa_trimestre_delta` S
+USING (
+  SELECT *
+  FROM `gold_analytics_staging.empresa_trimestre_delta`
+  WHERE batch_id = @batch_id
+    AND run_id = @run_id
+    AND source_version = @source_version
+    AND payload_sha256 = @payload_sha256
+) S
 ON T.`id_registro` = S.`id_registro`
 
 WHEN MATCHED AND S.operation = 'DELETE'
   THEN DELETE
 
 WHEN MATCHED AND S.operation = 'UPSERT'
-  THEN UPDATE SET
+  AND (
+    T.`rpj` IS DISTINCT FROM S.`rpj`
+    OR T.`ejercicio` IS DISTINCT FROM S.`ejercicio`
+    OR T.`trimestre_num` IS DISTINCT FROM S.`trimestre_num`
+    OR T.`id_registro` IS DISTINCT FROM S.`id_registro`
+    OR T.`clave_negocio` IS DISTINCT FROM S.`clave_negocio`
+    OR T.`ruc` IS DISTINCT FROM S.`ruc`
+    OR T.`ruc_valido` IS DISTINCT FROM S.`ruc_valido`
+    OR T.`nombre_empresa` IS DISTINCT FROM S.`nombre_empresa`
+    OR T.`tipo_empresa` IS DISTINCT FROM S.`tipo_empresa`
+    OR T.`tipo_sector` IS DISTINCT FROM S.`tipo_sector`
+    OR T.`ciiu` IS DISTINCT FROM S.`ciiu`
+    OR T.`trimestre_original` IS DISTINCT FROM S.`trimestre_original`
+    OR T.`tipo_informacion` IS DISTINCT FROM S.`tipo_informacion`
+    OR T.`metodo_flujo_efectivo` IS DISTINCT FROM S.`metodo_flujo_efectivo`
+    OR T.`moneda_original` IS DISTINCT FROM S.`moneda_original`
+    OR T.`activo_total` IS DISTINCT FROM S.`activo_total`
+    OR T.`pasivo_total` IS DISTINCT FROM S.`pasivo_total`
+    OR T.`patrimonio_total` IS DISTINCT FROM S.`patrimonio_total`
+    OR T.`total_ingreso` IS DISTINCT FROM S.`total_ingreso`
+    OR T.`utilidad_neta` IS DISTINCT FROM S.`utilidad_neta`
+    OR T.`cantidad_clave_negocio` IS DISTINCT FROM S.`cantidad_clave_negocio`
+    OR T.`colision_clave_negocio` IS DISTINCT FROM S.`colision_clave_negocio`
+    OR T.`fuente_datos` IS DISTINCT FROM S.`fuente_datos`
+    OR T.`fecha_ingesta` IS DISTINCT FROM S.`fecha_ingesta`
+    OR T.`moneda` IS DISTINCT FROM S.`moneda`
+    OR T.`anio` IS DISTINCT FROM S.`anio`
+    OR T.`trimestre` IS DISTINCT FROM S.`trimestre`
+    OR T.`periodo_valido` IS DISTINCT FROM S.`periodo_valido`
+    OR T.`periodo` IS DISTINCT FROM S.`periodo`
+    OR T.`fecha_fin_trimestre` IS DISTINCT FROM S.`fecha_fin_trimestre`
+    OR T.`activo_valido` IS DISTINCT FROM S.`activo_valido`
+    OR T.`pasivo_valido` IS DISTINCT FROM S.`pasivo_valido`
+    OR T.`patrimonio_valido` IS DISTINCT FROM S.`patrimonio_valido`
+    OR T.`patrimonio_positivo` IS DISTINCT FROM S.`patrimonio_positivo`
+    OR T.`ingreso_valido` IS DISTINCT FROM S.`ingreso_valido`
+    OR T.`ingreso_positivo` IS DISTINCT FROM S.`ingreso_positivo`
+    OR T.`utilidad_valida` IS DISTINCT FROM S.`utilidad_valida`
+    OR T.`moneda_valida` IS DISTINCT FROM S.`moneda_valida`
+    OR T.`identidad_contable_evaluable` IS DISTINCT FROM S.`identidad_contable_evaluable`
+    OR T.`diferencia_contable` IS DISTINCT FROM S.`diferencia_contable`
+    OR T.`identidad_contable_valida` IS DISTINCT FROM S.`identidad_contable_valida`
+    OR T.`cantidad_registros_empresa_periodo` IS DISTINCT FROM S.`cantidad_registros_empresa_periodo`
+    OR T.`colision_financiera` IS DISTINCT FROM S.`colision_financiera`
+    OR T.`sin_incidencias_estructurales` IS DISTINCT FROM S.`sin_incidencias_estructurales`
+    OR T.`apto_kpi_general` IS DISTINCT FROM S.`apto_kpi_general`
+    OR T.`roa_calculable` IS DISTINCT FROM S.`roa_calculable`
+    OR T.`roe_calculable` IS DISTINCT FROM S.`roe_calculable`
+    OR T.`endeudamiento_calculable` IS DISTINCT FROM S.`endeudamiento_calculable`
+    OR T.`margen_neto_calculable` IS DISTINCT FROM S.`margen_neto_calculable`
+    OR T.`autonomia_calculable` IS DISTINCT FROM S.`autonomia_calculable`
+    OR T.`roa_aproximado_pct` IS DISTINCT FROM S.`roa_aproximado_pct`
+    OR T.`roe_aproximado_pct` IS DISTINCT FROM S.`roe_aproximado_pct`
+    OR T.`endeudamiento_pct` IS DISTINCT FROM S.`endeudamiento_pct`
+    OR T.`margen_neto_pct` IS DISTINCT FROM S.`margen_neto_pct`
+    OR T.`autonomia_financiera_pct` IS DISTINCT FROM S.`autonomia_financiera_pct`
+    OR T.`resultado_financiero` IS DISTINCT FROM S.`resultado_financiero`
+    OR T.`patrimonio_negativo` IS DISTINCT FROM S.`patrimonio_negativo`
+    OR T.`motivos_calidad` IS DISTINCT FROM S.`motivos_calidad`
+  )
+THEN UPDATE SET
     `rpj` = S.`rpj`,
     `ejercicio` = S.`ejercicio`,
     `trimestre_num` = S.`trimestre_num`,

@@ -1,0 +1,46 @@
+{
+  "estado": "PROPUESTA_LOCAL_NO_AUTORIZADA",
+  "productos": [
+    "mercado_valor_diario",
+    "actividad_sab_diaria",
+    "empresa_trimestre"
+  ],
+  "identidad_batch": [
+    "product",
+    "batch_id",
+    "run_id",
+    "source_version",
+    "payload_sha256"
+  ],
+  "tabla_auditoria": "gold_analytics_control.incremental_batches",
+  "estados": [
+    "PROCESSING",
+    "COMPLETED",
+    "FAILED"
+  ],
+  "flujo_requerido": [
+    "validar_version_silver_oficial",
+    "validar_autorizacion_quality",
+    "verificar_hash_contenido_real",
+    "verificar_identidad_y_claves_staging",
+    "rechazar_delete_no_autorizado",
+    "detectar_batch_completado",
+    "controlar_ejecucion_concurrente",
+    "iniciar_transaccion",
+    "ejecutar_merge_del_batch",
+    "registrar_auditoria",
+    "confirmar_transaccion"
+  ],
+  "invariantes": {
+    "replay_completado": "NOOP",
+    "batch_id_con_otro_hash": "REJECT",
+    "batch_sin_filas": "REJECT",
+    "delete_sin_autorizacion": "REJECT",
+    "error_en_merge_o_auditoria": "ROLLBACK",
+    "concurrencia_mismo_batch": "SINGLE_WRITER_REQUERIDO",
+    "actualizacion_sin_cambios": "NOOP",
+    "cobertura_sab_parcial": "CONSERVAR_SIN_RELLENAR_CEROS"
+  },
+  "pendiente_quality": true,
+  "ejecucion_gcp_autorizada": false
+}
