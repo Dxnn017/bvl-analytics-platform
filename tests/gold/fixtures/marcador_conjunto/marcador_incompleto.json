@@ -1,0 +1,31 @@
+{
+  "contrato": "bvl-conjunta-candidato-v0.2",
+  "publicacion_conjunta_id": "fixture-conjunta-001",
+  "proyecto": "bvl-analytics-2026",
+  "run_id": "fixture-run-001",
+  "intento": 1,
+  "batch_id": "fixture-batch-001",
+  "commit_procesador": "8782d2a332a3492997e4e7af2bbac8df7db874f5",
+  "estado": "PUBLICACION_CONJUNTA_APROBADA",
+  "fecha_confirmacion": "2026-11-26T00:00:00Z",
+  "versiones": [
+    {
+      "producto": "referencias_smv/valores_inscritos",
+      "version_id": "fixture-v1",
+      "run_id": "fixture-run-001",
+      "intento": 1,
+      "batch_id": "fixture-batch-001",
+      "current": {
+        "uri": "gs://bvl26-control-7f3a9c/fixtures/1/current.json",
+        "generacion": "101",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "manifest": {
+        "uri": "gs://bvl26-control-7f3a9c/fixtures/1/manifest.json",
+        "generacion": "201",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "firma_manifest_uri": "gs://bvl26-control-7f3a9c/fixtures/1/manifest.sig"
+    }
+  ]
+}

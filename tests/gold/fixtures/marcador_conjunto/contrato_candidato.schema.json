@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BVL Publicacion Conjunta Silver - Candidato v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contrato",
+    "publicacion_conjunta_id",
+    "proyecto",
+    "run_id",
+    "intento",
+    "batch_id",
+    "commit_procesador",
+    "estado",
+    "fecha_confirmacion",
+    "versiones"
+  ],
+  "properties": {
+    "contrato": {
+      "const": "bvl-conjunta-candidato-v0.2"
+    },
+    "publicacion_conjunta_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "proyecto": {
+      "const": "bvl-analytics-2026"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intento": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit_procesador": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "estado": {
+      "const": "PUBLICACION_CONJUNTA_APROBADA"
+    },
+    "fecha_confirmacion": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "versiones": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/version"
+      }
+    }
+  },
+  "$defs": {
+    "referencia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "uri",
+        "generacion",
+        "sha256"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generacion": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producto",
+        "version_id",
+        "run_id",
+        "intento",
+        "batch_id",
+        "current",
+        "manifest",
+        "firma_manifest_uri"
+      ],
+      "properties": {
+        "producto": {
+          "type": "string"
+        },
+        "version_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intento": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "batch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current": {
+          "$ref": "#/$defs/referencia"
+        },
+        "manifest": {
+          "$ref": "#/$defs/referencia"
+        },
+        "firma_manifest_uri": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}
