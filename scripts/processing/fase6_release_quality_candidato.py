@@ -60,11 +60,20 @@ def main():
     out=args.out.expanduser().resolve()
     require(not out.exists(),'Release candidato ya existe, no sobreescribir')
     out.parent.mkdir(parents=True,exist_ok=True)
-    with zipfile.ZipFile(out,'x',compression=zipfile.ZIP_DEFLATED) as z:
-        z.writestr('fase6_restantes_batch.py',entry)
-        z.writestr('fase6_restantes_dependencias.zip',deps)
-        z.writestr('CANDIDATO_NO_AUTORIZA.json',q)
-        z.writestr('SHA256SUMS.txt',
+    with zipfile.ZipFile(out,'x',compression=zipfile.ZIP_DEFLATED,
+                         compresslevel=9) as z:
+        def escribir(nombre, contenido):
+            info = zipfile.ZipInfo(
+                nombre, date_time=(1980, 1, 1, 0, 0, 0))
+            info.create_system = 3
+            info.external_attr = 0o100644 << 16
+            info.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(info, contenido, compresslevel=9)
+
+        escribir('fase6_restantes_batch.py', entry)
+        escribir('fase6_restantes_dependencias.zip', deps)
+        escribir('CANDIDATO_NO_AUTORIZA.json', q)
+        escribir('SHA256SUMS.txt',
             f'{hashlib.sha256(entry).hexdigest()}  fase6_restantes_batch.py\n'
             f'{hashlib.sha256(deps).hexdigest()}  fase6_restantes_dependencias.zip\n'
             f'{hashlib.sha256(q).hexdigest()}  CANDIDATO_NO_AUTORIZA.json\n')
