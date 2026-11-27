@@ -268,3 +268,51 @@ def ejecutar_dependencia_impacto_local(
         "ejecucion_incremental_local": True,
         "publicacion_autorizada": False,
     }
+
+
+def ejecutar_dependencia_impacto_desde_rutas_local(
+    spark, rutas_gold, productos_completados
+):
+    """Carga versiones Gold explícitas y encadena impacto localmente."""
+
+    requeridas = {
+        "hechos_base",
+        "hechos_candidato",
+        "mercado_base",
+        "mercado_candidato",
+        "impacto_base",
+    }
+
+    if not isinstance(rutas_gold, dict):
+        raise ValueError("Las rutas Gold deben ser un diccionario.")
+
+    if set(rutas_gold) != requeridas:
+        raise ValueError(
+            f"Rutas Gold faltantes o desconocidas: "
+            f"{sorted(requeridas ^ set(rutas_gold))}"
+        )
+
+    pendientes = {
+        "hechos_empresa",
+        "mercado_valor_diario",
+    } - set(productos_completados)
+
+    if pendientes:
+        raise ValueError(
+            f"Predecesores pendientes: {sorted(pendientes)}"
+        )
+
+    if any(
+        not isinstance(ruta, str) or not ruta.strip()
+        for ruta in rutas_gold.values()
+    ):
+        raise ValueError("Existen rutas Gold vacías o inválidas.")
+
+    versiones = {
+        nombre: spark.read.parquet(ruta)
+        for nombre, ruta in rutas_gold.items()
+    }
+
+    return ejecutar_dependencia_impacto_local(
+        versiones, productos_completados
+    )
