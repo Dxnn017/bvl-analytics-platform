@@ -1,0 +1,132 @@
+"""Recálculo incremental de actividad SAB por fechas completas.
+
+No escribe datos ni publica versiones Gold.
+"""
+
+from pyspark.sql import functions as F
+
+from build_actividad_sab_diaria import construir_gold, validar_clave
+
+
+def recalcular_actividad_sab(silver_sab, gold_base, fechas_afectadas):
+    """Reconstruye las fechas afectadas y conserva el resto de Gold."""
+
+    fechas = fechas_afectadas.select(
+        F.to_date("fecha").alias("fecha")
+    ).distinct()
+
+    if fechas.filter(F.col("fecha").isNull()).limit(1).count():
+        raise ValueError("Hay fechas afectadas inválidas.")
+
+    # Recuperar todas las SAB de cada fecha afectada.
+    silver_afectado = silver_sab.join(
+        fechas,
+        silver_sab["fecha_negociacion"] == fechas["fecha"],
+        "left_semi",
+    )
+
+    validar_clave(
+        silver_afectado,
+        ["fecha_negociacion", "codigo_sab"],
+        "Silver SAB afectado",
+    )
+
+    gold_recalculado = construir_gold(silver_afectado)
+
+    # Conservar las fechas no afectadas, incluyendo otros meses.
+    gold_conservado = gold_base.join(
+        fechas,
+        "fecha",
+        "left_anti",
+    )
+
+    # Una fecha eliminada completamente en Silver desaparece de Gold.
+    gold_candidato = gold_conservado.unionByName(
+        gold_recalculado
+    )
+
+    validar_clave(
+        gold_candidato,
+        ["fecha", "codigo_sab"],
+        "Gold SAB candidato",
+    )
+
+    return gold_candidato
+
+
+def resolver_fechas_sab(spark, dataset):
+    """Convierte cambios efectivos Silver en fechas completas para SAB."""
+
+    from scope_resolver import (
+        obtener_fechas_afectadas,
+        construir_dataframe_fechas,
+    )
+
+    if not isinstance(dataset, dict):
+        raise ValueError("El detalle Silver debe ser un diccionario.")
+
+    if dataset.get("dataset") not in (None, "montos_sab"):
+        raise ValueError("El detalle no corresponde a montos_sab.")
+
+    fechas = obtener_fechas_afectadas(dataset)
+
+    if dataset["total_cambios_efectivos"] > 0 and not fechas:
+        raise ValueError(
+            "Existen cambios Silver sin fechas anteriores ni nuevas."
+        )
+
+    return construir_dataframe_fechas(spark, fechas)
+
+
+def resolver_fechas_sab_desde_tarea(spark, tarea):
+    """Obtiene fechas SAB desde una tarea del planificador Gold."""
+
+    from datetime import date
+    from scope_resolver import construir_dataframe_fechas
+
+    if tarea.get("producto_gold") != "actividad_sab_diaria":
+        raise ValueError("La tarea no corresponde a actividad_sab_diaria.")
+
+    if tarea.get("detalle_externo") or tarea.get("requiere_resolver_detalle_externo"):
+        raise ValueError("Existen detalles externos sin resolver.")
+
+    cambios = tarea.get("cambios_directos_declarados")
+    if not isinstance(cambios, list) or not cambios:
+        raise ValueError("La tarea no contiene cambios directos Silver.")
+
+    fechas = set()
+
+    for cambio in cambios:
+        if cambio.get("dataset") != "montos_sab":
+            raise ValueError("Dataset Silver incompatible con SAB.")
+
+        operaciones = cambio.get("operaciones_declaradas")
+        if not isinstance(operaciones, list):
+            raise ValueError("Falta el detalle de operaciones Silver.")
+
+        if len(operaciones) != cambio.get("total_cambios_declarados"):
+            raise ValueError("Cantidad de operaciones incompatible.")
+
+        for operacion in operaciones:
+            tipo = operacion.get("operacion")
+            if tipo not in {"INSERT", "UPDATE", "DELETE"}:
+                raise ValueError("Operacion Silver no soportada.")
+
+            for campo in ("clave_anterior", "clave_nueva"):
+                clave = operacion.get(campo)
+                if clave is None:
+                    continue
+
+                if not isinstance(clave, dict):
+                    raise ValueError("Clave Silver invalida.")
+
+                valor = clave.get("fecha_negociacion")
+                if not isinstance(valor, str):
+                    raise ValueError("Falta fecha_negociacion.")
+
+                fechas.add(date.fromisoformat(valor))
+
+    if not fechas:
+        raise ValueError("No se encontraron fechas SAB afectadas.")
+
+    return construir_dataframe_fechas(spark, sorted(fechas))
