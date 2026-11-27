@@ -8,13 +8,18 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from adaptador_gcs_quality import leer_objeto_gcs
+from reconstruir_particiones_hive import reconstruir_particiones
 
 
 class ClavesGlobalesError(ValueError):
     pass
 
 
-def validar_claves_globales(cliente, archivos, claves):
+def validar_claves_globales(
+    cliente, archivos, claves,
+    version_prefix=None, partition_columns=None,
+    tipos_esperados=None,
+):
     if not isinstance(archivos, list) or not archivos:
         raise ClavesGlobalesError("Archivos ausentes")
 
@@ -43,7 +48,21 @@ def validar_claves_globales(cliente, archivos, claves):
         ):
             raise ClavesGlobalesError("Integridad incompatible")
 
-        tabla = pq.read_table(pa.BufferReader(contenido))
+        tabla = pq.read_table(pa.BufferReader(contenido), use_threads=False)
+
+        if version_prefix is not None:
+            if partition_columns is None or tipos_esperados is None:
+                raise ClavesGlobalesError(
+                    "Configuración Hive incompleta"
+                )
+
+            tabla = reconstruir_particiones(
+                tabla,
+                ref["uri"],
+                version_prefix,
+                partition_columns,
+                tipos_esperados,
+            )
 
         if not set(claves).issubset(tabla.column_names):
             raise ClavesGlobalesError("Faltan columnas clave")

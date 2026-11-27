@@ -1,15 +1,12 @@
-"""Validación física de Parquet Silver con cliente GCS inyectado.
+"""Validación física Silver con reconstrucción de particiones Hive."""
 
-Solo lectura. No habilita consumo productivo.
-"""
-
-import os
-import tempfile
-from pathlib import Path
+import hashlib
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 from adaptador_gcs_quality import leer_objeto_gcs
-from validar_parquet_fisico import validar_parquet_fisico
 from contrato_silver_oficial import validar_referencia
+from reconstruir_particiones_hive import reconstruir_particiones
 
 
 class ParquetSilverGCSError(ValueError):
@@ -17,59 +14,74 @@ class ParquetSilverGCSError(ValueError):
 
 
 def validar_parquet_desde_gcs(
-    cliente,
-    referencia,
-    tipos_esperados,
-    claves,
-    particiones,
+    cliente, referencia, tipos_esperados, claves, particiones,
+    version_prefix=None, partition_columns=None,
 ):
-    """Verifica integridad y contenido físico antes de aceptarlo."""
-
-    import hashlib
-
     validar_referencia(referencia)
 
-    if not referencia["uri"].startswith(
-        "gs://bvl26-silver-7f3a9c/versions/"
-    ) or not referencia["uri"].endswith(".parquet"):
-        raise ParquetSilverGCSError("Ruta Parquet no autorizada")
+    uri = referencia["uri"]
+    if not uri.startswith("gs://bvl26-silver-7f3a9c/versions/"):
+        raise ParquetSilverGCSError("Ruta Silver inválida")
+
+    if not uri.endswith(".parquet") or "/staging/" in uri:
+        raise ParquetSilverGCSError("Archivo no autorizado")
 
     contenido = leer_objeto_gcs(
-        cliente,
-        referencia["uri"],
-        referencia["generation"],
+        cliente, uri, referencia["generation"]
     )
 
-    if len(contenido) != referencia["size_bytes"]:
-        raise ParquetSilverGCSError("Tamaño incompatible")
+    if (
+        len(contenido) != referencia["size_bytes"]
+        or hashlib.sha256(contenido).hexdigest()
+        != referencia["sha256"]
+    ):
+        raise ParquetSilverGCSError("Integridad incompatible")
 
-    if hashlib.sha256(contenido).hexdigest() != referencia["sha256"]:
-        raise ParquetSilverGCSError("SHA-256 incompatible")
+    tabla = pq.read_table(pa.BufferReader(contenido), use_threads=False)
 
-    ruta = None
+    if version_prefix is not None:
+        if partition_columns is None:
+            raise ParquetSilverGCSError("Particiones no definidas")
 
-    try:
-        with tempfile.NamedTemporaryFile(
-            suffix=".parquet", delete=False
-        ) as temporal:
-            ruta = Path(temporal.name)
-            temporal.write(contenido)
-
-        resultado = validar_parquet_fisico(
-            ruta,
-            tipos_esperados,
-            claves,
-            particiones,
+        tabla = reconstruir_particiones(
+            tabla, uri, version_prefix,
+            partition_columns, tipos_esperados,
         )
 
-        return {
-            **resultado,
-            "uri": referencia["uri"],
-            "generation": referencia["generation"],
-            "integridad_verificada": True,
-            "consumo_productivo_autorizado": False,
-        }
+    for columna, tipo in tipos_esperados.items():
+        if columna not in tabla.column_names:
+            raise ParquetSilverGCSError(f"Columna ausente: {columna}")
 
-    finally:
-        if ruta is not None:
-            ruta.unlink(missing_ok=True)
+        if str(tabla.schema.field(columna).type) != tipo:
+            raise ParquetSilverGCSError(f"Tipo incompatible: {columna}")
+
+    for columna, valor in particiones.items():
+        if columna not in tabla.column_names:
+            raise ParquetSilverGCSError("Partición ausente")
+
+        if any(
+            x != valor for x in tabla.column(columna).to_pylist()
+        ):
+            raise ParquetSilverGCSError("Partición incompatible")
+
+    for clave in claves:
+        if clave not in tabla.column_names:
+            raise ParquetSilverGCSError("Clave ausente")
+
+        if tabla.column(clave).null_count:
+            raise ParquetSilverGCSError("Clave nula")
+
+    identidades = [
+        tuple(f[c] for c in claves)
+        for f in tabla.select(list(claves)).to_pylist()
+    ]
+
+    if len(identidades) != len(set(identidades)):
+        raise ParquetSilverGCSError("Claves duplicadas")
+
+    return {
+        "filas_validadas": tabla.num_rows,
+        "esquema_fisico_verificado": True,
+        "particiones_hive_verificadas": version_prefix is not None,
+        "consumo_productivo_autorizado": False,
+    }

@@ -64,9 +64,33 @@ def preparar_silver_v03(
         referencias,
     )
 
+    productos_conjuntos = {
+        "referencias_smv/valores_inscritos",
+        "referencias_smv/puente_ruc_nemonico",
+    }
+
+    if autorizacion["product"] in productos_conjuntos:
+        from verificar_conjunto_silver_v03 import verificar_conjunto_silver
+
+        evidencia_conjunta = verificar_conjunto_silver(
+            cliente, autorizacion, pem_quality
+        )
+
+        referencias = evidencia_conjunta["referencias_verificadas"]
+    else:
+        evidencia_conjunta = None
+
     ref_current = referencias["current"]
     ref_manifest = referencias["manifest"]
     ref_firma = referencias["manifest_signature"]
+
+    # Referencias obtenidas de objetos recuperados y verificados.
+    if evidencia_conjunta is not None:
+        for campo in ("current", "manifest", "manifest_signature"):
+            if referencias[campo] != autorizacion[campo]:
+                raise FlujoSilverV03Error(
+                    "Referencia conjunta incompatible con autorización"
+                )
 
     # Comprobación inicial de vigencia.
     verificar_generaciones_vigentes(cliente, [ref_current])
@@ -74,6 +98,26 @@ def preparar_silver_v03(
     current_bytes = leer_verificado(cliente, ref_current)
     manifest_bytes = leer_verificado(cliente, ref_manifest)
     firma_manifest = leer_verificado(cliente, ref_firma)
+
+    # Evidencias calculadas sobre los bytes realmente recuperados.
+    referencias_observadas = {}
+    for nombre, ref, datos in (
+        ("current", ref_current, current_bytes),
+        ("manifest", ref_manifest, manifest_bytes),
+        ("manifest_signature", ref_firma, firma_manifest),
+    ):
+        referencias_observadas[nombre] = {
+            "uri": ref["uri"],
+            "generation": ref["generation"],
+            "sha256": hashlib.sha256(datos).hexdigest(),
+            "size_bytes": len(datos),
+        }
+
+        if referencias_observadas[nombre] != autorizacion[nombre]:
+            raise FlujoSilverV03Error(
+                f"Referencia recuperada incompatible: {nombre}"
+            )
+
 
     # La firma se verifica sobre los bytes originales.
     verificar_firma_ecdsa(
@@ -140,6 +184,7 @@ def preparar_silver_v03(
         "manifest": manifest,
         "firma_manifest_verificada": True,
         "registry_verificado": True,
+        "referencias_verificadas": referencias_observadas,
         "autorizacion_firmada_verificada": True,
         "archivos_integridad_verificada": archivos["archivos_validados"],
         "metadatos_esquema_validos": esquema["metadatos_esquema_validos"],
@@ -211,6 +256,8 @@ def preparar_silver_v03_con_parquet(
             tipos_esperados,
             claves,
             particiones_por_uri[ref["uri"]],
+            version_prefix=prefijo,
+            partition_columns=columnas_particion,
         )
 
         if validacion["filas_validadas"] != ref.get("rows"):
@@ -231,6 +278,10 @@ def preparar_silver_v03_con_parquet(
         cliente,
         archivos,
         claves,
+    
+        version_prefix=prefijo,
+        partition_columns=columnas_particion,
+        tipos_esperados=tipos_esperados,
     )
 
     if claves_globales["filas_validadas"] != filas:
@@ -246,6 +297,38 @@ def preparar_silver_v03_con_parquet(
                 autorizacion_bytes
             )["current"]["generation"],
         }],
+    )
+
+    # Evidencias procedentes de objetos recuperados y comprobados.
+    referencias_finales = {
+        campo: resultado["referencias_verificadas"][campo]
+        for campo in ("current", "manifest", "manifest_signature")
+    }
+
+    # Cierre: autorización aún vigente y registros sin cambios.
+    validar_autorizacion(
+        autorizacion_bytes,
+        firma_autorizacion_der,
+        pem_quality,
+        producto_gold,
+        referencias_finales,
+    )
+
+    autorizacion_final = json.loads(autorizacion_bytes)
+
+    if autorizacion_final["product"] in {
+        "referencias_smv/valores_inscritos",
+        "referencias_smv/puente_ruc_nemonico",
+    }:
+        from verificar_conjunto_silver_v03 import verificar_conjunto_silver
+
+        verificar_conjunto_silver(
+            cliente, autorizacion_final, pem_quality
+        )
+
+    # La vigencia del current se comprueba inmediatamente al finalizar.
+    verificar_generaciones_vigentes(
+        cliente, [autorizacion_final["current"]]
     )
 
     return {
