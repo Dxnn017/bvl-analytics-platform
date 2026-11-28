@@ -25,6 +25,15 @@ from preparar_candidatos_correctivos import (
 
 from ejecutor_portable import validar_claves
 
+from adaptador_numerico_integral import (
+    REGLAS,
+    POLITICA,
+)
+
+from autorizacion_correctiva_quality import (
+    validar_decision_numerica,
+)
+
 
 EXCEPCIONES = {
     "finanzas_ruc_no_conciliado": 85,
@@ -502,6 +511,118 @@ def materializar_parquet_local(
     }
 
 
+def validar_evidencia_integral(preparado):
+
+    auth = preparado["autorizacion"]
+
+    decision = validar_decision_numerica(auth)
+
+    evidencias = preparado.get("numeric_adaptations")
+
+    exigir(
+        isinstance(evidencias, dict)
+        and set(evidencias) == set(REGLAS),
+        "Evidencia numerica incompleta"
+    )
+
+    conteos_fuentes = {
+        "mercado_diario/cotizaciones": 83130,
+        "mercado_diario/montos_sab": 21911,
+    }
+
+    for fuente, reglas in REGLAS.items():
+
+        evidencia = evidencias[fuente]
+        referencia = decision["sources"][fuente]
+
+        exigir(
+            evidencia["status"] == "APPLIED"
+            and evidencia["product"] == fuente
+            and evidencia["policy"] == POLITICA
+            and evidencia["authorization_id"]
+            == auth["authorization_id"]
+            and evidencia["decision_id"]
+            == decision["decision_id"]
+            and evidencia["version_id"]
+            == referencia["version_id"]
+            and evidencia["physical_contract_sha256"]
+            == referencia["physical_contract_sha256"]
+            and evidencia["input_records"]
+            == conteos_fuentes[fuente]
+            and set(evidencia["columns"]) == set(reglas)
+            and evidencia["silver_modified"] is False
+            and evidencia["constructor_modified"] is False
+            and evidencia["publication_allowed"] is False
+            and evidencia["rounding_monetary_allowed"] is False
+            and evidencia["invalid_replacement_allowed"] is False,
+            "Evidencia numerica incompatible"
+        )
+
+        for columna, tipo in reglas.items():
+
+            campo = evidencia["columns"][columna]
+
+            exigir(
+                campo["input_type"] == "string"
+                and campo["output_type"] == tipo
+                and type(campo["converted_records"]) is int
+                and campo["converted_records"] >= 0
+                and type(campo["original_nulls"]) is int
+                and campo["original_nulls"] >= 0
+                and type(campo["invalid_records"]) is int
+                and campo["invalid_records"] == 0
+                and campo["converted_records"]
+                + campo["original_nulls"]
+                == evidencia["input_records"],
+                "Conteo de conversion incompatible"
+            )
+
+    cobertura = preparado.get("sab_coverage_evidence")
+
+    referencia = auth["sab_coverage"]
+
+    if referencia is None:
+
+        exigir(
+            cobertura is None
+            and preparado["cobertura_acreditada"] is False,
+            "Cobertura no autorizada"
+        )
+
+    else:
+
+        exigir(
+            isinstance(cobertura, dict)
+            and preparado["cobertura_acreditada"] is True
+            and cobertura["policy"] == referencia["policy"]
+            and cobertura["status"]
+            == "DOCUMENTARY_RATIFICATION_VERIFIED"
+            and cobertura["product"]
+            == "mercado_diario/montos_sab"
+            and cobertura["version_id"]
+            == referencia["version_id"]
+            and cobertura["sidecar_sha256"]
+            == referencia["payload"]["sha256"]
+            and cobertura["sidecar_signature_sha256"]
+            == referencia["signature"]["sha256"]
+            and cobertura["ratification_sha256"]
+            == referencia["ratification"]["sha256"]
+            and cobertura["ratification_signature_sha256"]
+            == referencia["ratification_signature"]["sha256"]
+            and cobertura["eligible_records"] == 21911
+            and cobertura["coverage"] == "DESCONOCIDA"
+            and cobertura["full_coverage_attested"] is False
+            and cobertura[
+                "daily_counts_verified_against_dataframe"
+            ] is True
+            and cobertura["production_authorized"] is False
+            and cobertura["publication_allowed"] is False,
+            "Evidencia integral SAB incompatible"
+        )
+
+    return evidencias, cobertura
+
+
 def escribir_correccion_supervisada(
     spark, cliente, preparado,
 ):
@@ -517,6 +638,10 @@ def escribir_correccion_supervisada(
 
     candidatos = preparado["candidatos"]
     excepciones = preparado["excepciones"]
+
+    evidencias_numericas, evidencia_cobertura = (
+        validar_evidencia_integral(preparado)
+    )
 
     adaptacion = preparado.get(
         "cotizaciones_adaptation"
@@ -708,6 +833,10 @@ def escribir_correccion_supervisada(
                     auth["financial_decision"],
                 "cotizaciones_adaptation":
                     adaptacion,
+                "numeric_adaptations":
+                    evidencias_numericas,
+                "sab_coverage_evidence":
+                    evidencia_cobertura,
                 "sab_coverage_accredited":
                     preparado["cobertura_acreditada"],
                 "sab_coverage_reference":

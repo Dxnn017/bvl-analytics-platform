@@ -22,7 +22,7 @@ from autorizacion_gold_quality_v03 import (
 )
 
 
-CONTRATO = "BVL-GOLD-CORRECTIVE-STAGING-CANDIDATE-v2"
+CONTRATO = "BVL-GOLD-CORRECTIVE-STAGING-CANDIDATE-v3"
 
 PROYECTO = "bvl-analytics-2026"
 REGION = "southamerica-west1"
@@ -89,6 +89,7 @@ CAMPOS = {
     "sab_coverage",
     "financial_decision",
     "cotizaciones_adaptation",
+    "numeric_adaptations",
 }
 
 
@@ -281,6 +282,95 @@ def validar_decision_cotizaciones(auth):
     return decision
 
 
+
+def validar_decision_numerica(auth):
+
+    from adaptador_numerico_integral import (
+        REGLAS,
+        POLITICA,
+    )
+
+    decision = auth.get("numeric_adaptations")
+
+    exigir(
+        isinstance(decision, dict)
+        and set(decision) == {
+            "decision_id",
+            "decision",
+            "quality_approved",
+            "policy",
+            "sources",
+        },
+        "Decision numerica ausente o incompleta"
+    )
+
+    validar_id(decision["decision_id"])
+
+    exigir(
+        decision["quality_approved"] is True
+        and decision["decision"]
+        == "ALLOW_STRICT_NUMERIC_CONVERSIONS"
+        and decision["policy"] == POLITICA,
+        "Politica numerica no autorizada"
+    )
+
+    fuentes = decision["sources"]
+
+    exigir(
+        isinstance(fuentes, dict)
+        and set(fuentes) == set(REGLAS),
+        "Fuentes de adaptacion incompatibles"
+    )
+
+    for fuente, reglas in REGLAS.items():
+
+        referencia = fuentes[fuente]
+
+        exigir(
+            isinstance(referencia, dict)
+            and set(referencia) == {
+                "version_id",
+                "physical_contract_sha256",
+                "columns",
+            },
+            "Referencia numerica incompleta"
+        )
+
+        oficial = auth["sources"][fuente]
+
+        exigir(
+            referencia["version_id"]
+            == oficial["version_id"],
+            "Adaptacion numerica para otra version"
+        )
+
+        validar_sha(
+            referencia["physical_contract_sha256"]
+        )
+
+        exigir(
+            referencia["physical_contract_sha256"]
+            == oficial["physical_contract_sha256"],
+            "Contrato fisico numerico incompatible"
+        )
+
+        columnas_esperadas = {
+            nombre: {
+                "input_type": "string",
+                "output_type": tipo,
+            }
+            for nombre, tipo in reglas.items()
+        }
+
+        exigir(
+            referencia["columns"]
+            == columnas_esperadas,
+            "Conversiones numericas no autorizadas"
+        )
+
+    return decision
+
+
 def validar_autorizacion_correctiva(
     contenido,
     firma,
@@ -455,7 +545,10 @@ def validar_autorizacion_correctiva(
             and set(cobertura) == {
                 "payload",
                 "signature",
+                "ratification",
+                "ratification_signature",
                 "version_id",
+                "policy",
             },
             "Sidecar SAB incompleto"
         )
@@ -466,6 +559,20 @@ def validar_autorizacion_correctiva(
 
         validar_referencia_control(
             cobertura["signature"]
+        )
+
+        validar_referencia_control(
+            cobertura["ratification"]
+        )
+
+        validar_referencia_control(
+            cobertura["ratification_signature"]
+        )
+
+        exigir(
+            cobertura["policy"]
+            == "SAB_RESTRICTED_RATIFICATION_V1",
+            "Politica de cobertura no autorizada"
         )
 
         exigir(
@@ -531,6 +638,7 @@ def validar_autorizacion_correctiva(
         validar_sha(financiera[campo])
 
     validar_decision_cotizaciones(auth)
+    validar_decision_numerica(auth)
 
     return auth
 

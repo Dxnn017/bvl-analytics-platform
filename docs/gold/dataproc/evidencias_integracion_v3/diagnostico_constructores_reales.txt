@@ -1,0 +1,343 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 23:44:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2]                                                                                Traceback (most recent call last):
+  File "/home/piero/REVISION_INTEGRAL_GOLD_FASE6/diagnostico_constructores_reales.py", line 248, in evaluar
+    df = operacion()
+         ^^^^^^^^^^^
+  File "/home/piero/REVISION_INTEGRAL_GOLD_FASE6/diagnostico_constructores_reales.py", line 386, in <lambda>
+    lambda: mercado(
+            ^^^^^^^^
+  File "/home/piero/bvl-analytics-platform/src/gold/mercado/build_mercado_valor_diario.py", line 215, in construir_gold
+    .withColumn(
+     ^^^^^^^^^^^
+  File "/home/piero/BigData_UPAO/bigdata_env/lib/python3.11/site-packages/pyspark/sql/dataframe.py", line 5174, in withColumn
+    return DataFrame(self._jdf.withColumn(colName, col._jc), self.sparkSession)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/piero/BigData_UPAO/bigdata_env/lib/python3.11/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/piero/BigData_UPAO/bigdata_env/lib/python3.11/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.AnalysisException: [DATATYPE_MISMATCH.BINARY_OP_WRONG_TYPE] Cannot resolve "(precio_cierre - precio_anterior)" due to data type mismatch: the binary operator requires the input type ("NUMERIC" or "INTERVAL DAY TO SECOND" or "INTERVAL YEAR TO MONTH" or "INTERVAL"), not "STRING".;
+'Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 9 more fields]
++- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 8 more fields]
+   +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 7 more fields]
+      +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 6 more fields]
+         +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 5 more fields]
+            +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 4 more fields]
+               +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 3 more fields]
+                  +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 2 more fields]
+                     +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, (((((isnotnull(precio_maximo#344) AND NOT isnan(cast(precio_maximo#344 as double))) AND NOT (abs(cast(precio_maximo#344 as double)) = Infinity)) AND ((isnotnull(precio_minimo#345) AND NOT isnan(cast(precio_minimo#345 as double))) AND NOT (abs(cast(precio_minimo#345 as double)) = Infinity))) AND (cast(precio_minimo#345 as bigint) > cast(0 as bigint))) AND (precio_maximo#344 >= precio_minimo#345)) AS rango_intradia_valido#476]
+                        +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, (((isnotnull(precio_cierre#342) AND NOT isnan(cast(precio_cierre#342 as double))) AND NOT (abs(cast(precio_cierre#342 as double)) = Infinity)) AND (cast(precio_cierre#342 as bigint) > cast(0 as bigint))) AS precio_cierre_valido#451]
+                           +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, (((isnotnull(precio_anterior#341) AND NOT isnan(cast(precio_anterior#341 as double))) AND NOT (abs(cast(precio_anterior#341 as double)) = Infinity)) AND (cast(precio_anterior#341 as bigint) > cast(0 as bigint))) AS precio_anterior_valido#427]
+                              +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88]
+                                 +- Join LeftOuter, (nemonico#339 = nemonico#396)
+                                    :- Project [fecha#338, nemonico#339, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65]
+                                    :  +- Join LeftOuter, (fecha#338 = fecha#64)
+                                    :     :- Project [fecha#338, nemonico#339, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48]
+                                    :     :  +- Join LeftOuter, (fecha#338 = fecha#47)
+                                    :     :     :- Project [fecha_cotizacion#5 AS fecha#338, upper(trim(valor#11, None)) AS nemonico#339, valor#11 AS nemonico_original#340, descripcion#3, fecha_anterior#4, cierre_anterior#2 AS precio_anterior#341, cierre_actual#1 AS precio_cierre#342, apertura_actual#0 AS precio_apertura#343, maxima_actual#7 AS precio_maximo#344, minima_actual#8 AS precio_minimo#345, promedio_actual#10 AS precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256]
+                                    :     :     :  +- Project [apertura_actual#0, cierre_actual#1, cierre_anterior#2, descripcion#3, fecha_anterior#4, fecha_cotizacion#5, fecha_registro#6, maxima_actual#7, minima_actual#8, monto_negociado#9, promedio_actual#10, valor#11, anio#12, mes#13, fuente#240, cast(null as date) AS fecha_ingesta#256]
+                                    :     :     :     +- Project [apertura_actual#0, cierre_actual#1, cierre_anterior#2, descripcion#3, fecha_anterior#4, fecha_cotizacion#5, fecha_registro#6, maxima_actual#7, minima_actual#8, monto_negociado#9, promedio_actual#10, valor#11, anio#12, mes#13, cast(null as string) AS fuente#240]
+                                    :     :     :        +- LogicalRDD [apertura_actual#0, cierre_actual#1, cierre_anterior#2, descripcion#3, fecha_anterior#4, fecha_cotizacion#5, fecha_registro#6, maxima_actual#7, minima_actual#8, monto_negociado#9, promedio_actual#10, valor#11, anio#12, mes#13], false
+                                    :     :     +- Project [fecha#47, tipo_cambio_venta#48]
+                                    :     :        +- LogicalRDD [fecha#47, tipo_cambio_venta#48, anio#49, mes#50], false
+                                    :     +- Project [fecha#64, embig_peru#65]
+                                    :        +- LogicalRDD [fecha#64, embig_peru#65, anio#66, mes#67], false
+                                    +- Project [upper(trim(nemonico_valor#82, None)) AS nemonico#396, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda#87 AS moneda_referencia#397, fecha_inscripcion#88]
+                                       +- LogicalRDD [ruc#81, nemonico_valor#82, razon_social#83, codigo_isin#84, denominacion_valor#85, tipo_valor#86, moneda#87, fecha_inscripcion#88, resolucion_inscripcion#89], false
+
+SHA256_ZIP: 32a1b866cb13f135a33783678601699dfb582ae3501280a899e42c91a933bf5f
+
+FUENTE: mercado_diario/cotizaciones
+ESQUEMA_EXACTO: True
+COLUMNAS: 14
+REGISTROS_SINTETICOS: 1
+
+FUENTE: macroeconomia/tipo_cambio
+ESQUEMA_EXACTO: True
+COLUMNAS: 4
+REGISTROS_SINTETICOS: 1
+
+FUENTE: macroeconomia/embig
+ESQUEMA_EXACTO: True
+COLUMNAS: 4
+REGISTROS_SINTETICOS: 1
+
+FUENTE: referencias_smv/puente_ruc_nemonico
+ESQUEMA_EXACTO: True
+COLUMNAS: 9
+REGISTROS_SINTETICOS: 1
+
+FUENTE: mercado_diario/montos_sab
+ESQUEMA_EXACTO: True
+COLUMNAS: 15
+REGISTROS_SINTETICOS: 2
+
+FUENTE: finanzas_empresariales/principales_cuentas
+ESQUEMA_EXACTO: True
+COLUMNAS: 24
+REGISTROS_SINTETICOS: 1
+
+======================================================================
+CONSTRUCTOR REAL: mercado_valor_diario
+======================================================================
+
+======================================================================
+CONSTRUCTOR REAL: actividad_sab_diaria
+======================================================================
+{
+  "producto": "actividad_sab_diaria",
+  "columnas_esperadas": 41,
+  "columnas_observadas": 41,
+  "columnas_faltantes": [],
+  "columnas_adicionales": [],
+  "diferencias_tipos": [
+    {
+      "columna": "porcentaje_compras_original",
+      "esperado": "double",
+      "observado": "string"
+    },
+    {
+      "columna": "porcentaje_ventas_original",
+      "esperado": "double",
+      "observado": "string"
+    },
+    {
+      "columna": "porcentaje_total_original",
+      "esperado": "double",
+      "observado": "string"
+    }
+  ],
+  "registros": 2,
+  "claves_presentes": true,
+  "claves_invalidas": 0,
+  "claves_duplicadas": 0,
+  "nulos_obligatorios": {
+    "montos_validos": 0,
+    "total_consistente": 0,
+    "cantidad_sab_diaria": 0,
+    "estado_cobertura": 0,
+    "trazabilidad_verificada": 0,
+    "cobertura_completa": 0
+  },
+  "compatible": false
+}
+root
+ |-- fecha: date (nullable = true)
+ |-- codigo_sab: string (nullable = true)
+ |-- sociedad_agente_bolsa: string (nullable = true)
+ |-- monto_compras: decimal(24,2) (nullable = true)
+ |-- monto_ventas: decimal(24,2) (nullable = true)
+ |-- monto_total: decimal(24,2) (nullable = true)
+ |-- porcentaje_compras_original: string (nullable = true)
+ |-- porcentaje_ventas_original: string (nullable = true)
+ |-- porcentaje_total_original: string (nullable = true)
+ |-- fuente_datos: string (nullable = false)
+ |-- fecha_ingesta: date (nullable = true)
+ |-- montos_validos: boolean (nullable = false)
+ |-- diferencia_monetaria: decimal(26,2) (nullable = true)
+ |-- total_consistente: boolean (nullable = false)
+ |-- saldo_neto: decimal(25,2) (nullable = true)
+ |-- total_compras_diario: decimal(34,2) (nullable = true)
+ |-- total_ventas_diario: decimal(34,2) (nullable = true)
+ |-- total_actividad_diaria: decimal(34,2) (nullable = true)
+ |-- cantidad_sab_diaria: long (nullable = false)
+ |-- registros_invalidos_diarios: long (nullable = true)
+ |-- actividad_diaria_valida: boolean (nullable = true)
+ |-- participacion_compras_pct: double (nullable = true)
+ |-- participacion_ventas_pct: double (nullable = true)
+ |-- participacion_total_pct: double (nullable = true)
+ |-- diferencia_participacion_compras: double (nullable = true)
+ |-- diferencia_participacion_ventas: double (nullable = true)
+ |-- diferencia_participacion_total: double (nullable = true)
+ |-- ranking_diario: integer (nullable = true)
+ |-- aporte_hhi: double (nullable = true)
+ |-- hhi_diario: double (nullable = true)
+ |-- anio: integer (nullable = true)
+ |-- mes: integer (nullable = true)
+ |-- trimestre: integer (nullable = true)
+ |-- registros_elegibles: long (nullable = true)
+ |-- registros_cuarentena: long (nullable = true)
+ |-- archivos_excluidos: long (nullable = true)
+ |-- estado_cobertura: string (nullable = false)
+ |-- version_silver: string (nullable = true)
+ |-- scope_quality_id: string (nullable = true)
+ |-- trazabilidad_verificada: boolean (nullable = false)
+ |-- cobertura_completa: boolean (nullable = false)
+
+
+======================================================================
+CONSTRUCTOR REAL: empresa_trimestre
+======================================================================
+{
+  "producto": "empresa_trimestre",
+  "columnas_esperadas": 58,
+  "columnas_observadas": 58,
+  "columnas_faltantes": [],
+  "columnas_adicionales": [],
+  "diferencias_tipos": [],
+  "registros": 1,
+  "claves_presentes": true,
+  "claves_invalidas": 0,
+  "claves_duplicadas": 0,
+  "nulos_obligatorios": {
+    "periodo_valido": 0,
+    "patrimonio_valido": 0,
+    "ingreso_valido": 0,
+    "utilidad_valida": 0,
+    "moneda_valida": 0,
+    "identidad_contable_evaluable": 0,
+    "identidad_contable_valida": 0,
+    "colision_financiera": 0,
+    "sin_incidencias_estructurales": 0,
+    "apto_kpi_general": 0,
+    "resultado_financiero": 0,
+    "patrimonio_negativo": 0,
+    "motivos_calidad": 0
+  },
+  "compatible": true
+}
+root
+ |-- rpj: string (nullable = true)
+ |-- ejercicio: integer (nullable = true)
+ |-- trimestre_num: integer (nullable = true)
+ |-- id_registro: string (nullable = true)
+ |-- clave_negocio: string (nullable = true)
+ |-- ruc: string (nullable = true)
+ |-- ruc_valido: boolean (nullable = true)
+ |-- nombre_empresa: string (nullable = true)
+ |-- tipo_empresa: string (nullable = true)
+ |-- tipo_sector: string (nullable = true)
+ |-- ciiu: string (nullable = true)
+ |-- trimestre_original: string (nullable = true)
+ |-- tipo_informacion: string (nullable = true)
+ |-- metodo_flujo_efectivo: string (nullable = true)
+ |-- moneda_original: string (nullable = true)
+ |-- activo_total: double (nullable = true)
+ |-- pasivo_total: double (nullable = true)
+ |-- patrimonio_total: double (nullable = true)
+ |-- total_ingreso: double (nullable = true)
+ |-- utilidad_neta: double (nullable = true)
+ |-- cantidad_clave_negocio: long (nullable = true)
+ |-- colision_clave_negocio: boolean (nullable = true)
+ |-- fuente_datos: string (nullable = false)
+ |-- fecha_ingesta: date (nullable = true)
+ |-- moneda: string (nullable = true)
+ |-- anio: integer (nullable = true)
+ |-- trimestre: integer (nullable = true)
+ |-- periodo_valido: boolean (nullable = false)
+ |-- periodo: string (nullable = true)
+ |-- fecha_fin_trimestre: date (nullable = true)
+ |-- activo_valido: boolean (nullable = true)
+ |-- pasivo_valido: boolean (nullable = true)
+ |-- patrimonio_valido: boolean (nullable = false)
+ |-- patrimonio_positivo: boolean (nullable = true)
+ |-- ingreso_valido: boolean (nullable = false)
+ |-- ingreso_positivo: boolean (nullable = true)
+ |-- utilidad_valida: boolean (nullable = false)
+ |-- moneda_valida: boolean (nullable = false)
+ |-- identidad_contable_evaluable: boolean (nullable = false)
+ |-- diferencia_contable: double (nullable = true)
+ |-- identidad_contable_valida: boolean (nullable = false)
+ |-- cantidad_registros_empresa_periodo: long (nullable = true)
+ |-- colision_financiera: boolean (nullable = false)
+ |-- sin_incidencias_estructurales: boolean (nullable = false)
+ |-- apto_kpi_general: boolean (nullable = false)
+ |-- roa_calculable: boolean (nullable = true)
+ |-- roe_calculable: boolean (nullable = true)
+ |-- endeudamiento_calculable: boolean (nullable = true)
+ |-- margen_neto_calculable: boolean (nullable = true)
+ |-- autonomia_calculable: boolean (nullable = true)
+ |-- roa_aproximado_pct: double (nullable = true)
+ |-- roe_aproximado_pct: double (nullable = true)
+ |-- endeudamiento_pct: double (nullable = true)
+ |-- margen_neto_pct: double (nullable = true)
+ |-- autonomia_financiera_pct: double (nullable = true)
+ |-- resultado_financiero: string (nullable = false)
+ |-- patrimonio_negativo: boolean (nullable = false)
+ |-- motivos_calidad: string (nullable = false)
+
+
+=== RESUMEN INTEGRAL ===
+[
+  {
+    "producto": "mercado_valor_diario",
+    "compatible": false,
+    "error": "AnalysisException",
+    "detalle": "[DATATYPE_MISMATCH.BINARY_OP_WRONG_TYPE] Cannot resolve \"(precio_cierre - precio_anterior)\" due to data type mismatch: the binary operator requires the input type (\"NUMERIC\" or \"INTERVAL DAY TO SECOND\" or \"INTERVAL YEAR TO MONTH\" or \"INTERVAL\"), not \"STRING\".;\n'Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 9 more fields]\n+- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 8 more fields]\n   +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 7 more fields]\n      +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 6 more fields]\n         +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 5 more fields]\n            +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 4 more fields]\n               +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 3 more fields]\n                  +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, ... 2 more fields]\n                     +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, precio_cierre_valido#451, (((((isnotnull(precio_maximo#344) AND NOT isnan(cast(precio_maximo#344 as double))) AND NOT (abs(cast(precio_maximo#344 as double)) = Infinity)) AND ((isnotnull(precio_minimo#345) AND NOT isnan(cast(precio_minimo#345 as double))) AND NOT (abs(cast(precio_minimo#345 as double)) = Infinity))) AND (cast(precio_minimo#345 as bigint) > cast(0 as bigint))) AND (precio_maximo#344 >= precio_minimo#345)) AS rango_intradia_valido#476]\n                        +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, precio_anterior_valido#427, (((isnotnull(precio_cierre#342) AND NOT isnan(cast(precio_cierre#342 as double))) AND NOT (abs(cast(precio_cierre#342 as double)) = Infinity)) AND (cast(precio_cierre#342 as bigint) > cast(0 as bigint))) AS precio_cierre_valido#451]\n                           +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88, (((isnotnull(precio_anterior#341) AND NOT isnan(cast(precio_anterior#341 as double))) AND NOT (abs(cast(precio_anterior#341 as double)) = Infinity)) AND (cast(precio_anterior#341 as bigint) > cast(0 as bigint))) AS precio_anterior_valido#427]\n                              +- Project [nemonico#339, fecha#338, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda_referencia#397, fecha_inscripcion#88]\n                                 +- Join LeftOuter, (nemonico#339 = nemonico#396)\n                                    :- Project [fecha#338, nemonico#339, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48, embig_peru#65]\n                                    :  +- Join LeftOuter, (fecha#338 = fecha#64)\n                                    :     :- Project [fecha#338, nemonico#339, nemonico_original#340, descripcion#3, fecha_anterior#4, precio_anterior#341, precio_cierre#342, precio_apertura#343, precio_maximo#344, precio_minimo#345, precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256, tipo_cambio_venta#48]\n                                    :     :  +- Join LeftOuter, (fecha#338 = fecha#47)\n                                    :     :     :- Project [fecha_cotizacion#5 AS fecha#338, upper(trim(valor#11, None)) AS nemonico#339, valor#11 AS nemonico_original#340, descripcion#3, fecha_anterior#4, cierre_anterior#2 AS precio_anterior#341, cierre_actual#1 AS precio_cierre#342, apertura_actual#0 AS precio_apertura#343, maxima_actual#7 AS precio_maximo#344, minima_actual#8 AS precio_minimo#345, promedio_actual#10 AS precio_promedio#346, monto_negociado#9, fuente#240, fecha_ingesta#256]\n                                    :     :     :  +- Project [apertura_actual#0, cierre_actual#1, cierre_anterior#2, descripcion#3, fecha_anterior#4, fecha_cotizacion#5, fecha_registro#6, maxima_actual#7, minima_actual#8, monto_negociado#9, promedio_actual#10, valor#11, anio#12, mes#13, fuente#240, cast(null as date) AS fecha_ingesta#256]\n                                    :     :     :     +- Project [apertura_actual#0, cierre_actual#1, cierre_anterior#2, descripcion#3, fecha_anterior#4, fecha_cotizacion#5, fecha_registro#6, maxima_actual#7, minima_actual#8, monto_negociado#9, promedio_actual#10, valor#11, anio#12, mes#13, cast(null as string) AS fuente#240]\n                                    :     :     :        +- LogicalRDD [apertura_actual#0, cierre_actual#1, cierre_anterior#2, descripcion#3, fecha_anterior#4, fecha_cotizacion#5, fecha_registro#6, maxima_actual#7, minima_actual#8, monto_negociado#9, promedio_actual#10, valor#11, anio#12, mes#13], false\n                                    :     :     +- Project [fecha#47, tipo_cambio_venta#48]\n                                    :     :        +- LogicalRDD [fecha#47, tipo_cambio_venta#48, anio#49, mes#50], false\n                                    :     +- Project [fecha#64, embig_peru#65]\n                                    :        +- LogicalRDD [fecha#64, embig_peru#65, anio#66, mes#67], false\n                                    +- Project [upper(trim(nemonico_valor#82, None)) AS nemonico#396, ruc#81, razon_social#83, codigo_isin#84, tipo_valor#86, moneda#87 AS moneda_referencia#397, fecha_inscripcion#88]\n                                       +- LogicalRDD [ruc#81, nemonico_valor#82, razon_social#83, codigo_isin#84, denominacion_valor#85, tipo_valor#86, moneda#87, fecha_inscripcion#88, resolucion_inscripcion#89], false\n"
+  },
+  {
+    "producto": "actividad_sab_diaria",
+    "columnas_esperadas": 41,
+    "columnas_observadas": 41,
+    "columnas_faltantes": [],
+    "columnas_adicionales": [],
+    "diferencias_tipos": [
+      {
+        "columna": "porcentaje_compras_original",
+        "esperado": "double",
+        "observado": "string"
+      },
+      {
+        "columna": "porcentaje_ventas_original",
+        "esperado": "double",
+        "observado": "string"
+      },
+      {
+        "columna": "porcentaje_total_original",
+        "esperado": "double",
+        "observado": "string"
+      }
+    ],
+    "registros": 2,
+    "claves_presentes": true,
+    "claves_invalidas": 0,
+    "claves_duplicadas": 0,
+    "nulos_obligatorios": {
+      "montos_validos": 0,
+      "total_consistente": 0,
+      "cantidad_sab_diaria": 0,
+      "estado_cobertura": 0,
+      "trazabilidad_verificada": 0,
+      "cobertura_completa": 0
+    },
+    "compatible": false
+  },
+  {
+    "producto": "empresa_trimestre",
+    "columnas_esperadas": 58,
+    "columnas_observadas": 58,
+    "columnas_faltantes": [],
+    "columnas_adicionales": [],
+    "diferencias_tipos": [],
+    "registros": 1,
+    "claves_presentes": true,
+    "claves_invalidas": 0,
+    "claves_duplicadas": 0,
+    "nulos_obligatorios": {
+      "periodo_valido": 0,
+      "patrimonio_valido": 0,
+      "ingreso_valido": 0,
+      "utilidad_valida": 0,
+      "moneda_valida": 0,
+      "identidad_contable_evaluable": 0,
+      "identidad_contable_valida": 0,
+      "colision_financiera": 0,
+      "sin_incidencias_estructurales": 0,
+      "apto_kpi_general": 0,
+      "resultado_financiero": 0,
+      "patrimonio_negativo": 0,
+      "motivos_calidad": 0
+    },
+    "compatible": true
+  }
+]
+CONSTRUCTORES_REALES_INVOCADOS: 3
+CONSTRUCTORES_SIMULADOS: 0
+ESQUEMAS_SILVER_UTILIZADOS: 6
+CONTRATOS_GOLD_UTILIZADOS: 3
+DATOS_SINTETICOS: True
+GCP_EJECUTADO: False
+DIAGNOSTICO_INTEGRAL_FINALIZADO

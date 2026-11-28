@@ -31,6 +31,19 @@ from adaptador_cotizaciones_quality import (
     adaptar_cotizaciones,
 )
 
+from adaptador_numerico_integral import (
+    adaptar_numericos,
+    REGLAS,
+)
+
+from autorizacion_correctiva_quality import (
+    validar_decision_numerica,
+)
+
+from sidecar_sab_ratificado import (
+    interpretar_sidecar_ratificado,
+)
+
 from ejecutor_portable import (
     construir_candidato,
     validar_claves,
@@ -177,97 +190,164 @@ def verificar_fuente(
     }
 
 
-def cargar_cobertura_acreditada(cliente, auth, pem):
+def cargar_cobertura_acreditada(
+    cliente, auth, pem, fuente_verificada,
+):
 
     referencia = auth["sab_coverage"]
 
     if referencia is None:
-        return None
+        return None, None
 
-    contenido = leer_verificado(
-        cliente,
-        referencia["payload"],
-    )
+    auth_silver = fuente_verificada["auth"]
 
-    firma = leer_verificado(
-        cliente,
-        referencia["signature"],
-    )
+    manifest = fuente_verificada["manifest"]
 
-    verificar_firma_oficial(
-        contenido, firma, pem
-    )
-
-    sidecar = json_estricto(contenido)
+    preflight = fuente_verificada["preflight"]
 
     exigir(
-        isinstance(sidecar, dict)
-        and set(sidecar) == {
-            "schema_version",
-            "status",
-            "product",
-            "version_id",
-            "quality_approved",
-            "scope_quality_id",
-            "rows",
-        },
-        "Contrato candidato sidecar incompatible"
+        auth_silver["product"]
+        == manifest["product"]
+        == preflight["product"]
+        == "mercado_diario/montos_sab",
+        "Fuente de cobertura incompatible"
     )
 
     exigir(
-        sidecar["schema_version"]
-        == "BVL-SILVER-SAB-COVERAGE-v0.1"
-        and sidecar["status"] == "QUALITY_RATIFIED"
-        and sidecar["quality_approved"] is True
-        and sidecar["product"] == "mercado_diario/montos_sab"
-        and sidecar["version_id"] == referencia["version_id"],
-        "Sidecar SAB no acreditado"
+        auth_silver["version_id"]
+        == manifest["version_id"]
+        == preflight["version_id"]
+        == referencia["version_id"],
+        "Version de cobertura incompatible"
     )
-
-    scope = sidecar["scope_quality_id"]
-    filas = sidecar["rows"]
 
     exigir(
-        isinstance(scope, str)
-        and bool(scope.strip())
-        and isinstance(filas, list)
-        and bool(filas),
-        "Cobertura acreditada incompleta"
+        preflight["esquema_fisico_verificado"] is True
+        and preflight["filas_validadas"]
+        == manifest["records_count"],
+        "Preflight SAB incompatible"
     )
 
-    for fila in filas:
+    filas, evidencia = interpretar_sidecar_ratificado(
+        contenido=leer_verificado(
+            cliente, referencia["payload"]
+        ),
+        firma=leer_verificado(
+            cliente, referencia["signature"]
+        ),
+        ratificacion_bytes=leer_verificado(
+            cliente, referencia["ratification"]
+        ),
+        ratificacion_firma=leer_verificado(
+            cliente, referencia["ratification_signature"]
+        ),
+        pem=pem,
+        version_id=referencia["version_id"],
+        manifest_sha256=auth_silver["manifest"]["sha256"],
+        manifest_signature_sha256=(
+            auth_silver["manifest_signature"]["sha256"]
+        ),
+        manifest_generation=(
+            auth_silver["manifest"]["generation"]
+        ),
+        registros_esperados=manifest["records_count"],
+    )
 
-        exigir(
-            fila["version_silver"]
-            == referencia["version_id"],
-            "Fila SAB de otra version"
+    exigir(
+        evidencia["policy"] == referencia["policy"],
+        "Politica de cobertura incompatible"
+    )
+
+    return filas, evidencia
+
+
+def adaptar_fuente_numerica(
+    df, fuente, auth, verificada,
+):
+
+    decision = validar_decision_numerica(auth)
+
+    referencia = decision["sources"][fuente]
+
+    auth_silver = verificada["auth"]
+    manifest = verificada["manifest"]
+    preflight = verificada["preflight"]
+
+    exigir(
+        auth_silver["product"]
+        == manifest["product"]
+        == preflight["product"]
+        == fuente,
+        "Identidad de adaptacion incompatible"
+    )
+
+    exigir(
+        auth_silver["version_id"]
+        == manifest["version_id"]
+        == preflight["version_id"]
+        == referencia["version_id"],
+        "Version de adaptacion incompatible"
+    )
+
+    exigir(
+        preflight["esquema_fisico_verificado"] is True
+        and preflight["filas_validadas"]
+        == manifest["records_count"],
+        "Preflight numerico incompatible"
+    )
+
+    resultado, evidencia = adaptar_numericos(
+        df, fuente
+    )
+
+    exigir(
+        evidencia["input_records"]
+        == manifest["records_count"],
+        "Conteo de adaptacion incompatible"
+    )
+
+    evidencia.update({
+        "status": "APPLIED",
+        "version_id": referencia["version_id"],
+        "physical_contract_sha256":
+            referencia["physical_contract_sha256"],
+        "authorization_id": auth["authorization_id"],
+        "decision_id": decision["decision_id"],
+        "manifest_reference": auth_silver["manifest"],
+    })
+
+    return resultado, evidencia
+
+
+def validar_claves_conservadas(
+    producto, candidato, fuente,
+):
+
+    if producto == "mercado_valor_diario":
+
+        origen = fuente.select(
+            F.upper(F.trim("valor")).alias("nemonico"),
+            F.col("fecha_cotizacion").alias("fecha"),
         )
 
-        if fila["estado_cobertura"] == "DESCONOCIDA":
+    elif producto == "actividad_sab_diaria":
 
-            exigir(
-                fila["trazabilidad_verificada"] is False
-                and fila["scope_quality_id"] is None
-                and all(
-                    fila[campo] is None
-                    for campo in (
-                        "registros_elegibles",
-                        "registros_cuarentena",
-                        "archivos_excluidos",
-                    )
-                ),
-                "Cobertura desconocida contradictoria"
-            )
+        origen = fuente.select(
+            F.col("fecha_negociacion").alias("fecha"),
+            "codigo_sab",
+        )
 
-        else:
+    else:
 
-            exigir(
-                fila["scope_quality_id"] == scope
-                and fila["trazabilidad_verificada"] is True,
-                "Trazabilidad SAB incompatible"
-            )
+        return
 
-    return filas
+    destino = candidato.select(*origen.columns)
+
+    exigir(
+        not origen.exceptAll(destino).limit(1).count()
+        and not destino.exceptAll(origen).limit(1).count(),
+        "Constructor altero claves de negocio"
+    )
 
 
 def validar_contrato_salida(
@@ -626,8 +706,11 @@ def preparar_candidatos(
         "Limite candidato de materializacion excedido"
     )
 
-    cobertura = cargar_cobertura_acreditada(
-        cliente, auth, pem
+    cobertura, evidencia_cobertura = (
+        cargar_cobertura_acreditada(
+            cliente, auth, pem,
+            verificadas["actividad_sab_diaria"]["montos_sab"],
+        )
     )
 
     def comprobar_vigencia():
@@ -650,6 +733,7 @@ def preparar_candidatos(
     candidatos = {}
     excepciones = {}
     evidencia_adaptacion = None
+    evidencias_numericas = {}
 
     for producto in ORDEN:
 
@@ -672,6 +756,23 @@ def preparar_candidatos(
                 dataframes[producto]["cotizaciones"],
                 auth,
                 verificadas[producto]["cotizaciones"],
+            )
+
+        for alias, fuente in DEPENDENCIAS[producto].items():
+
+            if fuente not in REGLAS:
+                continue
+
+            comprobar_vigencia()
+
+            (
+                dataframes[producto][alias],
+                evidencias_numericas[fuente],
+            ) = adaptar_fuente_numerica(
+                dataframes[producto][alias],
+                fuente,
+                auth,
+                verificadas[producto][alias],
             )
 
         parametros = {}
@@ -719,7 +820,65 @@ def preparar_candidatos(
             cobertura,
         )
 
+        validar_claves_conservadas(
+            producto,
+            candidato,
+            fuente_principal,
+        )
+
+        if producto == "actividad_sab_diaria":
+
+            if evidencia_cobertura is not None:
+
+                observados = {
+                    fila["fecha"].isoformat():
+                        fila["cantidad_sab_diaria"]
+                    for fila in candidato.select(
+                        "fecha", "cantidad_sab_diaria"
+                    ).distinct().collect()
+                }
+
+                esperados = {
+                    fila["fecha_negociacion"]:
+                        fila["registros_elegibles"]
+                    for fila in cobertura
+                }
+
+                exigir(
+                    observados == esperados,
+                    "Cobertura diaria incompleta o incompatible"
+                )
+
+                exigir(
+                    not candidato.filter(
+                        ~F.col("estado_cobertura").eqNullSafe(
+                            F.lit("DESCONOCIDA")
+                        )
+                        | F.col("cobertura_completa")
+                        | F.col("trazabilidad_verificada")
+                        | F.col("scope_quality_id").isNotNull()
+                        | F.col("registros_cuarentena").isNotNull()
+                        | F.col("archivos_excluidos").isNotNull()
+                        | ~F.col("version_silver").eqNullSafe(
+                            F.lit(evidencia_cobertura["version_id"])
+                        )
+                        | ~F.col("registros_elegibles").eqNullSafe(
+                            F.col("cantidad_sab_diaria")
+                        )
+                    ).limit(1).count(),
+                    "Propagacion SAB incompatible"
+                )
+
+                evidencia_cobertura[
+                    "daily_counts_verified_against_dataframe"
+                ] = True
+
         candidatos[producto] = candidato
+
+    exigir(
+        set(evidencias_numericas) == set(REGLAS),
+        "Adaptaciones numericas incompletas"
+    )
 
     comprobar_vigencia()
 
@@ -729,6 +888,8 @@ def preparar_candidatos(
         "excepciones": excepciones,
         "cobertura_acreditada": cobertura is not None,
         "cotizaciones_adaptation": evidencia_adaptacion,
+        "numeric_adaptations": evidencias_numericas,
+        "sab_coverage_evidence": evidencia_cobertura,
 
         "verificar_vigencia": comprobar_vigencia,
         "publication_allowed": False,

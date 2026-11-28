@@ -1,0 +1,32 @@
+test_01_evidencia_valida (__main__.TestEvidenciaIntegralV3.test_01_evidencia_valida) ... ok
+test_02_evidencia_numerica_ausente (__main__.TestEvidenciaIntegralV3.test_02_evidencia_numerica_ausente) ... ok
+test_03_fuente_ausente (__main__.TestEvidenciaIntegralV3.test_03_fuente_ausente) ... ok
+test_04_version_incorrecta (__main__.TestEvidenciaIntegralV3.test_04_version_incorrecta) ... ok
+test_05_contrato_incorrecto (__main__.TestEvidenciaIntegralV3.test_05_contrato_incorrecto) ... ok
+test_06_invalidos_no_cero (__main__.TestEvidenciaIntegralV3.test_06_invalidos_no_cero) ... ok
+test_07_conteo_inconsistente (__main__.TestEvidenciaIntegralV3.test_07_conteo_inconsistente) ... ok
+test_08_redondeo_no_autorizado (__main__.TestEvidenciaIntegralV3.test_08_redondeo_no_autorizado) ... ok
+test_09_tipo_incorrecto (__main__.TestEvidenciaIntegralV3.test_09_tipo_incorrecto) ... ok
+test_10_ratificacion_incorrecta (__main__.TestEvidenciaIntegralV3.test_10_ratificacion_incorrecta) ... ok
+test_11_cobertura_inventada (__main__.TestEvidenciaIntegralV3.test_11_cobertura_inventada) ... ok
+test_12_conteos_diarios_no_verificados (__main__.TestEvidenciaIntegralV3.test_12_conteos_diarios_no_verificados) ... ok
+test_13_evidencia_sab_ausente (__main__.TestEvidenciaIntegralV3.test_13_evidencia_sab_ausente) ... ok
+test_14_sin_sidecar_expreso (__main__.TestEvidenciaIntegralV3.test_14_sin_sidecar_expreso) ... ok
+test_15_sin_sidecar_con_evidencia (__main__.TestEvidenciaIntegralV3.test_15_sin_sidecar_con_evidencia) ... ok
+test_16_decision_no_autorizada (__main__.TestEvidenciaIntegralV3.test_16_decision_no_autorizada) ... ok
+test_17_auditoria_y_marcador_final (__main__.TestEvidenciaIntegralV3.test_17_auditoria_y_marcador_final) ... ok
+test_18_null_tipado_no_acreditado (__main__.TestEvidenciaIntegralV3.test_18_null_tipado_no_acreditado) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.077s
+
+OK
+VALIDACIONES_NUEVAS_WRITER: 18/18
+AUDITORIA_WRITER_INTEGRAL_PROBADA: True
+TRANSPORTE_ESCRITURA_SIMULADO: True
+MATERIALIZACION_EN_ESTA_PRUEBA_SIMULADA: True
+SPARK_EJECUTADO_EN_ESTA_PRUEBA: False
+CONSTRUCTORES_SIMULADOS: 0
+GCP_EJECUTADO: False
+PUBLICACION_AUTORIZADA: False
+EVIDENCIA_INTEGRAL_WRITER_V3_OK

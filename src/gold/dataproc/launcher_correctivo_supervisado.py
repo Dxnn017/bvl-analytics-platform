@@ -151,6 +151,9 @@ def cargar_paquete(ruta):
 
     for modulo in (
         "autorizacion_correctiva_quality",
+        "adaptador_cotizaciones_quality",
+        "adaptador_numerico_integral",
+        "sidecar_sab_ratificado",
         "preparar_candidatos_correctivos",
         "escritura_correctiva_staging",
         "ejecutor_portable",

@@ -1,0 +1,156 @@
+{
+  "cotizaciones_adaptation": {
+    "columns": {
+      "fecha_ingesta": {
+        "spark_type": "date",
+        "value": null
+      },
+      "fuente": {
+        "spark_type": "string",
+        "value": null
+      }
+    },
+    "decision": "ALLOW_TYPED_NULLS",
+    "decision_id": "pendiente-quality",
+    "product": "mercado_diario/cotizaciones",
+    "quality_approved": false,
+    "reason": "INSUFFICIENT_ACCREDITED_ROW_METADATA",
+    "version_id": "v01-bvl-bronze-inicial-20261125-001-cotizaciones-4cd3944afbbf413e"
+  },
+  "document_status": "UNSIGNED_NON_EXECUTABLE_TEMPLATE",
+  "execution_authorized": false,
+  "numeric_adaptations": {
+    "decision": "ALLOW_STRICT_NUMERIC_CONVERSIONS",
+    "decision_id": "pendiente-quality",
+    "policy": "STRICT_NUMERIC_CONVERSION_V1",
+    "quality_approved": false,
+    "sources": {
+      "mercado_diario/cotizaciones": {
+        "columns": {
+          "apertura_actual": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "cierre_actual": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "cierre_anterior": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "maxima_actual": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "minima_actual": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "monto_negociado": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "promedio_actual": {
+            "input_type": "string",
+            "output_type": "double"
+          }
+        },
+        "physical_contract_sha256": "d13097c5d75779eeff190dc335c3d87ccc81013f5eb49950f828f0db9f263ab8",
+        "version_id": "v01-bvl-bronze-inicial-20261125-001-cotizaciones-4cd3944afbbf413e"
+      },
+      "mercado_diario/montos_sab": {
+        "columns": {
+          "MontoCompras": {
+            "input_type": "string",
+            "output_type": "decimal(24,2)"
+          },
+          "MontoTotal": {
+            "input_type": "string",
+            "output_type": "decimal(24,2)"
+          },
+          "MontoVentas": {
+            "input_type": "string",
+            "output_type": "decimal(24,2)"
+          },
+          "PorcentajeCompras": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "PorcentajeTotal": {
+            "input_type": "string",
+            "output_type": "double"
+          },
+          "PorcentajeVentas": {
+            "input_type": "string",
+            "output_type": "double"
+          }
+        },
+        "physical_contract_sha256": "ce32f73970388d8a3a9d17c134d33cc0627bdc7573f00727de4df8598cd4146c",
+        "version_id": "v01-bvl-bronze-inicial-20261125-001-montos-sab-4cd3944afbbf413e"
+      }
+    }
+  },
+  "output_contracts": {
+    "actividad_sab_diaria": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+    "empresa_trimestre": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+    "mercado_valor_diario": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340"
+  },
+  "publication_allowed": false,
+  "sab_coverage": {
+    "payload": {
+      "generation": "PENDIENTE_QUALITY",
+      "sha256": "4f9a2d0d7b8433e54647151ee183f5b5379ce86a683d845a578d3fa0c3a03b13",
+      "size_bytes": 437093,
+      "uri": "PENDIENTE_REFERENCIA_GCS_QUALITY"
+    },
+    "policy": "SAB_RESTRICTED_RATIFICATION_V1",
+    "ratification": {
+      "generation": "PENDIENTE_QUALITY",
+      "sha256": "94bc1a625168cfdeac312f73a9a42c299049ac63610e6eb34e23940143d6b189",
+      "size_bytes": 1143,
+      "uri": "PENDIENTE_REFERENCIA_GCS_QUALITY"
+    },
+    "ratification_signature": {
+      "generation": "PENDIENTE_QUALITY",
+      "sha256": "4e9ea164bba4d715c0e971df5c653fd8ce1bd454f6948d160ef4611b1df3e719",
+      "size_bytes": 71,
+      "uri": "PENDIENTE_REFERENCIA_GCS_QUALITY"
+    },
+    "signature": {
+      "generation": "PENDIENTE_QUALITY",
+      "sha256": "7c1e5bf90c17081d649a8412af7b3ba041da41a4f89e86df4a09b393395e8745",
+      "size_bytes": 70,
+      "uri": "PENDIENTE_REFERENCIA_GCS_QUALITY"
+    },
+    "version_id": "v01-bvl-bronze-inicial-20261125-001-montos-sab-4cd3944afbbf413e"
+  },
+  "source_contract_bundle_sha256": "32a1b866cb13f135a33783678601699dfb582ae3501280a899e42c91a933bf5f",
+  "source_contract_references": {
+    "finanzas_empresariales/principales_cuentas": {
+      "physical_contract_sha256": "cea223dd88791666016e796e300b1d4a2e63341421643d037902c86c39be7302",
+      "version_id": "v01-bvl-bronze-inicial-20261125-001-principales-cuentas-4cd3944afbbf413e"
+    },
+    "macroeconomia/embig": {
+      "physical_contract_sha256": "1c1081d7e2bd4b9172335a3b5c1587b6d89b8ba7cb306becf150d5df745aff73",
+      "version_id": "v01-bvl-bronze-inicial-20261125-001-embig-4cd3944afbbf413e"
+    },
+    "macroeconomia/tipo_cambio": {
+      "physical_contract_sha256": "45a33c45d7d542a24be33e84f96ca894e3850a1a8dc92f9cdc8950e9cd4996d2",
+      "version_id": "v01-bvl-bronze-inicial-20261125-001-tipo-cambio-1c3dbb5c43d4496f9e0a0cef120b5d50"
+    },
+    "mercado_diario/cotizaciones": {
+      "physical_contract_sha256": "d13097c5d75779eeff190dc335c3d87ccc81013f5eb49950f828f0db9f263ab8",
+      "version_id": "v01-bvl-bronze-inicial-20261125-001-cotizaciones-4cd3944afbbf413e"
+    },
+    "mercado_diario/montos_sab": {
+      "physical_contract_sha256": "ce32f73970388d8a3a9d17c134d33cc0627bdc7573f00727de4df8598cd4146c",
+      "version_id": "v01-bvl-bronze-inicial-20261125-001-montos-sab-4cd3944afbbf413e"
+    },
+    "referencias_smv/puente_ruc_nemonico": {
+      "physical_contract_sha256": "2991facff915d9d1da0a99761e5a68a60cf13d586852994c725bbd162024a399",
+      "version_id": "v01-bvl-bronze-inicial-20261125-001-valores-inscritos-4cd3944afbbf413e"
+    }
+  },
+  "target_schema_version": "BVL-GOLD-CORRECTIVE-STAGING-CANDIDATE-v3"
+}

@@ -1,0 +1,40 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 23:52:13 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 1) / 2][Stage 0:>                                                          (0 + 2) / 2][Stage 0:=============================>                             (1 + 1) / 2]                                                                                CASOS_NUMERICOS_APROBADOS: 24
+COTIZACION_INVALIDA_RECHAZADA_OK
+[Stage 31:>                                                         (0 + 2) / 2]                                                                                [Stage 53:=========>        (1 + 1) / 2][Stage 54:>                 (0 + 1) / 2][Stage 53:=========>        (1 + 1) / 2][Stage 54:=========>        (1 + 1) / 2]                                                                                [Stage 62:>                                                         (0 + 2) / 4][Stage 62:=============================>                            (2 + 2) / 4]                                                                                CONTRATO_GOLD_OK: mercado_valor_diario 41 FILAS: 2
+MERCADO_INDICADORES_OK
+[Stage 103:>                                                        (0 + 2) / 2][Stage 103:============================>                            (1 + 1) / 2]                                                                                SAB_REDONDEO_NO_AUTORIZADO_RECHAZADO_OK
+[Stage 133:============================>                            (1 + 1) / 2]                                                                                [Stage 138:>                                                        (0 + 2) / 4][Stage 138:==============>                                          (1 + 2) / 4][Stage 138:============================>                            (2 + 2) / 4]                                                                                CONTRATO_GOLD_OK: actividad_sab_diaria 41 FILAS: 21911
+[Stage 162:===============================================>         (5 + 1) / 6]                                                                                [Stage 171:======================================>                  (4 + 2) / 6]                                                                                SAB_INDICADORES_OK
+SAB_FECHAS_CONTRASTADAS_SINTETICAS: 1207
+SAB_REGISTROS_SINTETICOS: 21911
+[Stage 190:============================>                            (1 + 1) / 2][Stage 191:============================>                            (1 + 1) / 2]                                                                                CONTRATO_GOLD_OK: empresa_trimestre 58 FILAS: 5
+EMPRESA_INDICADORES_OK
+PARQUET_LOCAL_ROUNDTRIP_OK: mercado_valor_diario 2
+[Stage 268:>                                                        (0 + 1) / 1]PARQUET_LOCAL_ROUNDTRIP_OK: actividad_sab_diaria 21911
+                                                                                PARQUET_LOCAL_ROUNDTRIP_OK: empresa_trimestre 5
+
+=== RESUMEN FINAL V3 ===
+CONSTRUCTORES_REALES_COMPATIBLES: 3/3
+CONSTRUCTORES_SIMULADOS: 0
+ESQUEMAS_SILVER_UTILIZADOS: 6/6
+COLUMNAS_GOLD_COMPATIBLES: 140/140
+CONVERSIONES_NUMERICAS: 13/13
+METADATOS_NULL_TIPADOS: 2/2
+CASOS_NUMERICOS: 24/24
+CLAVES_NEGOCIO_CONSERVADAS: True
+INDICADORES_VERIFICADOS: 3/3
+PARQUET_LOCAL_ROUNDTRIP: 3/3
+SAB_FECHAS_SINTETICAS: 1207
+SAB_REGISTROS_SINTETICOS: 21911
+SAB_COBERTURA_COMPLETA: False
+DATOS_NEGOCIO_SINTETICOS: True
+PREFLIGHT_CLOUD_REAL: False
+AUTORIZACION_QUALITY_REAL: False
+CONCILIACION_HISTORICA_REEJECUTADA: False
+AUDITORIA_WRITER_INTEGRAL_PROBADA: False
+GCP_EJECUTADO: False
+PUBLICACION_AUTORIZADA: False
+VALIDACION_CONSTRUCTORES_REALES_V3_OK
