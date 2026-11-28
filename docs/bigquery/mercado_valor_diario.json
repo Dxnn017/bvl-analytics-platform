@@ -250,6 +250,12 @@
       "spark_type": "boolean",
       "bigquery_type": "BOOL",
       "nullable": true
+    },
+    {
+      "name": "nemonico_original",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
     }
   ],
   "production_authorized": false,

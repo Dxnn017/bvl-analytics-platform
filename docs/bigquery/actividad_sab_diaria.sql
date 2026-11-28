@@ -32,7 +32,15 @@ CREATE TABLE `gold_analytics.actividad_sab_diaria` (
   `hhi_diario` FLOAT64,
   `anio` INT64,
   `mes` INT64,
-  `trimestre` INT64
+  `trimestre` INT64,
+  `registros_elegibles` INT64,
+  `registros_cuarentena` INT64,
+  `archivos_excluidos` INT64,
+  `estado_cobertura` STRING NOT NULL,
+  `version_silver` STRING,
+  `scope_quality_id` STRING,
+  `trazabilidad_verificada` BOOL NOT NULL,
+  `cobertura_completa` BOOL NOT NULL
 )
 PARTITION BY `fecha`
 CLUSTER BY `codigo_sab`;

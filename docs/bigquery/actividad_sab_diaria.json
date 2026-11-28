@@ -208,11 +208,65 @@
       "spark_type": "int",
       "bigquery_type": "INT64",
       "nullable": true
+    },
+    {
+      "name": "registros_elegibles",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "registros_cuarentena",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "archivos_excluidos",
+      "spark_type": "bigint",
+      "bigquery_type": "INT64",
+      "nullable": true
+    },
+    {
+      "name": "estado_cobertura",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": false
+    },
+    {
+      "name": "version_silver",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "scope_quality_id",
+      "spark_type": "string",
+      "bigquery_type": "STRING",
+      "nullable": true
+    },
+    {
+      "name": "trazabilidad_verificada",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
+    },
+    {
+      "name": "cobertura_completa",
+      "spark_type": "boolean",
+      "bigquery_type": "BOOL",
+      "nullable": false
     }
   ],
   "production_authorized": false,
   "bigquery_partition_field": "fecha",
   "bigquery_clustering_fields": [
     "codigo_sab"
+  ],
+  "coverage_contract": "BVL-SILVER-SAB-COVERAGE-v0.1",
+  "coverage_states": [
+    "COMPLETA",
+    "PARCIAL",
+    "DESCONOCIDA"
   ]
 }

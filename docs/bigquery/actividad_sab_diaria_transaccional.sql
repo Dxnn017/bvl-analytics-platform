@@ -128,7 +128,34 @@ ASSERT (
     AND (
       `montos_validos` IS NULL OR
       `total_consistente` IS NULL OR
-      `cantidad_sab_diaria` IS NULL
+      `cantidad_sab_diaria` IS NULL OR
+       `estado_cobertura` IS NULL OR
+       `estado_cobertura` NOT IN
+         ('COMPLETA', 'PARCIAL', 'DESCONOCIDA') OR
+       `trazabilidad_verificada` IS NULL OR
+       `cobertura_completa` IS NULL OR
+       `cobertura_completa` IS DISTINCT FROM
+         (`estado_cobertura` = 'COMPLETA') OR
+       (`registros_elegibles` IS NOT NULL AND
+         (`registros_elegibles` < 0 OR
+          `registros_elegibles` != `cantidad_sab_diaria`)) OR
+       `registros_cuarentena` < 0 OR
+       `archivos_excluidos` < 0 OR
+       (`estado_cobertura` IN ('COMPLETA', 'PARCIAL')
+         AND (
+           `trazabilidad_verificada` IS NOT TRUE OR
+           NULLIF(TRIM(`version_silver`), '') IS NULL OR
+           NULLIF(TRIM(`scope_quality_id`), '') IS NULL OR
+           `registros_elegibles` IS NULL OR
+           `registros_cuarentena` IS NULL OR
+           `archivos_excluidos` IS NULL
+         )) OR
+       (`estado_cobertura` = 'COMPLETA'
+         AND (`registros_cuarentena` != 0 OR
+              `archivos_excluidos` != 0)) OR
+       (`estado_cobertura` = 'PARCIAL'
+         AND `registros_cuarentena` = 0
+         AND `archivos_excluidos` = 0)
     )
 ) AS 'UPSERT rechazado: campos obligatorios nulos';
 
@@ -213,6 +240,14 @@ WHEN MATCHED AND S.operation = 'UPSERT'
     OR T.`anio` IS DISTINCT FROM S.`anio`
     OR T.`mes` IS DISTINCT FROM S.`mes`
     OR T.`trimestre` IS DISTINCT FROM S.`trimestre`
+    OR T.`registros_elegibles` IS DISTINCT FROM S.`registros_elegibles`
+    OR T.`registros_cuarentena` IS DISTINCT FROM S.`registros_cuarentena`
+    OR T.`archivos_excluidos` IS DISTINCT FROM S.`archivos_excluidos`
+    OR T.`estado_cobertura` IS DISTINCT FROM S.`estado_cobertura`
+    OR T.`version_silver` IS DISTINCT FROM S.`version_silver`
+    OR T.`scope_quality_id` IS DISTINCT FROM S.`scope_quality_id`
+    OR T.`trazabilidad_verificada` IS DISTINCT FROM S.`trazabilidad_verificada`
+    OR T.`cobertura_completa` IS DISTINCT FROM S.`cobertura_completa`
   )
 THEN UPDATE SET
     `sociedad_agente_bolsa` = S.`sociedad_agente_bolsa`,
@@ -245,11 +280,19 @@ THEN UPDATE SET
     `hhi_diario` = S.`hhi_diario`,
     `anio` = S.`anio`,
     `mes` = S.`mes`,
-    `trimestre` = S.`trimestre`
+    `trimestre` = S.`trimestre`,
+    `registros_elegibles` = S.`registros_elegibles`,
+    `registros_cuarentena` = S.`registros_cuarentena`,
+    `archivos_excluidos` = S.`archivos_excluidos`,
+    `estado_cobertura` = S.`estado_cobertura`,
+    `version_silver` = S.`version_silver`,
+    `scope_quality_id` = S.`scope_quality_id`,
+    `trazabilidad_verificada` = S.`trazabilidad_verificada`,
+    `cobertura_completa` = S.`cobertura_completa`
 
 WHEN NOT MATCHED AND S.operation = 'UPSERT'
-  THEN INSERT (`fecha`, `codigo_sab`, `sociedad_agente_bolsa`, `monto_compras`, `monto_ventas`, `monto_total`, `porcentaje_compras_original`, `porcentaje_ventas_original`, `porcentaje_total_original`, `fuente_datos`, `fecha_ingesta`, `montos_validos`, `diferencia_monetaria`, `total_consistente`, `saldo_neto`, `total_compras_diario`, `total_ventas_diario`, `total_actividad_diaria`, `cantidad_sab_diaria`, `registros_invalidos_diarios`, `actividad_diaria_valida`, `participacion_compras_pct`, `participacion_ventas_pct`, `participacion_total_pct`, `diferencia_participacion_compras`, `diferencia_participacion_ventas`, `diferencia_participacion_total`, `ranking_diario`, `aporte_hhi`, `hhi_diario`, `anio`, `mes`, `trimestre`)
-  VALUES (S.`fecha`, S.`codigo_sab`, S.`sociedad_agente_bolsa`, S.`monto_compras`, S.`monto_ventas`, S.`monto_total`, S.`porcentaje_compras_original`, S.`porcentaje_ventas_original`, S.`porcentaje_total_original`, S.`fuente_datos`, S.`fecha_ingesta`, S.`montos_validos`, S.`diferencia_monetaria`, S.`total_consistente`, S.`saldo_neto`, S.`total_compras_diario`, S.`total_ventas_diario`, S.`total_actividad_diaria`, S.`cantidad_sab_diaria`, S.`registros_invalidos_diarios`, S.`actividad_diaria_valida`, S.`participacion_compras_pct`, S.`participacion_ventas_pct`, S.`participacion_total_pct`, S.`diferencia_participacion_compras`, S.`diferencia_participacion_ventas`, S.`diferencia_participacion_total`, S.`ranking_diario`, S.`aporte_hhi`, S.`hhi_diario`, S.`anio`, S.`mes`, S.`trimestre`);
+  THEN INSERT (`fecha`, `codigo_sab`, `sociedad_agente_bolsa`, `monto_compras`, `monto_ventas`, `monto_total`, `porcentaje_compras_original`, `porcentaje_ventas_original`, `porcentaje_total_original`, `fuente_datos`, `fecha_ingesta`, `montos_validos`, `diferencia_monetaria`, `total_consistente`, `saldo_neto`, `total_compras_diario`, `total_ventas_diario`, `total_actividad_diaria`, `cantidad_sab_diaria`, `registros_invalidos_diarios`, `actividad_diaria_valida`, `participacion_compras_pct`, `participacion_ventas_pct`, `participacion_total_pct`, `diferencia_participacion_compras`, `diferencia_participacion_ventas`, `diferencia_participacion_total`, `ranking_diario`, `aporte_hhi`, `hhi_diario`, `anio`, `mes`, `trimestre`, `registros_elegibles`, `registros_cuarentena`, `archivos_excluidos`, `estado_cobertura`, `version_silver`, `scope_quality_id`, `trazabilidad_verificada`, `cobertura_completa`)
+  VALUES (S.`fecha`, S.`codigo_sab`, S.`sociedad_agente_bolsa`, S.`monto_compras`, S.`monto_ventas`, S.`monto_total`, S.`porcentaje_compras_original`, S.`porcentaje_ventas_original`, S.`porcentaje_total_original`, S.`fuente_datos`, S.`fecha_ingesta`, S.`montos_validos`, S.`diferencia_monetaria`, S.`total_consistente`, S.`saldo_neto`, S.`total_compras_diario`, S.`total_ventas_diario`, S.`total_actividad_diaria`, S.`cantidad_sab_diaria`, S.`registros_invalidos_diarios`, S.`actividad_diaria_valida`, S.`participacion_compras_pct`, S.`participacion_ventas_pct`, S.`participacion_total_pct`, S.`diferencia_participacion_compras`, S.`diferencia_participacion_ventas`, S.`diferencia_participacion_total`, S.`ranking_diario`, S.`aporte_hhi`, S.`hhi_diario`, S.`anio`, S.`mes`, S.`trimestre`, S.`registros_elegibles`, S.`registros_cuarentena`, S.`archivos_excluidos`, S.`estado_cobertura`, S.`version_silver`, S.`scope_quality_id`, S.`trazabilidad_verificada`, S.`cobertura_completa`);
 
   -- Auditoría del batch en la misma transacción.
   -- Métricas NULL hasta incorporar conteos verificables.

@@ -113,6 +113,29 @@ ASSERT (
   WHERE operation = 'DELETE'
 ) AS 'DELETE bloqueado hasta autorización oficial de Quality';
 
+
+-- Claves canonicas: no migrar destinos antiguos automaticamente.
+ASSERT (
+  SELECT COUNT(*) = 0
+  FROM `gold_analytics.mercado_valor_diario`
+  WHERE `nemonico` IS DISTINCT FROM UPPER(TRIM(`nemonico`))
+) AS 'Destino no canonico: requiere migracion autorizada';
+
+ASSERT (
+  SELECT COUNT(*) = 0
+  FROM `gold_analytics_staging.mercado_valor_diario_delta`
+  WHERE batch_id = @batch_id
+    AND run_id = @run_id
+    AND source_version = @source_version
+    AND payload_sha256 = @payload_sha256
+    AND operation = 'UPSERT'
+    AND (
+      `nemonico_original` IS NULL OR
+      `nemonico` IS DISTINCT FROM
+        UPPER(TRIM(`nemonico_original`))
+    )
+) AS 'Nemonico canonico o trazabilidad incompatible';
+
 -- Integridad de identidad del batch.
 ASSERT (
   @batch_id IS NOT NULL
@@ -201,6 +224,7 @@ WHEN MATCHED AND S.operation = 'UPSERT'
     OR T.`trimestre` IS DISTINCT FROM S.`trimestre`
     OR T.`dias_desde_cierre_anterior` IS DISTINCT FROM S.`dias_desde_cierre_anterior`
     OR T.`macro_disponible` IS DISTINCT FROM S.`macro_disponible`
+    OR T.`nemonico_original` IS DISTINCT FROM S.`nemonico_original`
   )
 THEN UPDATE SET
     `descripcion` = S.`descripcion`,
@@ -240,11 +264,12 @@ THEN UPDATE SET
     `mes` = S.`mes`,
     `trimestre` = S.`trimestre`,
     `dias_desde_cierre_anterior` = S.`dias_desde_cierre_anterior`,
-    `macro_disponible` = S.`macro_disponible`
+    `macro_disponible` = S.`macro_disponible`,
+    `nemonico_original` = S.`nemonico_original`
 
 WHEN NOT MATCHED AND S.operation = 'UPSERT'
-  THEN INSERT (`nemonico`, `fecha`, `descripcion`, `fecha_anterior`, `precio_anterior`, `precio_cierre`, `precio_apertura`, `precio_maximo`, `precio_minimo`, `precio_promedio`, `monto_negociado`, `fuente`, `fecha_ingesta`, `tipo_cambio_venta`, `embig_peru`, `ruc`, `razon_social`, `codigo_isin`, `tipo_valor`, `moneda_referencia`, `fecha_inscripcion`, `precio_anterior_valido`, `precio_cierre_valido`, `rango_intradia_valido`, `tipo_cambio_disponible`, `embig_disponible`, `empresa_vinculada`, `inscripcion_compatible`, `monto_negociado_valido`, `monto_negociado_positivo`, `retorno_calculable`, `variacion_precio`, `retorno_diario_pct`, `rango_intradia`, `rango_intradia_pct`, `anio`, `mes`, `trimestre`, `dias_desde_cierre_anterior`, `macro_disponible`)
-  VALUES (S.`nemonico`, S.`fecha`, S.`descripcion`, S.`fecha_anterior`, S.`precio_anterior`, S.`precio_cierre`, S.`precio_apertura`, S.`precio_maximo`, S.`precio_minimo`, S.`precio_promedio`, S.`monto_negociado`, S.`fuente`, S.`fecha_ingesta`, S.`tipo_cambio_venta`, S.`embig_peru`, S.`ruc`, S.`razon_social`, S.`codigo_isin`, S.`tipo_valor`, S.`moneda_referencia`, S.`fecha_inscripcion`, S.`precio_anterior_valido`, S.`precio_cierre_valido`, S.`rango_intradia_valido`, S.`tipo_cambio_disponible`, S.`embig_disponible`, S.`empresa_vinculada`, S.`inscripcion_compatible`, S.`monto_negociado_valido`, S.`monto_negociado_positivo`, S.`retorno_calculable`, S.`variacion_precio`, S.`retorno_diario_pct`, S.`rango_intradia`, S.`rango_intradia_pct`, S.`anio`, S.`mes`, S.`trimestre`, S.`dias_desde_cierre_anterior`, S.`macro_disponible`);
+  THEN INSERT (`nemonico`, `fecha`, `descripcion`, `fecha_anterior`, `precio_anterior`, `precio_cierre`, `precio_apertura`, `precio_maximo`, `precio_minimo`, `precio_promedio`, `monto_negociado`, `fuente`, `fecha_ingesta`, `tipo_cambio_venta`, `embig_peru`, `ruc`, `razon_social`, `codigo_isin`, `tipo_valor`, `moneda_referencia`, `fecha_inscripcion`, `precio_anterior_valido`, `precio_cierre_valido`, `rango_intradia_valido`, `tipo_cambio_disponible`, `embig_disponible`, `empresa_vinculada`, `inscripcion_compatible`, `monto_negociado_valido`, `monto_negociado_positivo`, `retorno_calculable`, `variacion_precio`, `retorno_diario_pct`, `rango_intradia`, `rango_intradia_pct`, `anio`, `mes`, `trimestre`, `dias_desde_cierre_anterior`, `macro_disponible`, `nemonico_original`)
+  VALUES (S.`nemonico`, S.`fecha`, S.`descripcion`, S.`fecha_anterior`, S.`precio_anterior`, S.`precio_cierre`, S.`precio_apertura`, S.`precio_maximo`, S.`precio_minimo`, S.`precio_promedio`, S.`monto_negociado`, S.`fuente`, S.`fecha_ingesta`, S.`tipo_cambio_venta`, S.`embig_peru`, S.`ruc`, S.`razon_social`, S.`codigo_isin`, S.`tipo_valor`, S.`moneda_referencia`, S.`fecha_inscripcion`, S.`precio_anterior_valido`, S.`precio_cierre_valido`, S.`rango_intradia_valido`, S.`tipo_cambio_disponible`, S.`embig_disponible`, S.`empresa_vinculada`, S.`inscripcion_compatible`, S.`monto_negociado_valido`, S.`monto_negociado_positivo`, S.`retorno_calculable`, S.`variacion_precio`, S.`retorno_diario_pct`, S.`rango_intradia`, S.`rango_intradia_pct`, S.`anio`, S.`mes`, S.`trimestre`, S.`dias_desde_cierre_anterior`, S.`macro_disponible`, S.`nemonico_original`);
 
   -- Auditoría del batch en la misma transacción.
   -- Métricas NULL hasta incorporar conteos verificables.

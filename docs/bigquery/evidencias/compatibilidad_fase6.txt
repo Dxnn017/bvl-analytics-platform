@@ -1,0 +1,31 @@
+
+=== mercado_valor_diario ===
+CONTRATOS_Y_MERGE_COHERENTES_OK
+COLUMNAS_ANTERIORES: 40
+COLUMNAS_NUEVAS: 1
+COLUMNAS_TOTALES: 41
+
+=== actividad_sab_diaria ===
+CONTRATOS_Y_MERGE_COHERENTES_OK
+COLUMNAS_ANTERIORES: 33
+COLUMNAS_NUEVAS: 8
+COLUMNAS_TOTALES: 41
+ACTUALIZADO: docs/bigquery/mercado_valor_diario.json
+ACTUALIZADO: docs/bigquery/mercado_valor_diario.sql
+ACTUALIZADO: docs/bigquery/mercado_valor_diario_staging.sql
+ACTUALIZADO: docs/bigquery/mercado_valor_diario_merge.sql
+ACTUALIZADO: docs/bigquery/mercado_valor_diario_transaccional.sql
+ACTUALIZADO: docs/bigquery/actividad_sab_diaria.json
+ACTUALIZADO: docs/bigquery/actividad_sab_diaria.sql
+ACTUALIZADO: docs/bigquery/actividad_sab_diaria_staging.sql
+ACTUALIZADO: docs/bigquery/actividad_sab_diaria_merge.sql
+ACTUALIZADO: docs/bigquery/actividad_sab_diaria_transaccional.sql
+
+=== PRUEBAS FOCALIZADAS DEL COMPARADOR ===
+CAMBIO_TRAZABILIDAD_NEMONICO_OK
+CAMBIO_EXCLUSIVO_COBERTURA_DETECTADO_OK
+COBERTURA_SIN_CAMBIOS_NOOP_OK
+NUEVAS_COLUMNAS_RECONOCIDAS_OK
+ARCHIVOS_ACTUALIZADOS: 10
+EJECUCION_GCP_AUTORIZADA: False
+COMPATIBILIDAD_BIGQUERY_FASE6_OK

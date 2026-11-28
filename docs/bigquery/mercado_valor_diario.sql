@@ -39,7 +39,8 @@ CREATE TABLE `gold_analytics.mercado_valor_diario` (
   `mes` INT64,
   `trimestre` INT64,
   `dias_desde_cierre_anterior` INT64,
-  `macro_disponible` BOOL
+  `macro_disponible` BOOL,
+  `nemonico_original` STRING
 )
 PARTITION BY `fecha`
 CLUSTER BY `nemonico`;

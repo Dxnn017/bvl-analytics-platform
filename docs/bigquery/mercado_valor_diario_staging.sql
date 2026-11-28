@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `gold_analytics_staging.mercado_valor_diario_delta` (
   `trimestre` INT64,
   `dias_desde_cierre_anterior` INT64,
   `macro_disponible` BOOL,
+  `nemonico_original` STRING,
   `operation` STRING NOT NULL,
   `delete_authorized` BOOL NOT NULL,
   `batch_id` STRING NOT NULL,

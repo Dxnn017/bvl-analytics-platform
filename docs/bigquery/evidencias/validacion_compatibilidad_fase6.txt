@@ -1,0 +1,9 @@
+test_01_contratos_ddl (__main__.TestCompatibilidadFase6.test_01_contratos_ddl) ... ok
+test_02_merge_y_transaccional (__main__.TestCompatibilidadFase6.test_02_merge_y_transaccional) ... ok
+test_03_incremental_nemonico (__main__.TestCompatibilidadFase6.test_03_incremental_nemonico) ... ok
+test_04_incremental_cobertura (__main__.TestCompatibilidadFase6.test_04_incremental_cobertura) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.026s
+
+OK
