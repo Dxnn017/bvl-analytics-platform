@@ -1,0 +1,11 @@
+{
+  "financial_evidence_sha256": "198a2d18c5acaf35f2918b1c7fde5dd9058f472e39e8f1a1d29bcb0e70ed8da4",
+  "version_id": "v01-bvl-bronze-inicial-20261125-001-principales-cuentas-4cd3944afbbf413e",
+  "expected_source_rows": 5249,
+  "expected_accepted_rows": 5158,
+  "digest_format": "SORTED_IDS_UTF8_LF_FINAL",
+  "quality_authorization": false,
+  "accepted_ids_sha256": "7a71e82bde0329e2b42e8a56505958708c9fdbc7892964f7f83c54ad79aff6d0",
+  "excluded_ruc_ids_sha256": "0b899fbb04f2c15c044b0e6f0481db9bb906b10f237b87963ac85b04bf7225f0",
+  "excluded_bnb_ids_sha256": "7f9211f858d2f2c69bb4c01e18a7fa3e3a3f472784415013232b2077c4de4f82"
+}

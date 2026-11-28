@@ -1,0 +1,25 @@
+test_01_autorizacion_valida (__main__.SeguridadCorrectiva.test_01_autorizacion_valida) ... ok
+test_02_firma_manipulada (__main__.SeguridadCorrectiva.test_02_firma_manipulada) ... ok
+test_03_clave_no_confiable (__main__.SeguridadCorrectiva.test_03_clave_no_confiable) ... ok
+test_04_autorizacion_vencida (__main__.SeguridadCorrectiva.test_04_autorizacion_vencida) ... ok
+test_05_identidad_incompatible (__main__.SeguridadCorrectiva.test_05_identidad_incompatible) ... ok
+test_06_publicacion_prohibida (__main__.SeguridadCorrectiva.test_06_publicacion_prohibida) ... ok
+test_07_destino_no_autorizado (__main__.SeguridadCorrectiva.test_07_destino_no_autorizado) ... ok
+test_08_productos_bloqueados (__main__.SeguridadCorrectiva.test_08_productos_bloqueados) ... ok
+test_09_empresa_sin_decision (__main__.SeguridadCorrectiva.test_09_empresa_sin_decision) ... ok
+test_10_evidencia_financiera_distinta (__main__.SeguridadCorrectiva.test_10_evidencia_financiera_distinta) ... ok
+test_11_sidecar_ausente (__main__.SeguridadCorrectiva.test_11_sidecar_ausente) ... ok
+test_12_sidecar_version_incompatible (__main__.SeguridadCorrectiva.test_12_sidecar_version_incompatible) ... ok
+test_13_fuentes_incompletas (__main__.SeguridadCorrectiva.test_13_fuentes_incompletas) ... ok
+test_14_contrato_fisico_manipulado (__main__.SeguridadCorrectiva.test_14_contrato_fisico_manipulado) ... ok
+test_15_creacion_exclusiva (__main__.SeguridadCorrectiva.test_15_creacion_exclusiva) ... ok
+test_16_reutilizacion_rechazada (__main__.SeguridadCorrectiva.test_16_reutilizacion_rechazada) ... ok
+test_17_fallo_sin_reintento (__main__.SeguridadCorrectiva.test_17_fallo_sin_reintento) ... ok
+test_18_corrupcion_remota (__main__.SeguridadCorrectiva.test_18_corrupcion_remota) ... ok
+test_19_objeto_ajeno_inventario (__main__.SeguridadCorrectiva.test_19_objeto_ajeno_inventario) ... ok
+test_20_vigencia_antes_de_escribir (__main__.SeguridadCorrectiva.test_20_vigencia_antes_de_escribir) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.122s
+
+OK

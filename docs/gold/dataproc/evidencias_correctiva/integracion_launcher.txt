@@ -1,0 +1,71 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 22:37:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+test_01_sidecar_firmado_y_propagado (__main__.IntegracionCorrectiva.test_01_sidecar_firmado_y_propagado) ... [Stage 0:>                                                          (0 + 0) / 2][Stage 0:>                                                          (0 + 2) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 0) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 2) / 2][Stage 0:=========>         (1 + 1) / 2][Stage 1:>                  (0 + 2) / 2]                                                                                /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 57860), raddr=('127.0.0.1', 42351)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_02_sidecar_manipulado (__main__.IntegracionCorrectiva.test_02_sidecar_manipulado) ... ok
+test_03_contratos_de_salida_3_productos (__main__.IntegracionCorrectiva.test_03_contratos_de_salida_3_productos) ... ok
+test_04_tipo_y_columna_incompatibles (__main__.IntegracionCorrectiva.test_04_tipo_y_columna_incompatibles) ... ok
+test_05_separacion_financiera_y_huellas (__main__.IntegracionCorrectiva.test_05_separacion_financiera_y_huellas) ... [Stage 66:=============================>                            (1 + 1) / 2]                                                                                /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 57092), raddr=('127.0.0.1', 41869)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 53590), raddr=('127.0.0.1', 46521)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 46856), raddr=('127.0.0.1', 46345)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 39170), raddr=('127.0.0.1', 35991)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 57078), raddr=('127.0.0.1', 44879)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 48182), raddr=('127.0.0.1', 43171)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_06_parquet_fisico_y_reconstruccion (__main__.IntegracionCorrectiva.test_06_parquet_fisico_y_reconstruccion) ... [Stage 193:>                                                        (0 + 1) / 1]/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 56332), raddr=('127.0.0.1', 34405)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_07_escritura_integral_e_inventario (__main__.IntegracionCorrectiva.test_07_escritura_integral_e_inventario) ...                                                                                 /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 44172), raddr=('127.0.0.1', 43909)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 40098), raddr=('127.0.0.1', 38259)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 44860), raddr=('127.0.0.1', 45323)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 34260), raddr=('127.0.0.1', 33857)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 58248), raddr=('127.0.0.1', 43919)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_08_fallo_parcial_sin_finalizacion (__main__.IntegracionCorrectiva.test_08_fallo_parcial_sin_finalizacion) ... /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 47454), raddr=('127.0.0.1', 36541)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 48036), raddr=('127.0.0.1', 37609)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 39134), raddr=('127.0.0.1', 40469)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 49702), raddr=('127.0.0.1', 33031)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 37338), raddr=('127.0.0.1', 44761)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 80.848s
+
+OK
+{"status": "STAGING_REQUIRES_REVIEW", "authorization_id": "test-integracion", "staging_uri": "gs://bvl26-gold-7f3a9c/staging/correccion_fase6/batch_id=batch-test/run_id=run-test/attempt_id=attempt-test/", "error_type": "OSError", "automatic_retry": false, "publication_allowed": false}
