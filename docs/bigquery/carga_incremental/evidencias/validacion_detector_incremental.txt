@@ -1,0 +1,48 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/28 00:25:17 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+SPARK_VERSION: 3.5.1
+[Stage 0:>                                                          (0 + 2) / 2]                                                                                [Stage 12:=============================>                            (1 + 1) / 2]                                                                                [Stage 15:>                                                         (0 + 2) / 2]                                                                                [Stage 30:=============================>                            (2 + 2) / 4][Stage 31:>                                                         (0 + 2) / 4][Stage 31:=============================>                            (2 + 2) / 4]                                                                                [Stage 46:==============>                                           (1 + 2) / 4][Stage 46:=============================>                            (2 + 2) / 4][Stage 46:=============>    (3 + 1) / 4][Stage 47:>                 (0 + 1) / 4][Stage 47:>                                                         (0 + 2) / 4][Stage 47:=============================>                            (2 + 2) / 4][Stage 47:===========================================>              (3 + 1) / 4]                                                                                [Stage 62:=============================>                            (2 + 2) / 4][Stage 62:===========================================>              (3 + 1) / 4][Stage 63:>                                                         (0 + 2) / 4][Stage 63:==============>                                           (1 + 2) / 4][Stage 63:===========================================>              (3 + 1) / 4]                                                                                [Stage 79:=============================>                            (2 + 2) / 4]                                                                                DETECTOR_INSERT_UPDATE_ACTIVIDAD_SAB_DIARIA_OK
+FILAS_COMPLETAS_ACTIVIDAD_SAB_DIARIA_OK
+PUENTE_DETECTOR_ACTIVIDAD_SAB_DIARIA_OK
+DETECTOR_A_PARQUET_ACTIVIDAD_SAB_DIARIA_OK
+[Stage 87:=============================>                            (1 + 1) / 2]                                                                                [Stage 118:============================>                            (2 + 2) / 4]                                                                                [Stage 126:>                                                        (0 + 2) / 4][Stage 126:============================>                            (2 + 2) / 4]                                                                                [Stage 133:==========================================>              (3 + 1) / 4]                                                                                SIN_CAMBIOS_ACTIVIDAD_SAB_DIARIA_OK
+[Stage 169:==============>                                          (1 + 2) / 4][Stage 169:==========================================>              (3 + 1) / 4]                                                                                ELIMINACION_BLOQUEADA_ACTIVIDAD_SAB_DIARIA_OK
+[Stage 199:============================>                            (1 + 1) / 2]                                                                                [Stage 205:============================>                            (2 + 2) / 4][Stage 206:============================>                            (2 + 2) / 4][Stage 206:==========================================>              (3 + 1) / 4]                                                                                [Stage 221:============================>                            (2 + 2) / 4][Stage 222:>                                                        (0 + 2) / 4][Stage 222:============================>                            (2 + 2) / 4]                                                                                [Stage 237:========>        (2 + 2) / 4][Stage 238:>                (0 + 0) / 4][Stage 238:>                                                        (0 + 2) / 4][Stage 238:============================>                            (2 + 2) / 4][Stage 238:==========================================>              (3 + 1) / 4]                                                                                DETECTOR_INSERT_UPDATE_EMPRESA_TRIMESTRE_OK
+FILAS_COMPLETAS_EMPRESA_TRIMESTRE_OK
+PUENTE_DETECTOR_EMPRESA_TRIMESTRE_OK
+DETECTOR_A_PARQUET_EMPRESA_TRIMESTRE_OK
+[Stage 287:==============>                                          (1 + 2) / 4]                                                                                [Stage 293:==============>                                          (1 + 2) / 4][Stage 293:==========================================>              (3 + 1) / 4]                                                                                SIN_CAMBIOS_EMPRESA_TRIMESTRE_OK
+[Stage 327:==========================================>              (3 + 1) / 4][Stage 328:==============>                                          (1 + 2) / 4][Stage 328:==========================================>              (3 + 1) / 4]                                                                                ELIMINACION_BLOQUEADA_EMPRESA_TRIMESTRE_OK
+[Stage 371:==========================================>              (3 + 1) / 4]                                                                                [Stage 387:==============>                                          (1 + 2) / 4]                                                                                [Stage 403:============================>                            (2 + 2) / 4][Stage 403:=========================================================(4 + 0) / 4]                                                                                [Stage 419:>                                                        (0 + 2) / 4][Stage 419:============================>                            (2 + 2) / 4][Stage 419:========>        (2 + 2) / 4][Stage 421:>                (0 + 0) / 1]                                                                                [Stage 423:>                                                        (0 + 1) / 1][Stage 423:=========================================================(1 + 0) / 1]                                                                                DETECTOR_INSERT_UPDATE_MERCADO_VALOR_DIARIO_OK
+FILAS_COMPLETAS_MERCADO_VALOR_DIARIO_OK
+PUENTE_DETECTOR_MERCADO_VALOR_DIARIO_OK
+DETECTOR_A_PARQUET_MERCADO_VALOR_DIARIO_OK
+[Stage 458:==========================================>              (3 + 1) / 4]                                                                                SIN_CAMBIOS_MERCADO_VALOR_DIARIO_OK
+ELIMINACION_BLOQUEADA_MERCADO_VALOR_DIARIO_OK
+HASH_DECLARADO_ALTERADO_OK
+[Stage 638:>                                                        (0 + 2) / 4][Stage 638:====>            (1 + 2) / 4][Stage 640:>                (0 + 0) / 1][Stage 638:========>        (2 + 2) / 4][Stage 640:>                (0 + 0) / 1][Stage 638:==========================================>              (3 + 1) / 4]                                                                                CONTEO_DECLARADO_INCORRECTO_OK
+DUPLICADO_DETECTOR_ORIGINAL_OK
+ESQUEMA_INCOMPATIBLE_OK
+CLAVE_NULA_EN_SNAPSHOT_OK
+[Stage 702:============================>                            (1 + 1) / 2]                                                                                [Stage 733:==========================================>              (3 + 1) / 4]                                                                                [Stage 749:==========================================>              (3 + 1) / 4]                                                                                CAMBIO_METADATA_CONSERVADO_OK
+LIMITE_MEMORIA_RECHAZADO_OK
+[Stage 951:============================>                            (2 + 2) / 4]                                                                                [Stage 957:==========================================>              (3 + 1) / 4]                                                                                [Stage 981:============================>                            (2 + 2) / 4]                                                                                ORDEN_DETERMINISTA_DELTA_OK
+
+=== RESUMEN INTEGRACION DETECTOR GOLD ===
+CONTROLES_DETECTOR_INCREMENTAL: 26/26
+PRODUCTOS_DETECTOR_INTEGRADOS: 3/3
+DETECTOR_A_PARQUET: 3/3
+DETECTOR_GOLD_ORIGINAL_UTILIZADO: True
+INSERT_UPDATE_IDENTIFICADOS: 3/3
+DELTA_VACIO_CONTROLADO: 3/3
+DELETE_BLOQUEADO: 3/3
+ORDEN_DELTA_DETERMINISTA: True
+CAMBIO_METADATA_CONSERVADO: True
+CONSTRUCTORES_GOLD_EJECUTADOS: 0
+DATOS_SINTETICOS: True
+AUTORIZACION_OPERATIVA_REAL: False
+SPARK_LOCAL_EJECUTADO: True
+GCP_EJECUTADO: False
+BIGQUERY_EJECUTADO: False
+INTEGRACION_DETECTOR_BIGQUERY_LOCAL_OK

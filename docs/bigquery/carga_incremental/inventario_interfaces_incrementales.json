@@ -1,0 +1,533 @@
+{
+  "base_commit": "7c77be9c0b8e71e3b7b8b2473a85700bd4f49c7b",
+  "delete_authorized": false,
+  "execution_authorized": false,
+  "gold_base_commit": "62e0f0f76743822bc19859459e4307b2fb9b6ef2",
+  "interfaces": [
+    {
+      "path": "docs/bigquery/COMPATIBILIDAD_FASE6.md",
+      "sha256": "4fdb1fd338bf80efaebce5042c29ff36ae339361a1415dc32034c633f8bb52dd",
+      "size_bytes": 2064
+    },
+    {
+      "path": "docs/bigquery/CONTROL_VERSIONES_REPLAY.md",
+      "sha256": "31046003e389750e6daa892101eca3256c545816943f1bbfac63ec31daa5588e",
+      "size_bytes": 1627
+    },
+    {
+      "path": "docs/bigquery/actividad_sab_diaria.json",
+      "sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "size_bytes": 6088
+    },
+    {
+      "path": "docs/bigquery/actividad_sab_diaria.sql",
+      "sha256": "ae596c97f551800b39027a2f3848a949feb5bdfb6a613e1ce02f7f19d96fdca7",
+      "size_bytes": 1453
+    },
+    {
+      "path": "docs/bigquery/actividad_sab_diaria_merge.sql",
+      "sha256": "35f2f11a6742f91a64181213175573b4ae4df261814811f09ab65046cd0de76c",
+      "size_bytes": 12537
+    },
+    {
+      "path": "docs/bigquery/actividad_sab_diaria_staging.sql",
+      "sha256": "f0108bd6997573322ccb5bdd3c687d6da32bb8564ae5cfdac01efce5b065dc86",
+      "size_bytes": 1751
+    },
+    {
+      "path": "docs/bigquery/actividad_sab_diaria_transaccional.sql",
+      "sha256": "e52ce7bf9aeb01a48d5e7f9413d24e4f733c724564a494ad835bab031bfdba68",
+      "size_bytes": 15228
+    },
+    {
+      "path": "docs/bigquery/auditoria_incremental.sql",
+      "sha256": "15cdfd2cddfb19618bee49517d554f640463f937b07ba0c65c03605c073aa0f2",
+      "size_bytes": 1207
+    },
+    {
+      "path": "docs/bigquery/contrato_transaccional.json",
+      "sha256": "2c133f738ee430c908a0914d91a9fe318426f2b07d9a5b05bf990e8445cdefc8",
+      "size_bytes": 1250
+    },
+    {
+      "path": "docs/bigquery/control_batch_preflight.sql",
+      "sha256": "2eb9594f139368aa8eb31229ceeda88095b8c267eff064d34a21c3e2e984fe06",
+      "size_bytes": 1372
+    },
+    {
+      "path": "docs/bigquery/empresa_trimestre.json",
+      "sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "size_bytes": 8069
+    },
+    {
+      "path": "docs/bigquery/empresa_trimestre.sql",
+      "sha256": "75172b9aea638f134044c59362c4b71b800ed07ce561ad8f2691e38e84045f12",
+      "size_bytes": 1889
+    },
+    {
+      "path": "docs/bigquery/empresa_trimestre_merge.sql",
+      "sha256": "9a1df72cd1ca40a89cf988af1bbc8ff439af6cde1f26e5b6ef4701400c64aaa8",
+      "size_bytes": 13644
+    },
+    {
+      "path": "docs/bigquery/empresa_trimestre_staging.sql",
+      "sha256": "a54cd803ea86043da68a471991f107fef4c138e88a3c0eaf370b8567a42c463c",
+      "size_bytes": 2102
+    },
+    {
+      "path": "docs/bigquery/empresa_trimestre_transaccional.sql",
+      "sha256": "d9dc66631ca1ab822c664447485cb291eb15ac2ddbf6e5daebf4aed5e4eff4a1",
+      "size_bytes": 16320
+    },
+    {
+      "path": "docs/bigquery/mercado_valor_diario.json",
+      "sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "size_bytes": 5757
+    },
+    {
+      "path": "docs/bigquery/mercado_valor_diario.sql",
+      "sha256": "0d0087b4c0c820f1bf08802384a184532ecd7ad6819d2fc27f57b19c213b3d3e",
+      "size_bytes": 1253
+    },
+    {
+      "path": "docs/bigquery/mercado_valor_diario_merge.sql",
+      "sha256": "2d9c154cbc926b1ca1142d3f4374550b9c4e80e56b52aa7f30d31cbb01c41cff",
+      "size_bytes": 10796
+    },
+    {
+      "path": "docs/bigquery/mercado_valor_diario_staging.sql",
+      "sha256": "a72e4bff7bfd917e56cc80759d7f35e09884e943d8d52afa72f7922ee8761dee",
+      "size_bytes": 1607
+    },
+    {
+      "path": "docs/bigquery/mercado_valor_diario_transaccional.sql",
+      "sha256": "e8181500894fd3396fb119af5591ae3feec3db35ca210e60f6964c60008efc18",
+      "size_bytes": 13487
+    },
+    {
+      "path": "src/gold/bigquery/adaptador_incremental_local.py",
+      "sha256": "b50c754ec6fdba7baeb410531ffbd69782ac0546eecd8793a4c9c07d08dbc62e",
+      "size_bytes": 3268
+    },
+    {
+      "path": "src/gold/bigquery/autorizacion_previa_local.py",
+      "sha256": "fdd36114d98653f1cd44d0c88d1762fc8bbd597b9820ecf6c8780fbc282030f9",
+      "size_bytes": 2904
+    },
+    {
+      "path": "src/gold/bigquery/batch_atomico_local.py",
+      "sha256": "299f89d4363a98973c76f0b0090be31ec844f01ce4383ef1beb51cafdc4a7fb8",
+      "size_bytes": 6138
+    },
+    {
+      "path": "src/gold/bigquery/comparador_negocio_local.py",
+      "sha256": "6fe9098f1b2f71c55c78af60f682a04163f1e72b0547de37e22f1516bc0fb204",
+      "size_bytes": 2023
+    },
+    {
+      "path": "src/gold/bigquery/conteos_incrementales_local.py",
+      "sha256": "1d2f88a8da0ce30c65bc4c830606cbf30de1c17b8a6a02400c1d2b321dcad48a",
+      "size_bytes": 3675
+    },
+    {
+      "path": "src/gold/bigquery/control_replay_local.py",
+      "sha256": "057c3c9217b144b86848471b6ebac5668064721923a7218d0e244c0b64598c12",
+      "size_bytes": 1932
+    },
+    {
+      "path": "src/gold/bigquery/escritor_unico_local.py",
+      "sha256": "1834c6801fc9d3c1e02d68945482edf4f764d548a5647e384e70796cd8946070",
+      "size_bytes": 1535
+    },
+    {
+      "path": "src/gold/bigquery/verificar_payload_local.py",
+      "sha256": "3fb37d7c56d3e76dc989a1c6c1892106db3bb9486e559b9a02c94d6122dd8b7b",
+      "size_bytes": 1771
+    },
+    {
+      "path": "src/gold/eventos/audit_cobertura_impacto.py",
+      "sha256": "1182463a6e72d6225a92591f6099df624557e4d84f71307c6edf20a10708c34e",
+      "size_bytes": 26993
+    },
+    {
+      "path": "src/gold/eventos/build_hechos_empresa.py",
+      "sha256": "23d0e13cde907d43dcce666aa1f9048b0658c12121a1d149b630f75d576b2306",
+      "size_bytes": 21782
+    },
+    {
+      "path": "src/gold/eventos/build_impacto_hechos_valor.py",
+      "sha256": "4b4ea874554d4ba072e8f8cefb89b6b00a2c564c6356d6563f9f617a0b06ba76",
+      "size_bytes": 25631
+    },
+    {
+      "path": "src/gold/eventos/validate_hechos_empresa.py",
+      "sha256": "ed1c371becd9884e86fe41803eec88c287aa798a6fd9053fc2128e9a2a1f5889",
+      "size_bytes": 22286
+    },
+    {
+      "path": "src/gold/eventos/validate_impacto_hechos_valor.py",
+      "sha256": "ac425bec88fca868d50f36fa7ad469c97d25af34326b3ab670eef639d364cb52",
+      "size_bytes": 30016
+    },
+    {
+      "path": "src/gold/incremental/actualizar_impacto_desde_cambios.py",
+      "sha256": "62e282b8f031fb5eba5cd67e457142d9495705662691e9030f61b2d9a1ebf264",
+      "size_bytes": 1581
+    },
+    {
+      "path": "src/gold/incremental/actualizar_mercado_desde_silver.py",
+      "sha256": "7666c07246f35c291f4b4419829de65ea55762e3c1e97a55ed64a08a448f8861",
+      "size_bytes": 908
+    },
+    {
+      "path": "src/gold/incremental/adaptador_gcs_quality.py",
+      "sha256": "32cf92fb2a39236fa87631ebc2f9d84f41ae7fe1a14ad32047ea0f234b4d38e6",
+      "size_bytes": 2033
+    },
+    {
+      "path": "src/gold/incremental/adaptador_tareas_gold.py",
+      "sha256": "4c75ac57307e5ff8c15904553f56164ed22cc15a009a7e14c42673af098d38e0",
+      "size_bytes": 5343
+    },
+    {
+      "path": "src/gold/incremental/autorizacion_gold_quality_v03.py",
+      "sha256": "7c21a9146ee2e2e28160c06e606be18b80b8a588e8cf174ba5b73866a825685b",
+      "size_bytes": 6670
+    },
+    {
+      "path": "src/gold/incremental/consumidor_conjunto_quality.py",
+      "sha256": "8da4cf1a0192896e5e4e8a84dc03c5c58d360c08dcaeb9e008c0e27354311f73",
+      "size_bytes": 2647
+    },
+    {
+      "path": "src/gold/incremental/consumidor_gcs_seguro.py",
+      "sha256": "93ac6c8876690aaf9cb8f989c671ec35d9bd11006b80c33bd29fffbe1f8e9b87",
+      "size_bytes": 1870
+    },
+    {
+      "path": "src/gold/incremental/consumidor_silver_gold_integrado.py",
+      "sha256": "ad3bb2d19256a2d7681ac897ef33ef58cf64790d70d1b274d7c14c35e01caf20",
+      "size_bytes": 1437
+    },
+    {
+      "path": "src/gold/incremental/consumidor_versiones_gold.py",
+      "sha256": "174a9aad84f25b87accf060a62762da4e3122f4053303bfb36e258ef66540706",
+      "size_bytes": 2983
+    },
+    {
+      "path": "src/gold/incremental/contrato_silver_oficial.py",
+      "sha256": "4f750065c1d03750c5a598f4bef13f51df2f0638191f70460bfe8553bdb99f52",
+      "size_bytes": 5266
+    },
+    {
+      "path": "src/gold/incremental/control_concurrencia_gcs.py",
+      "sha256": "21067d7e646dba73b6dddc0fe8acc1f7d3ec1c150ae93f0de189e741a345daef",
+      "size_bytes": 1820
+    },
+    {
+      "path": "src/gold/incremental/control_versiones_gold.py",
+      "sha256": "9ff24dae758ccb7ee5709ddd62c917981c7142813d7b8b7b3ee6f97ee9769a4f",
+      "size_bytes": 2360
+    },
+    {
+      "path": "src/gold/incremental/dependency_registry.py",
+      "sha256": "f18bb633c51a22ad009d94cf0a642b2fdf194d379f57e7a68f30f6784280e765",
+      "size_bytes": 25370
+    },
+    {
+      "path": "src/gold/incremental/detectar_alcance_mercado.py",
+      "sha256": "6b9a33578a5d3a45b3d16df524c59719df825cffec4a62fe5d21a10f6d4b6d6e",
+      "size_bytes": 3134
+    },
+    {
+      "path": "src/gold/incremental/detectar_cambios_gold.py",
+      "sha256": "90093637eaa41d4d4f3f90619d165cb05f1199b543bf3d15d7eb9caea79bd879",
+      "size_bytes": 2381
+    },
+    {
+      "path": "src/gold/incremental/dispatcher_local.py",
+      "sha256": "e7fb5dda6e00f03cc60daa5cce7f30d15fb03c8c9ed216faa5e16205441c6bce",
+      "size_bytes": 7375
+    },
+    {
+      "path": "src/gold/incremental/ejecucion_controlada_local.py",
+      "sha256": "f6a1efd379c6ab61e09e66f1a3cce65432c69588bf1b77c2c5d607c3ecf7b412",
+      "size_bytes": 5600
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_actividad_sab_local.py",
+      "sha256": "d16bf024d5fd07adc9570ff8870def85fcb99a09a1fb407ee275722913bca0d2",
+      "size_bytes": 3805
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_cinco_gold_memoria.py",
+      "sha256": "1cd177c33541f21e9cee59c5e0f8336301596135c963defc4609bedba2e287fc",
+      "size_bytes": 3062
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_empresa_trimestre_local.py",
+      "sha256": "eee53bf61f7ed34cc49c35ba6aa927ec3a7ca4e8c0708170be28911bcf8e4d9e",
+      "size_bytes": 2461
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_gold_integral_local.py",
+      "sha256": "0999e3c5e986d216f8d296b23764fbe00eb8bae46e53b5691ebfdae95176fb6d",
+      "size_bytes": 1205
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_hechos_empresa_local.py",
+      "sha256": "eb7ed5699a1cf34f2dd592d24e782eae36ae5ceead946fe5b902a0726ed6705b",
+      "size_bytes": 3607
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_impacto_hechos_valor_local.py",
+      "sha256": "120c2c3be3bf5999b0d6706c0fc9c1967bf998573b46124e8247cf879d7a1632",
+      "size_bytes": 4333
+    },
+    {
+      "path": "src/gold/incremental/ejecutar_mercado_valor_local.py",
+      "sha256": "87114693a8e5a34e5368845421d1559e0cc5a3d8cbd48c2658e3542bfa3747cf",
+      "size_bytes": 3144
+    },
+    {
+      "path": "src/gold/incremental/encadenar_gold_impacto.py",
+      "sha256": "350b4b91880c4cbb6aa46f6253c316b0cf2d08ed039ce6851d64ff57ca328c4f",
+      "size_bytes": 2380
+    },
+    {
+      "path": "src/gold/incremental/escribir_candidata_sab.py",
+      "sha256": "0327b0d0bcdd86058283a289f8682db74a9a0dddff4e876ca8f09ba4b5e5f041",
+      "size_bytes": 1827
+    },
+    {
+      "path": "src/gold/incremental/flujo_silver_gold_seguro.py",
+      "sha256": "7db8dbaa36b4e316ccde65c4f1c66e2bcaa6e7e821aa9842963bb81d326d25a2",
+      "size_bytes": 2386
+    },
+    {
+      "path": "src/gold/incremental/flujo_silver_gold_v03.py",
+      "sha256": "2252d801d27d9a7f44f7430479653015db7adda7607e2a51c013e094e866d563",
+      "size_bytes": 10818
+    },
+    {
+      "path": "src/gold/incremental/incremental_executor.py",
+      "sha256": "b81575d9df5f80dad87b3dfabadea6a828337bb73f59216ae3737e739b0249de",
+      "size_bytes": 38721
+    },
+    {
+      "path": "src/gold/incremental/incremental_planner.py",
+      "sha256": "c8c6b76e735b8eefb204193cf00ec2a309d880cc652c0afe8641208dbad6b504",
+      "size_bytes": 43966
+    },
+    {
+      "path": "src/gold/incremental/manifest_validator.py",
+      "sha256": "fcd924d6f454db92757194e98f5224908cca4397cd70741d0c5c985047708d72",
+      "size_bytes": 38000
+    },
+    {
+      "path": "src/gold/incremental/marcador_conjunto_quality_v03.py",
+      "sha256": "32219110418fbf9eb3345a221f391a85b8a4dd219d50a191eb4200ab09ee47ae",
+      "size_bytes": 6627
+    },
+    {
+      "path": "src/gold/incremental/marcador_publicacion_conjunta.py",
+      "sha256": "bc2ba75915010e703c939deadc1dc01a06f11ebae19db1823bcff276c638c0b0",
+      "size_bytes": 1326
+    },
+    {
+      "path": "src/gold/incremental/operational_validator.py",
+      "sha256": "debb19c2ed9fb5330e9c214b2fcfe0b397ab1f6fa56803df484265bec9258457",
+      "size_bytes": 37457
+    },
+    {
+      "path": "src/gold/incremental/orquestador_gold_local.py",
+      "sha256": "206b6997ff77fb613c71bb58078050facaa0f5eb24a2272e8eb782326d3a3c63",
+      "size_bytes": 9152
+    },
+    {
+      "path": "src/gold/incremental/politica_quality_gold.py",
+      "sha256": "dec870aab09bb17e6d7375f72f7d0841fbcd15007c8bdc544e3d299a896c1581",
+      "size_bytes": 2940
+    },
+    {
+      "path": "src/gold/incremental/propagar_cambios_impacto.py",
+      "sha256": "a972ede3c2210209218183dda02d1ff36ad167f730c8a8b95caca0882188cdf1",
+      "size_bytes": 2056
+    },
+    {
+      "path": "src/gold/incremental/recalcular_actividad_sab.py",
+      "sha256": "fef17b8bd9f40e17c15e91b4ad67821624c8bdeab3ac267492865077f05bc300",
+      "size_bytes": 6486
+    },
+    {
+      "path": "src/gold/incremental/recalcular_empresa_trimestre.py",
+      "sha256": "df8ba521c22398e42edf24b84c402a4a91cbad6fac01e46ed215fb23fd393334",
+      "size_bytes": 4760
+    },
+    {
+      "path": "src/gold/incremental/recalcular_hechos_empresa.py",
+      "sha256": "c93b1f489dea44def2548abeda17a4da14df434c41a2f75fd174b9bef3a78bf1",
+      "size_bytes": 2245
+    },
+    {
+      "path": "src/gold/incremental/recalcular_impacto_hechos_valor.py",
+      "sha256": "4273a486da0239216ee71b17c72f334c39ad8debef906923c14369b572e23155",
+      "size_bytes": 2659
+    },
+    {
+      "path": "src/gold/incremental/recalcular_mercado_valor.py",
+      "sha256": "ae2b63c1ec91bce1d57c616326a2fd258f9927639c43b5da920cebd8867e33cc",
+      "size_bytes": 1934
+    },
+    {
+      "path": "src/gold/incremental/reconstruir_particiones_hive.py",
+      "sha256": "5057f5f17de40819e7acd82890144399ce57dcbfbb0c6b26026f52214893e8f8",
+      "size_bytes": 1457
+    },
+    {
+      "path": "src/gold/incremental/registro_ejecucion_local.py",
+      "sha256": "91f84c455811a112317e4f74818892cda2e8686d251ea539d3f52610bd7eb314",
+      "size_bytes": 2066
+    },
+    {
+      "path": "src/gold/incremental/scope_resolver.py",
+      "sha256": "04b37969c119705e38a8d7ebcbca5b72d92bb97a6e119c814de5cca305a2520d",
+      "size_bytes": 35246
+    },
+    {
+      "path": "src/gold/incremental/storage_backend.py",
+      "sha256": "5837eeb6e1aa774d3ac40306b90ddb581512e33a2c158142639520997107108f",
+      "size_bytes": 28566
+    },
+    {
+      "path": "src/gold/incremental/storage_config.py",
+      "sha256": "0c0fdb02e84a75ab7b9cf878b243d869d5e5a3d4ae451549125493049591276b",
+      "size_bytes": 20015
+    },
+    {
+      "path": "src/gold/incremental/validar_archivos_silver.py",
+      "sha256": "97b3f62676eb8dd1f203adba982dc383550abf50ea04f14fdc20c7051d865531",
+      "size_bytes": 2464
+    },
+    {
+      "path": "src/gold/incremental/validar_claves_globales_silver.py",
+      "sha256": "e97babe19889df41e9fec8c9d813bf7f761c31eab9bcc29650d51be731380446",
+      "size_bytes": 2504
+    },
+    {
+      "path": "src/gold/incremental/validar_esquema_particiones.py",
+      "sha256": "f419b763d9848d8f9d30df197565fa562c3fc5789764a6d5a3a01949005fb996",
+      "size_bytes": 2094
+    },
+    {
+      "path": "src/gold/incremental/validar_marcador_conjunto_v2.py",
+      "sha256": "e06dd253e6119b0457918993f4c1fa74113a4c4ce3243acdbb3e1d1b3ace0643",
+      "size_bytes": 3582
+    },
+    {
+      "path": "src/gold/incremental/validar_parquet_fisico.py",
+      "sha256": "996fd194c1c9fa517e1964be3c9f474ea9e00d08e9a5a34d2dcfd6be8cb616b0",
+      "size_bytes": 2231
+    },
+    {
+      "path": "src/gold/incremental/validar_parquet_silver_gcs.py",
+      "sha256": "0ced1a72d065bf3b9606fcc6bd72fd2a44df7a2097bbeedd42f4aa4cbd6c5fb3",
+      "size_bytes": 2768
+    },
+    {
+      "path": "src/gold/incremental/validar_particiones_silver.py",
+      "sha256": "779dc83b1f0e4150a12100027fba792c49ac315901fe2d69e33c528fe2782e48",
+      "size_bytes": 1295
+    },
+    {
+      "path": "src/gold/incremental/validar_publicacion_silver_local.py",
+      "sha256": "b3a782994325a5ba4c9e47bd4c3e65c4ddb8439742f092af633ab9804b764a2b",
+      "size_bytes": 2141
+    },
+    {
+      "path": "src/gold/incremental/validar_secuencia_gold.py",
+      "sha256": "e982113fa2f002f5f96f9e2e33bdc84dd682ca320fa281d3fc165cec2898dd7a",
+      "size_bytes": 2400
+    },
+    {
+      "path": "src/gold/incremental/verificar_conjunto_silver_v03.py",
+      "sha256": "2ecaacd09199f14ea2ad1333f34354a62a483a28f9c0701cbdfd22e8dcbabcd8",
+      "size_bytes": 5326
+    },
+    {
+      "path": "src/gold/incremental/verificar_firma_quality.py",
+      "sha256": "5a4bec5ef42910f0ff0e5d9507fc4ed57966f6e2b9fb07c140e200acb18edfee",
+      "size_bytes": 1971
+    },
+    {
+      "path": "src/gold/incremental/verificar_objeto_quality.py",
+      "sha256": "839f9f8dcae58a03d7af8fe574801f7a335b23b7fce3b2cd9f81e1342d7ba519",
+      "size_bytes": 1467
+    },
+    {
+      "path": "src/gold/incremental/version_registry.py",
+      "sha256": "536bf7a330f6f680a33873faf52b9bb0894144f116da71cd723e93c99377f3b2",
+      "size_bytes": 37444
+    },
+    {
+      "path": "src/gold/incremental/vincular_archivos_manifest.py",
+      "sha256": "ac5e965f3445c6e9dafc661d19e33e0932034706d39d5c2ec91e1b93904bd0a3",
+      "size_bytes": 1300
+    }
+  ],
+  "production_write_authorized": false,
+  "products": {
+    "actividad_sab_diaria": {
+      "business_keys": [
+        "fecha",
+        "codigo_sab"
+      ],
+      "expected_staging_columns": 47,
+      "gold_columns": 41,
+      "gold_contract_sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "partition_columns": [
+        "anio",
+        "mes"
+      ],
+      "target_table": "gold_analytics.actividad_sab_diaria"
+    },
+    "empresa_trimestre": {
+      "business_keys": [
+        "id_registro"
+      ],
+      "expected_staging_columns": 64,
+      "gold_columns": 58,
+      "gold_contract_sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "partition_columns": [
+        "anio",
+        "trimestre"
+      ],
+      "target_table": "gold_analytics.empresa_trimestre"
+    },
+    "mercado_valor_diario": {
+      "business_keys": [
+        "nemonico",
+        "fecha"
+      ],
+      "expected_staging_columns": 47,
+      "gold_columns": 41,
+      "gold_contract_sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "partition_columns": [
+        "anio",
+        "mes"
+      ],
+      "target_table": "gold_analytics.mercado_valor_diario"
+    }
+  },
+  "project_id": "bvl-analytics-2026",
+  "publication_authorized": false,
+  "staging_control_columns": {
+    "batch_id": "STRING",
+    "delete_authorized": "BOOL",
+    "operation": "STRING",
+    "payload_sha256": "STRING",
+    "run_id": "STRING",
+    "source_version": "STRING"
+  },
+  "status": "LOCAL_INCREMENTAL_DESIGN_NOT_AUTHORIZED"
+}
