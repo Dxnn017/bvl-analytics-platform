@@ -1,0 +1,6 @@
+BORRADOR. NO EJECUTAR SIN AUTORIZACION.
+
+gcloud dataproc batches submit pyspark src/gold/dataproc/main_gold.py --project=bvl-analytics-2026 --region=southamerica-west1 --version=2.2 --service-account=sa-bvl-gold@bvl-analytics-2026.iam.gserviceaccount.com --batch=BATCH_ID_PENDIENTE --deps-bucket=gs://BUCKET_DEPENDENCIAS_AUTORIZADO --subnet=SUBRED_AUTORIZADA --py-files=outputs/dataproc/bvl_gold_modules.zip --properties=spark.dataproc.driver.compute.tier=standard,spark.dataproc.executor.compute.tier=standard,spark.driver.cores=4,spark.executor.cores=4,spark.executor.instances=2,spark.dynamicAllocation.enabled=false --ttl=20m -- --modo smoke-test
+
+EJECUCION_CLOUD_AUTORIZADA: False
+COMANDO_DATAPROC_PREPARADO_OK

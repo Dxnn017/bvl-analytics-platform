@@ -1,0 +1,30 @@
+mercado_valor_diario DEPENDENCIAS_OK
+actividad_sab_diaria DEPENDENCIAS_OK
+empresa_trimestre DEPENDENCIAS_OK
+hechos_empresa BLOQUEADO_OK
+impacto_hechos_valor BLOQUEADO_OK
+IMPORTACION_DESDE_ZIP_OK
+CONTROL_PRODUCTOS_Y_DEPENDENCIAS_OK
+26/11/27 21:11:08 WARN Utils: Your hostname, Debian12 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/11/27 21:11:08 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 21:11:08 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+{
+  "estado": "SMOKE_TEST_OK",
+  "modo": "smoke-test",
+  "python": "3.11.2",
+  "spark": "3.5.1",
+  "productos_candidatos": [
+    "actividad_sab_diaria",
+    "empresa_trimestre",
+    "mercado_valor_diario"
+  ],
+  "productos_bloqueados": [
+    "hechos_empresa",
+    "impacto_hechos_valor"
+  ],
+  "consumo_silver_oficial": false,
+  "ejecucion_productiva_autorizada": false,
+  "publicacion_autorizada": false
+}

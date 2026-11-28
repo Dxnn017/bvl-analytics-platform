@@ -1,0 +1,17 @@
+{
+  "project": "bvl-analytics-2026",
+  "region": "southamerica-west1",
+  "runtime_version": "2.2",
+  "service_account": "sa-bvl-gold@bvl-analytics-2026.iam.gserviceaccount.com",
+  "tier": "standard",
+  "driver_cores": 4,
+  "executor_cores": 4,
+  "executor_instances": 2,
+  "dynamic_allocation": false,
+  "total_vcpu": 12,
+  "ttl": "20m",
+  "mode": "smoke-test",
+  "cloud_execution_authorized": false,
+  "silver_consumption_authorized": false,
+  "production_authorized": false
+}

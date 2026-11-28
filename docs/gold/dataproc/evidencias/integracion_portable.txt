@@ -1,0 +1,36 @@
+=== VALIDACION INCREMENTAL DESDE ZIP ===
+test_01_integracion_tres_recalculadores (__main__.TestEjecutorPortable.test_01_integracion_tres_recalculadores) ... ok
+test_02_propagar_version_y_cobertura_sab (__main__.TestEjecutorPortable.test_02_propagar_version_y_cobertura_sab) ... ok
+test_03_productos_bloqueados (__main__.TestEjecutorPortable.test_03_productos_bloqueados) ... ok
+test_04_dependencias_incompletas (__main__.TestEjecutorPortable.test_04_dependencias_incompletas) ... ok
+test_05_base_o_alcance_ausente (__main__.TestEjecutorPortable.test_05_base_o_alcance_ausente) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+OK
+=== SMOKE TEST DRIVER Y WORKERS ===
+26/11/27 21:12:04 WARN Utils: Your hostname, Debian12 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/11/27 21:12:04 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 21:12:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 3:>                                                          (0 + 2) / 2]                                                                                MODULOS_ZIP_EN_WORKERS_OK
+{
+  "estado": "SMOKE_TEST_OK",
+  "modo": "smoke-test",
+  "python": "3.11.2",
+  "spark": "3.5.1",
+  "productos_candidatos": [
+    "actividad_sab_diaria",
+    "empresa_trimestre",
+    "mercado_valor_diario"
+  ],
+  "productos_bloqueados": [
+    "hechos_empresa",
+    "impacto_hechos_valor"
+  ],
+  "consumo_silver_oficial": false,
+  "ejecucion_productiva_autorizada": false,
+  "publicacion_autorizada": false
+}
