@@ -335,17 +335,79 @@ def _stage_parquet(client, rows, prefix):
     return receipts
 
 
-def validate_writer_permissions(client):
-    """Preclaim: IAM declarada para lectura y create-only, no prueba de escritura."""
-    required={
-        BRONZE_BUCKET: ('storage.objects.get',),
-        CONTROL_BUCKET: ('storage.objects.get',),
-        ARTIFACT_BUCKET: ('storage.objects.get',),
-        SILVER_BUCKET: ('storage.objects.create','storage.objects.list'),
-    }
-    for bucket,perms in required.items():
-        actual=set(client.bucket(bucket).test_iam_permissions(list(perms)))
-        require(set(perms)<=actual,'IAM_INSUFICIENTE_PRECLAIM:'+bucket)
+def validate_writer_permissions(client, context, entries, launch_refs):
+    """Preclaim IAM no destructivo con recursos de OBJETO sujetos a condiciones.
+
+    `Bucket.test_iam_permissions` evalua el bucket, no un objeto con resource.name
+    condicionado: no debe usarse para deducir get/create sobre prefijos de objetos.
+    No se hacen escrituras, claims ni simulaciones de upload. Toda duda falla cerrado.
+    """
+    require(type(context) is dict and context.get('product') == PRODUCT and
+            context.get('source_dataset') == DATASET and
+            context.get('staging_prefix') == expected_staging(
+                context.get('run_id'), context.get('attempt_id')),
+            'IAM_CONTEXTO_NO_VINCULADO_A_STAGING')
+    require(type(launch_refs) is dict and
+            all(type(launch_refs.get(k)) is str for k in ('uri','signature_uri')),
+            'IAM_REFERENCIAS_CONTEXT_INCOMPLETAS')
+    require(type(entries) is list and len(entries) == 1979,
+            'IAM_INVENTARIO_SOURCE_INCOMPLETO')
+
+    # Los otros documentos F5 y los artefactos ya se leyeron por generacion+hash
+    # antes de esta funcion; comprobamos ademas IAM sobre sus NOMBRES reales.
+    readings = [
+        (CONTROL_BUCKET, context['bronze_manifest_uri']),
+        (CONTROL_BUCKET, launch_refs['uri']),
+        (CONTROL_BUCKET, launch_refs['signature_uri']),
+        (ARTIFACT_BUCKET, context['entrypoint_uri']),
+        (ARTIFACT_BUCKET, context['dependencies_uri']),
+    ]
+    # Muestras separadas PDF y TXT; la verificacion integral de 1979 bytes
+    # por generacion+SHA permanece obligatoria despues del claim autorizado.
+    for extension in ('.pdf', '.txt'):
+        match = next((e.get('uri') for e in entries if type(e) is dict and
+                      type(e.get('uri')) is str and
+                      e['uri'].lower().endswith(extension)), None)
+        require(match is not None, 'IAM_FUENTE_SIN_'+extension[1:].upper())
+        readings.append((BRONZE_BUCKET, match))
+
+    def check_object(bucket_name, uri, perm):
+        name = _gcs_uri_parts(uri, bucket_name)
+        require(name != '', 'IAM_NOMBRE_OBJETO_VACIO')
+        try:
+            # GCS Objects.testIamPermissions: usa `resource.name` del objeto,
+            # no la comprobacion a nivel del bucket. No crea objetos.
+            permissions = client.bucket(bucket_name).blob(name).test_iam_permissions([perm])
+        except Exception as exc:
+            raise ValueError('IAM_PRECLAIM_NO_VERIFICABLE:'+uri) from exc
+        require(type(permissions) in (list,tuple,set) and perm in permissions,
+                'IAM_INSUFICIENTE_PRECLAIM:'+uri+':'+perm)
+
+    for bucket_name, uri in readings:
+        check_object(bucket_name, uri, 'storage.objects.get')
+
+    # `storage.objects.list` opera a nivel bucket. El listado REAL sobre el
+    # prefijo exacto y la comprobacion de staging vacio siguen en execute().
+    try:
+        allowed = client.bucket(SILVER_BUCKET).test_iam_permissions(
+            ['storage.objects.list'])
+    except Exception as exc:
+        raise ValueError('IAM_PRECLAIM_LIST_NO_VERIFICABLE') from exc
+    require(type(allowed) in (list,tuple,set) and
+            'storage.objects.list' in allowed,
+            'IAM_INSUFICIENTE_PRECLAIM:'+SILVER_BUCKET+':list')
+
+    prefix = context['staging_prefix']
+    # 990 filas, 125 por parquet: 8 nombres create-only, mas ambos recibos
+    # del prefijo _quality. Los nombres se fijan sin generar ningun objeto.
+    targets = [prefix+f'parquet/part-{i:05d}.snappy.parquet'
+               for i in range(len(range(0, 990, MAX_PARQUET_ROWS)))]
+    targets.extend((
+        prefix+'_quality/manifest_candidate_documental.json',
+        prefix+'_quality/failure_candidate.json',
+    ))
+    for uri in targets:
+        check_object(SILVER_BUCKET, uri, 'storage.objects.create')
     return True
 
 
@@ -470,7 +532,8 @@ def execute(args):
     require(len(index)==990, 'INDEX_INCOMPLETO')
     validate_part_capacity(index)
     # Preclaim: verificar IAM (sin escribir), staging vacio, limites e intento.
-    validate_writer_permissions(client)
+    validate_writer_permissions(client, context, entries,
+                                _read_json(args.launch_refs))
     object_prefix=_gcs_uri_parts(context['staging_prefix'],SILVER_BUCKET)
     require(not list(client.list_blobs(SILVER_BUCKET,prefix=object_prefix,max_results=1)),
             'STAGING_PREEXISTENTE_REQUIERE_CONCILIACION')

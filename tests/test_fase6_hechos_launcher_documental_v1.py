@@ -225,14 +225,21 @@ class TestDocumentalLauncher(unittest.TestCase):
             launch._create_only(FailedClient(),uri,b'abc',content_type='application/octet-stream')
 
     def test_permission_preflight_denies_missing(self):
+        class Blob:
+            def test_iam_permissions(self, perms): return []
         class Bucket:
-            def __init__(self,b): self.name=b
-            def test_iam_permissions(self,p):
-                return p[:-1] if self.name==launch.SILVER_BUCKET else p
+            def __init__(self, b): self.name=b
+            def test_iam_permissions(self, perms): return perms
+            def blob(self, name): return Blob()
         class Client:
-            def bucket(self,b): return Bucket(b)
+            def bucket(self, b): return Bucket(b)
+        ctx=candidate_context()
+        refs={'uri':f'gs://{launch.CONTROL_BUCKET}/authorizations/silver_documental/'
+                    f"run_id={ctx['run_id']}/attempt_id={ctx['attempt_id']}/launch_context.json",
+              'signature_uri':f'gs://{launch.CONTROL_BUCKET}/authorizations/silver_documental/'
+                    f"run_id={ctx['run_id']}/attempt_id={ctx['attempt_id']}/launch_context.sig"}
         with self.assertRaisesRegex(ValueError,'IAM_INSUFICIENTE_PRECLAIM'):
-            launch.validate_writer_permissions(Client())
+            launch.validate_writer_permissions(Client(),ctx,self.items,refs)
 
     def test_post_claim_failure_receipt_no_retry(self):
         seen=[]
