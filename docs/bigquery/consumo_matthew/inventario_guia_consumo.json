@@ -1,0 +1,36 @@
+{
+  "status": "LOCAL_CONSUMPTION_CANDIDATE_ONLY",
+  "files": [
+    {
+      "path": "docs/bigquery/consumo_matthew/indicadores_gold_documentados.json",
+      "sha256": "1b8f774a9ce89fb0b2871454db52f2d082742040db8ab01a48f76bf7567e8cea",
+      "size_bytes": 6235
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/sql_consumo/actividad_sab_diaria_detalle.sql",
+      "sha256": "0d5e4fcbe73cd0744d4fe7c3d4875dc96af9b70fbb3d24cabd4a6f90d70443b6",
+      "size_bytes": 1167
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/sql_consumo/actividad_sab_resumen_diario.sql",
+      "sha256": "f3dbef548af392fdcd454f77474db9d1b6d2f4a112ca2beced34fd2670a19dd4",
+      "size_bytes": 3796
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/sql_consumo/empresa_trimestre_detalle.sql",
+      "sha256": "17a95e2ecc1c55a3fa04203ecdd121519d886c95672ba3f6e2eba59a27ea84c1",
+      "size_bytes": 1186
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/sql_consumo/mercado_valor_diario_detalle.sql",
+      "sha256": "94ca965add4b905770e601ba9002a697a4b44bdc99ed66927bbe352fd444e855",
+      "size_bytes": 977
+    }
+  ],
+  "query_count": 4,
+  "indicator_count": 13,
+  "google_sql_engine_validated": false,
+  "cloud_execution_authorized": false,
+  "production_consumption_authorized": false,
+  "publication_authorized": false
+}

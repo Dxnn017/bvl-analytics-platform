@@ -1,0 +1,576 @@
+{
+  "status": "LOCAL_CONSUMPTION_CANDIDATE_ONLY",
+  "products": {
+    "actividad_sab_diaria": {
+      "product": "actividad_sab_diaria",
+      "numeric_candidates": [
+        {
+          "column": "monto_compras",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "monto_ventas",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "monto_total",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "porcentaje_compras_original",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "porcentaje_ventas_original",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "porcentaje_total_original",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "diferencia_monetaria",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "saldo_neto",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "total_compras_diario",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "total_ventas_diario",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "total_actividad_diaria",
+          "type": "NUMERIC",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "cantidad_sab_diaria",
+          "type": "INT64",
+          "nullable": false,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "registros_invalidos_diarios",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "participacion_compras_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "participacion_ventas_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "participacion_total_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "diferencia_participacion_compras",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "diferencia_participacion_ventas",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "diferencia_participacion_total",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "ranking_diario",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "aporte_hhi",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "hhi_diario",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "trimestre",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        }
+      ],
+      "restrictions": [
+        "Conservar precision monetaria NUMERIC.",
+        "No convertir valores monetarios a FLOAT64.",
+        "No reemplazar NULL por cero automaticamente.",
+        "Conservar estado_cobertura.",
+        "Distinguir COMPLETA, PARCIAL y DESCONOCIDA.",
+        "No declarar cobertura total sin acreditacion.",
+        "No sumar totales diarios repetidos por SAB."
+      ]
+    },
+    "empresa_trimestre": {
+      "product": "empresa_trimestre",
+      "numeric_candidates": [
+        {
+          "column": "ejercicio",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "trimestre_num",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "activo_total",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "pasivo_total",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "patrimonio_total",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "total_ingreso",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "utilidad_neta",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "cantidad_clave_negocio",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "diferencia_contable",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "cantidad_registros_empresa_periodo",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "roa_aproximado_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "roe_aproximado_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "endeudamiento_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "margen_neto_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "autonomia_financiera_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        }
+      ],
+      "restrictions": [
+        "Utilizar id_registro como clave contractual.",
+        "No asumir unicidad por RUC y trimestre.",
+        "No mezclar registros financieros ambiguos.",
+        "No reincorporar excepciones sin autorizacion.",
+        "No sumar ratios financieros.",
+        "Validar comparabilidad de periodos contables."
+      ]
+    },
+    "mercado_valor_diario": {
+      "product": "mercado_valor_diario",
+      "numeric_candidates": [
+        {
+          "column": "precio_anterior",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "precio_cierre",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "precio_apertura",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "precio_maximo",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "precio_minimo",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "precio_promedio",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "monto_negociado",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "tipo_cambio_venta",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "embig_peru",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "variacion_precio",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "retorno_diario_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "rango_intradia",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "rango_intradia_pct",
+          "type": "FLOAT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "trimestre",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        },
+        {
+          "column": "dias_desde_cierre_anterior",
+          "type": "INT64",
+          "nullable": true,
+          "status": "AGGREGATION_REVIEW_REQUIRED",
+          "default_aggregation": null,
+          "unit": null,
+          "unit_verified": false,
+          "kpi_approved": false
+        }
+      ],
+      "restrictions": [
+        "Conservar nemonico canonico.",
+        "No sumar precios de cierre entre valores.",
+        "No interpretar ausencia como precio cero.",
+        "Validar comparabilidad temporal.",
+        "No asumir ajustes por eventos corporativos."
+      ]
+    }
+  },
+  "kpis_operatively_approved": false,
+  "automatic_aggregation_authorized": false
+}

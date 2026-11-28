@@ -1,0 +1,957 @@
+{
+  "schema_version": "BVL-CONSUMPTION-CANDIDATE-v0.1",
+  "status": "LOCAL_CONSUMPTION_CANDIDATE_ONLY",
+  "recipient_role": "Matthew - Analytics BI ML",
+  "base_commit": "0b68dac7a26ff43ed09b9218958185cd79514407",
+  "gold_base_commit": "62e0f0f76743822bc19859459e4307b2fb9b6ef2",
+  "project_id": "bvl-analytics-2026",
+  "dataset_proposed": "gold_analytics",
+  "products": {
+    "actividad_sab_diaria": {
+      "product": "actividad_sab_diaria",
+      "table_proposed": "bvl-analytics-2026.gold_analytics.actividad_sab_diaria",
+      "grain": "Una fila por fecha y codigo_sab",
+      "business_keys": [
+        "fecha",
+        "codigo_sab"
+      ],
+      "source_partition_columns": [
+        "anio",
+        "mes"
+      ],
+      "bigquery_partition": "fecha",
+      "clustering": [
+        "codigo_sab"
+      ],
+      "columns_count": 41,
+      "candidate_historical_rows": 21911,
+      "gold_contract_sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "columns": [
+        {
+          "name": "fecha",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "codigo_sab",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "sociedad_agente_bolsa",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "monto_compras",
+          "spark_type": "decimal(24,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "monto_ventas",
+          "spark_type": "decimal(24,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "monto_total",
+          "spark_type": "decimal(24,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "porcentaje_compras_original",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "porcentaje_ventas_original",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "porcentaje_total_original",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "fuente_datos",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha_ingesta",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "montos_validos",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "diferencia_monetaria",
+          "spark_type": "decimal(26,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "total_consistente",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "saldo_neto",
+          "spark_type": "decimal(25,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "total_compras_diario",
+          "spark_type": "decimal(34,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "total_ventas_diario",
+          "spark_type": "decimal(34,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "total_actividad_diaria",
+          "spark_type": "decimal(34,2)",
+          "bigquery_type": "NUMERIC",
+          "nullable": true
+        },
+        {
+          "name": "cantidad_sab_diaria",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": false
+        },
+        {
+          "name": "registros_invalidos_diarios",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "actividad_diaria_valida",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "participacion_compras_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "participacion_ventas_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "participacion_total_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "diferencia_participacion_compras",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "diferencia_participacion_ventas",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "diferencia_participacion_total",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "ranking_diario",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "aporte_hhi",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "hhi_diario",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "anio",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "mes",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "trimestre",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "registros_elegibles",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "registros_cuarentena",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "archivos_excluidos",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "estado_cobertura",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": false
+        },
+        {
+          "name": "version_silver",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "scope_quality_id",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "trazabilidad_verificada",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "cobertura_completa",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        }
+      ],
+      "consumption_restrictions": [
+        "Conservar precision monetaria NUMERIC.",
+        "No convertir valores monetarios a FLOAT64.",
+        "No reemplazar NULL por cero automaticamente.",
+        "Conservar estado_cobertura.",
+        "Distinguir COMPLETA, PARCIAL y DESCONOCIDA.",
+        "No declarar cobertura total sin acreditacion.",
+        "No sumar totales diarios repetidos por SAB."
+      ],
+      "official_source_verified": false,
+      "table_availability_verified": false,
+      "production_consumption_authorized": false
+    },
+    "empresa_trimestre": {
+      "product": "empresa_trimestre",
+      "table_proposed": "bvl-analytics-2026.gold_analytics.empresa_trimestre",
+      "grain": "Una fila por id_registro financiero",
+      "business_keys": [
+        "id_registro"
+      ],
+      "source_partition_columns": [
+        "anio",
+        "trimestre"
+      ],
+      "bigquery_partition": "fecha_fin_trimestre",
+      "clustering": [
+        "id_registro",
+        "rpj"
+      ],
+      "columns_count": 58,
+      "candidate_historical_rows": 5158,
+      "gold_contract_sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "columns": [
+        {
+          "name": "rpj",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "ejercicio",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "trimestre_num",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "id_registro",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "clave_negocio",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "ruc",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "ruc_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "nombre_empresa",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "tipo_empresa",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "tipo_sector",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "ciiu",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "trimestre_original",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "tipo_informacion",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "metodo_flujo_efectivo",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "moneda_original",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "activo_total",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "pasivo_total",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "patrimonio_total",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "total_ingreso",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "utilidad_neta",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "cantidad_clave_negocio",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "colision_clave_negocio",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "fuente_datos",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha_ingesta",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "moneda",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "anio",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "trimestre",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "periodo_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "periodo",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha_fin_trimestre",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "activo_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "pasivo_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "patrimonio_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "patrimonio_positivo",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "ingreso_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "ingreso_positivo",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "utilidad_valida",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "moneda_valida",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "identidad_contable_evaluable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "diferencia_contable",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "identidad_contable_valida",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "cantidad_registros_empresa_periodo",
+          "spark_type": "bigint",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "colision_financiera",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "sin_incidencias_estructurales",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "apto_kpi_general",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "roa_calculable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "roe_calculable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "endeudamiento_calculable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "margen_neto_calculable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "autonomia_calculable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "roa_aproximado_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "roe_aproximado_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "endeudamiento_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "margen_neto_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "autonomia_financiera_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "resultado_financiero",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": false
+        },
+        {
+          "name": "patrimonio_negativo",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": false
+        },
+        {
+          "name": "motivos_calidad",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": false
+        }
+      ],
+      "consumption_restrictions": [
+        "Utilizar id_registro como clave contractual.",
+        "No asumir unicidad por RUC y trimestre.",
+        "No mezclar registros financieros ambiguos.",
+        "No reincorporar excepciones sin autorizacion.",
+        "No sumar ratios financieros.",
+        "Validar comparabilidad de periodos contables."
+      ],
+      "official_source_verified": false,
+      "table_availability_verified": false,
+      "production_consumption_authorized": false
+    },
+    "mercado_valor_diario": {
+      "product": "mercado_valor_diario",
+      "table_proposed": "bvl-analytics-2026.gold_analytics.mercado_valor_diario",
+      "grain": "Una fila por nemonico y fecha",
+      "business_keys": [
+        "nemonico",
+        "fecha"
+      ],
+      "source_partition_columns": [
+        "anio",
+        "mes"
+      ],
+      "bigquery_partition": "fecha",
+      "clustering": [
+        "nemonico"
+      ],
+      "columns_count": 41,
+      "candidate_historical_rows": 83130,
+      "gold_contract_sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "columns": [
+        {
+          "name": "nemonico",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "descripcion",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha_anterior",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "precio_anterior",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "precio_cierre",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "precio_apertura",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "precio_maximo",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "precio_minimo",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "precio_promedio",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "monto_negociado",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "fuente",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha_ingesta",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "tipo_cambio_venta",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "embig_peru",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "ruc",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "razon_social",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "codigo_isin",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "tipo_valor",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "moneda_referencia",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        },
+        {
+          "name": "fecha_inscripcion",
+          "spark_type": "date",
+          "bigquery_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "precio_anterior_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "precio_cierre_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "rango_intradia_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "tipo_cambio_disponible",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "embig_disponible",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "empresa_vinculada",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "inscripcion_compatible",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "monto_negociado_valido",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "monto_negociado_positivo",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "retorno_calculable",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "variacion_precio",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "retorno_diario_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "rango_intradia",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "rango_intradia_pct",
+          "spark_type": "double",
+          "bigquery_type": "FLOAT64",
+          "nullable": true
+        },
+        {
+          "name": "anio",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "mes",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "trimestre",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "dias_desde_cierre_anterior",
+          "spark_type": "int",
+          "bigquery_type": "INT64",
+          "nullable": true
+        },
+        {
+          "name": "macro_disponible",
+          "spark_type": "boolean",
+          "bigquery_type": "BOOL",
+          "nullable": true
+        },
+        {
+          "name": "nemonico_original",
+          "spark_type": "string",
+          "bigquery_type": "STRING",
+          "nullable": true
+        }
+      ],
+      "consumption_restrictions": [
+        "Conservar nemonico canonico.",
+        "No sumar precios de cierre entre valores.",
+        "No interpretar ausencia como precio cero.",
+        "Validar comparabilidad temporal.",
+        "No asumir ajustes por eventos corporativos."
+      ],
+      "official_source_verified": false,
+      "table_availability_verified": false,
+      "production_consumption_authorized": false
+    }
+  },
+  "total_columns": 140,
+  "candidate_historical_rows": 110199,
+  "data_access_mode_proposed": "READ_ONLY",
+  "official_source_verified": false,
+  "cloud_execution_authorized": false,
+  "production_consumption_authorized": false,
+  "publication_authorized": false
+}

@@ -1,0 +1,192 @@
+{
+  "status": "LOCAL_CONSUMPTION_CANDIDATE_ONLY",
+  "indicators": [
+    {
+      "product": "mercado_valor_diario",
+      "column": "precio_cierre",
+      "bigquery_type": "FLOAT64",
+      "definition": "Precio de cierre de la fuente bursatil",
+      "quality_flags": [
+        "precio_cierre_valido"
+      ],
+      "analytical_restriction": "No sumar entre valores o fechas",
+      "unit": null,
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "mercado_valor_diario",
+      "column": "retorno_diario_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "(precio_cierre / precio_anterior - 1) * 100",
+      "quality_flags": [
+        "retorno_calculable"
+      ],
+      "analytical_restriction": "Retorno simple de precio, no retorno total ajustado",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "mercado_valor_diario",
+      "column": "rango_intradia_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "(precio_maximo - precio_minimo) / precio_anterior * 100",
+      "quality_flags": [
+        "rango_intradia_valido",
+        "precio_anterior_valido"
+      ],
+      "analytical_restriction": "No sumar porcentajes",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "actividad_sab_diaria",
+      "column": "monto_compras",
+      "bigquery_type": "NUMERIC",
+      "definition": "MontoCompras de Silver con precision decimal",
+      "quality_flags": [
+        "montos_validos",
+        "total_consistente"
+      ],
+      "analytical_restriction": "Preservar NUMERIC y verificar cobertura",
+      "unit": null,
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "actividad_sab_diaria",
+      "column": "monto_ventas",
+      "bigquery_type": "NUMERIC",
+      "definition": "MontoVentas de Silver con precision decimal",
+      "quality_flags": [
+        "montos_validos",
+        "total_consistente"
+      ],
+      "analytical_restriction": "Preservar NUMERIC y verificar cobertura",
+      "unit": null,
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "actividad_sab_diaria",
+      "column": "saldo_neto",
+      "bigquery_type": "NUMERIC",
+      "definition": "monto_compras - monto_ventas",
+      "quality_flags": [
+        "montos_validos"
+      ],
+      "analytical_restriction": "Preservar signo, precision y cobertura",
+      "unit": null,
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "actividad_sab_diaria",
+      "column": "participacion_total_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "monto_total / total_actividad_diaria * 100",
+      "quality_flags": [
+        "actividad_diaria_valida"
+      ],
+      "analytical_restriction": "Participacion sobre universo observado; total positivo",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "actividad_sab_diaria",
+      "column": "hhi_diario",
+      "bigquery_type": "FLOAT64",
+      "definition": "SUM(POW(participacion_total_pct, 2)) por fecha",
+      "quality_flags": [
+        "actividad_diaria_valida"
+      ],
+      "analytical_restriction": "Valor diario repetido por SAB; no sumar filas",
+      "unit": "indice HHI de 0 a 10000",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "empresa_trimestre",
+      "column": "roa_aproximado_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "utilidad_neta / activo_total * 100",
+      "quality_flags": [
+        "roa_calculable"
+      ],
+      "analytical_restriction": "Aproximado; no anualizar automaticamente",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "empresa_trimestre",
+      "column": "roe_aproximado_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "utilidad_neta / patrimonio_total * 100",
+      "quality_flags": [
+        "roe_calculable"
+      ],
+      "analytical_restriction": "Aproximado; no anualizar automaticamente",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "empresa_trimestre",
+      "column": "endeudamiento_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "pasivo_total / activo_total * 100",
+      "quality_flags": [
+        "endeudamiento_calculable"
+      ],
+      "analytical_restriction": "No sumar ratios financieros",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "empresa_trimestre",
+      "column": "margen_neto_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "utilidad_neta / total_ingreso * 100",
+      "quality_flags": [
+        "margen_neto_calculable"
+      ],
+      "analytical_restriction": "No sumar ratios financieros",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    },
+    {
+      "product": "empresa_trimestre",
+      "column": "autonomia_financiera_pct",
+      "bigquery_type": "FLOAT64",
+      "definition": "patrimonio_total / activo_total * 100",
+      "quality_flags": [
+        "autonomia_calculable"
+      ],
+      "analytical_restriction": "No sumar ratios financieros",
+      "unit": "porcentaje",
+      "automatic_aggregation": null,
+      "existing_gold_indicator": true,
+      "operatively_approved": false
+    }
+  ],
+  "indicator_count": 13,
+  "production_consumption_authorized": false
+}

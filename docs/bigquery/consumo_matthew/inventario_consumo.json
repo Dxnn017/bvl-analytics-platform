@@ -1,0 +1,33 @@
+{
+  "status": "LOCAL_CONSUMPTION_CANDIDATE_ONLY",
+  "base_commit": "0b68dac7a26ff43ed09b9218958185cd79514407",
+  "products": [
+    "actividad_sab_diaria",
+    "empresa_trimestre",
+    "mercado_valor_diario"
+  ],
+  "files": [
+    {
+      "path": "docs/bigquery/consumo_matthew/contratos_consumo.json",
+      "sha256": "71f7d014724eb99408fd1dd59c764661562110d2fdd7fb1ac1f55292e09eb922",
+      "size_bytes": 25984
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/diccionario_datos.json",
+      "sha256": "d00b015f904820662a97a5dd69086bce2af2b49688af912fdf36bece15fb239c",
+      "size_bytes": 73932
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/diccionario_datos.csv",
+      "sha256": "6c667d3bfa443b5762cc6b301be506a4fa7f1470caf2d3f78d932d11f2310f27",
+      "size_bytes": 15732
+    },
+    {
+      "path": "docs/bigquery/consumo_matthew/catalogo_indicadores_candidatos.json",
+      "sha256": "02ff6dbe91888a6cd4a8851c89f51d6a5d8fc8425d2d02eac32b1d10ce14849e",
+      "size_bytes": 17383
+    }
+  ],
+  "production_consumption_authorized": false,
+  "publication_authorized": false
+}
