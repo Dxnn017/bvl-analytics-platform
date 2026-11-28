@@ -756,14 +756,15 @@ def execute(args):
     original_contract = gate.check_base(args.contract.read_bytes())
     candidates=[x for x in original_contract['datasets'] if x['dataset']==DATASET]
     require(len(candidates)==1,'FUENTE_NO_ESTABLECIDA_EN_F5')
-    manifest, entries = gcs.read_official_manifest(client,candidates[0],
+    manifest_f5_raw, entries = gcs.read_official_manifest(client,candidates[0],
                               __import__('puerta_silver_v1_candidata').verify_manifest)
     # Verificar bytes del manifest FIJADOS en la extension documental.
     manifest_raw=_read_pinned(client, context['bronze_manifest_uri'],
              context['bronze_manifest_generation'],context['bronze_manifest_sha256'],
              bucket=CONTROL_BUCKET)
-    require(canonical(json.loads(manifest_raw))==canonical(manifest),
+    require(manifest_f5_raw == manifest_raw,
             'MANIFEST_F5_Y_EXTENSION_DISTINTOS')
+    manifest = gate.core.load_strict(manifest_raw)
     inv=validate_official_manifest(manifest,entries)
     pdf,txt=classify_official(entries)
     index=prepare_document_index(pdf,txt)
