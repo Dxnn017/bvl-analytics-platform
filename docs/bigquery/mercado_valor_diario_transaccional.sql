@@ -7,7 +7,7 @@
 -- 2. Verificar autorización Quality.
 -- 3. Verificar SHA-256 del contenido real.
 -- 4. Implementar reserva exclusiva del batch.
--- 5. Resolver REPLAY sin reprocesamiento.
+-- 5. REPLAY condicional implementado; pendiente validacion real.
 -- 6. Obtener métricas reales de INSERT/UPDATE/DELETE/NOOP.
 -- 7. Validar comportamiento y concurrencia en BigQuery.
 
@@ -19,12 +19,51 @@ BEGIN
 
   -- Comprobación provisional contra el registro persistente.
   -- NO sustituye una reserva exclusiva del batch.
+  -- Validar identidad antes de resolver PROCESS o REPLAY.
+  ASSERT (
+    @batch_id IS NOT NULL
+    AND TRIM(@batch_id) != ''
+    AND @run_id IS NOT NULL
+    AND TRIM(@run_id) != ''
+    AND @source_version IS NOT NULL
+    AND TRIM(@source_version) != ''
+    AND @payload_sha256 IS NOT NULL
+    AND REGEXP_CONTAINS(@payload_sha256, r'^[0-9a-fA-F]{64}$')
+  ) AS 'Identidad del batch invalida';
+
+  ASSERT (
+    SELECT COUNT(*) <= 1
+    FROM `gold_analytics_control.incremental_batches`
+    WHERE product = 'mercado_valor_diario'
+      AND batch_id = @batch_id
+  ) AS 'Registro de batch duplicado';
+
   ASSERT (
     SELECT COUNT(*) = 0
     FROM `gold_analytics_control.incremental_batches`
     WHERE product = 'mercado_valor_diario'
       AND batch_id = @batch_id
-  ) AS 'Batch existente: requiere resolución de replay';
+      AND (
+        run_id IS DISTINCT FROM @run_id
+        OR source_version IS DISTINCT FROM @source_version
+        OR payload_sha256 IS DISTINCT FROM @payload_sha256
+        OR status IS DISTINCT FROM 'COMPLETED'
+      )
+  ) AS 'Batch incompatible o no completado';
+
+  IF EXISTS (
+    SELECT 1
+    FROM `gold_analytics_control.incremental_batches`
+    WHERE product = 'mercado_valor_diario'
+      AND batch_id = @batch_id
+      AND status = 'COMPLETED'
+  ) THEN
+
+    SELECT 'REPLAY_NOOP' AS resultado_batch;
+
+  ELSE
+    -- PROCESS: MERGE y auditoria dentro de la transaccion.
+
 
   -- MERGE y validaciones del producto.
 -- SIMULACIÓN LOCAL: NO EJECUTAR EN GCP SIN QUALITY.
@@ -303,6 +342,10 @@ WHEN NOT MATCHED AND S.operation = 'UPSERT'
     NULL,
     NULL
   );
+
+    SELECT 'COMPLETED' AS resultado_batch;
+
+  END IF;
 
   COMMIT TRANSACTION;
 

@@ -1,0 +1,11 @@
+test_01_actualizacion_y_conservacion (__main__.TestControlVersionesGold.test_01_actualizacion_y_conservacion) ... ok
+test_02_replay_despues_de_actualizacion (__main__.TestControlVersionesGold.test_02_replay_despues_de_actualizacion) ... ok
+test_03_replay_no_retrocede_versiones (__main__.TestControlVersionesGold.test_03_replay_no_retrocede_versiones) ... ok
+test_04_run_id_reutilizado_rechazado (__main__.TestControlVersionesGold.test_04_run_id_reutilizado_rechazado) ... ok
+test_05_continuidad_incorrecta_rechazada (__main__.TestControlVersionesGold.test_05_continuidad_incorrecta_rechazada) ... ok
+test_06_producto_desconocido_rechazado (__main__.TestControlVersionesGold.test_06_producto_desconocido_rechazado) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+OK

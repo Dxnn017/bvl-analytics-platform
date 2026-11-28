@@ -61,6 +61,62 @@ def recalcular_actividad_sab(
         "left_anti",
     )
 
+    # No trasladar evidencia de cobertura entre versiones Silver.
+    # Sin version acreditada, la cobertura conservada es desconocida.
+    version_vigente = (
+        F.lit(version_silver).cast("string")
+        if version_silver
+        else F.lit(None).cast("string")
+    )
+
+    conservar_evidencia = (
+        F.col("version_silver").isNotNull()
+        & version_vigente.isNotNull()
+        & F.col("version_silver").eqNullSafe(version_vigente)
+    )
+
+    gold_conservado = gold_conservado.withColumn(
+        "_conservar_evidencia", conservar_evidencia
+    )
+
+    conservar_evidencia = F.col("_conservar_evidencia")
+
+    for campo in (
+        "registros_elegibles",
+        "registros_cuarentena",
+        "archivos_excluidos",
+        "version_silver",
+        "scope_quality_id",
+    ):
+        tipo = gold_conservado.schema[campo].dataType
+
+        gold_conservado = gold_conservado.withColumn(
+            campo,
+            F.when(conservar_evidencia, F.col(campo))
+             .otherwise(F.lit(None).cast(tipo))
+        )
+
+    gold_conservado = (
+        gold_conservado
+        .withColumn(
+            "estado_cobertura",
+            F.when(conservar_evidencia, F.col("estado_cobertura"))
+             .otherwise(F.lit("DESCONOCIDA"))
+        )
+        .withColumn(
+            "trazabilidad_verificada",
+            F.when(conservar_evidencia, F.col("trazabilidad_verificada"))
+             .otherwise(F.lit(False))
+        )
+        .withColumn(
+            "cobertura_completa",
+            F.when(conservar_evidencia, F.col("cobertura_completa"))
+             .otherwise(F.lit(False))
+        )
+    )
+
+    gold_conservado = gold_conservado.drop("_conservar_evidencia")
+
     # Una fecha eliminada completamente en Silver desaparece de Gold.
     gold_candidato = gold_conservado.unionByName(
         gold_recalculado

@@ -1,0 +1,63 @@
+26/11/27 21:04:15 WARN Utils: Your hostname, Debian12 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/11/27 21:04:15 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 21:04:16 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 0) / 2][Stage 0:>                  (0 + 2) / 2][Stage 1:>                  (0 + 2) / 2][Stage 1:>                                                          (0 + 2) / 2]                                                                                [Stage 14:=============================>                            (2 + 2) / 4]                                                                                [Stage 46:=============================>                            (1 + 1) / 2]                                                                                [Stage 75:=============================>                            (1 + 1) / 2]                                                                                [Stage 178:============================>                            (1 + 1) / 2]                                                                                [Stage 221:>                                                        (0 + 2) / 2][Stage 221:============================>                            (1 + 1) / 2][Stage 223:>                                                        (0 + 1) / 1]                                                                                BASE_V1_COBERTURA_COMPLETA: OK
+
+=== MISMA VERSION SILVER ===
+
+Validacion de clave: Silver SAB afectado
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold SAB candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+EVIDENCIA_MISMA_VERSION_CONSERVADA: OK
+
+=== CAMBIO DE VERSION SIN EVIDENCIA ===
+
+Validacion de clave: Silver SAB afectado
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold SAB candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+COBERTURA_ANTIGUA_INVALIDADA: OK
+SIN_ACREDITACION_INDEBIDA: OK
+METADATOS_ANTIGUOS_RETIRADOS: OK
+
+=== CAMBIO DE VERSION CON EVIDENCIA PARCIAL ===
+
+Validacion de clave: Silver SAB afectado
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold SAB candidato
+Claves invalidas: 0
+Grupos duplicados: 0
++----------+--------------+----------------+------------------+-----------------------+
+|fecha     |version_silver|estado_cobertura|cobertura_completa|actividad_diaria_valida|
++----------+--------------+----------------+------------------+-----------------------+
+|2026-01-15|V2            |COMPLETA        |true              |true                   |
+|2026-01-16|NULL          |DESCONOCIDA     |false             |true                   |
++----------+--------------+----------------+------------------+-----------------------+
+
+EVIDENCIA_NUEVA_ACREDITADA_EN_FIXTURE: OK
+JORNADA_SIN_EVIDENCIA_V2_DESCONOCIDA: OK
+INDICADORES_ORIGINALES_CONSERVADOS: OK
+
+=== VERSION NO INFORMADA ===
+
+Validacion de clave: Silver SAB afectado
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold SAB candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+SIN_VERSION_NO_SE_HEREDA_EVIDENCIA: OK
+CONTROL_VERSION_COBERTURA_SAB_VALIDADO_OK
+PUBLICACION_AUTORIZADA: False

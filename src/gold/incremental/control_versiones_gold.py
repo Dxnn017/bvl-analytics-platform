@@ -31,18 +31,7 @@ def preparar_actualizacion_gold(
     if set(cambios) - set(versiones_vigentes):
         raise ControlVersionesError("Producto Gold desconocido.")
 
-    for producto, detalle in cambios.items():
-        if not isinstance(detalle, dict):
-            raise ControlVersionesError("Cambio inválido.")
-
-        if not detalle.get("version_anterior"):
-            raise ControlVersionesError("Falta versión anterior.")
-
-        if detalle["version_anterior"] != versiones_vigentes[producto]:
-            raise ControlVersionesError(
-                f"Continuidad incorrecta: {producto}"
-            )
-
+    # Resolver replay antes de validar continuidad de una nueva ejecucion.
     if run_id in ejecuciones_previas:
         if ejecuciones_previas[run_id] != cambios:
             raise ControlVersionesError(
@@ -54,6 +43,18 @@ def preparar_actualizacion_gold(
             "versiones_resultantes": dict(versiones_vigentes),
             "publicacion_autorizada": False,
         }
+
+    for producto, detalle in cambios.items():
+        if not isinstance(detalle, dict):
+            raise ControlVersionesError("Cambio inválido.")
+
+        if not detalle.get("version_anterior"):
+            raise ControlVersionesError("Falta versión anterior.")
+
+        if detalle["version_anterior"] != versiones_vigentes[producto]:
+            raise ControlVersionesError(
+                f"Continuidad incorrecta: {producto}"
+            )
 
     nuevas = dict(versiones_vigentes)
 
