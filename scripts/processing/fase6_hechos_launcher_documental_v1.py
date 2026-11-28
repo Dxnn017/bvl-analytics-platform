@@ -335,7 +335,238 @@ def _stage_parquet(client, rows, prefix):
     return receipts
 
 
-def validate_writer_permissions(client, context, entries, launch_refs):
+# La atestacion es un documento firmado por Quality, NUNCA un permiso local.
+IAM_SCOPE_SCHEMA = 'BVL-F6-DOCUMENTAL-IAM-SCOPE-ATTESTATION-v1'
+IAM_PROBE_REPORT_SHA256 = 'f4ff57f304b5ec381b156220279238aad0fa6e55e6da9ed6e596a762278151d8'
+IAM_PROBE_GENERATION = '1795841107238750'
+IAM_PROBE_OBJECT = (
+    f'gs://{SILVER_BUCKET}/staging/{PRODUCT}/_iam_diagnostic_only/'
+    'probe-7dc9827c171d4fe28424e91343f6bbe4.json'
+)
+IAM_SCOPE_MAX_AGE_SECONDS = 600
+
+
+def expected_iam_create_targets(context):
+    """Fija todos los nombres que el launcher puede crear; no escribe objetos."""
+    prefix = expected_staging(context['run_id'], context['attempt_id'])
+    require(context['staging_prefix'] == prefix, 'IAM_SCOPE_STAGING_DISTINTO')
+    targets = [prefix + f'parquet/part-{i:05d}.snappy.parquet'
+               for i in range(len(range(0, 990, MAX_PARQUET_ROWS)))]
+    targets += [prefix + '_quality/manifest_candidate_documental.json',
+                prefix + '_quality/failure_candidate.json']
+    require(len(targets) == 10 and len(set(targets)) == 10,
+            'IAM_SCOPE_NOMBRES_INCONSISTENTES')
+    return targets
+
+
+def validate_iam_scope_attestation(doc, context, context_sha, *, now=None):
+    """Evalua evidencia de IAM firmada Quality para los 10 objetos exactos.
+
+    Este verificador NO firma ni presume permisos. Solo se permite llamar en
+    produccion tras `gate.signed` y lectura GCS fijada por generacion+SHA.
+    La revision de denegaciones/herencia es una declaracion firmada y auditada
+    por Quality; no equivale a una prueba GCS de cada objeto inexistente.
+    """
+    required = {'schema_version', 'status', 'project_id', 'product', 'service_account',
+        'run_id', 'attempt_id', 'batch_id', 'processor_commit', 'staging_prefix',
+        'authorization_fingerprint', 'launch_context_sha256', 'issued_at_utc',
+        'expires_at_utc', 'diagnostic', 'targets', 'allow_policy', 'role_definition',
+        'independent_deny_review'}
+    require(type(doc) is dict and set(doc) == required,
+            'IAM_ATESTACION_ESTRUCTURA_INVALIDA')
+    exact = {
+        'schema_version': IAM_SCOPE_SCHEMA,
+        'status': 'QUALITY_ATTESTED_SCOPE_CANDIDATE',
+        'project_id': PROJECT, 'product': PRODUCT,
+        'service_account': context['service_account'],
+        'run_id': context['run_id'], 'attempt_id': context['attempt_id'],
+        'batch_id': context['batch_id'], 'processor_commit': context['processor_commit'],
+        'staging_prefix': context['staging_prefix'],
+        'authorization_fingerprint': context['authorization_fingerprint'],
+        'launch_context_sha256': context_sha,
+    }
+    for key, value in exact.items():
+        require(doc.get(key) == value and type(doc.get(key)) is type(value),
+                'IAM_ATESTACION_ALCANCE_DISTINTO:' + key)
+    require(type(context_sha) is str and HEX.fullmatch(context_sha) is not None,
+            'IAM_CONTEXT_SHA_INVALIDO')
+    now = now or datetime.now(timezone.utc)
+    issued, expires = _utc(doc['issued_at_utc']), _utc(doc['expires_at_utc'])
+    ctx_end = _utc(context['expires_at_utc'])
+    require(issued <= now <= expires <= ctx_end and
+            0 < (expires-issued).total_seconds() <= IAM_SCOPE_MAX_AGE_SECONDS and
+            0 <= (now-issued).total_seconds() <= IAM_SCOPE_MAX_AGE_SECONDS,
+            'IAM_ATESTACION_VENCIDA_O_NO_VIGENTE')
+
+    diagnostic = doc['diagnostic']
+    require(type(diagnostic) is dict and set(diagnostic) == {
+        'report_sha256', 'object_uri', 'generation', 'creation_http',
+        'read_integrity', 'cleanup_http', 'claims_consumed', 'dataproc_executed'},
+        'IAM_DIAGNOSTICO_ESTRUCTURA_INVALIDA')
+    require(diagnostic == {
+        'report_sha256': IAM_PROBE_REPORT_SHA256,
+        'object_uri': IAM_PROBE_OBJECT,
+        'generation': IAM_PROBE_GENERATION,
+        'creation_http': 200,
+        'read_integrity': 'PASS',
+        'cleanup_http': 204,
+        'claims_consumed': 0,
+        'dataproc_executed': False,
+    }, 'IAM_DIAGNOSTICO_NO_ACREDITADO')
+    # El probe es una evidencia secundaria; por si solo NO habilita ninguno de
+    # los objetos bajo /run_id=.../attempt_id=...
+
+    targets = expected_iam_create_targets(context)
+    require(type(doc['targets']) is list and doc['targets'] == targets,
+            'IAM_OBJETIVOS_EXACTOS_NO_COINCIDEN')
+
+    evidence_prefix = (f'gs://{CONTROL_BUCKET}/authorizations/silver_documental/'
+        f"run_id={context['run_id']}/attempt_id={context['attempt_id']}/iam_evidence/")
+    policy = doc['allow_policy']
+    require(type(policy) is dict and set(policy) == {
+        'source_uri', 'source_generation', 'source_sha256', 'version', 'etag',
+        'bindings', 'observed_at_utc', 'resource_type', 'resource_name'},
+            'IAM_POLICY_SNAPSHOT_INCOMPLETA')
+    source_kind = policy['resource_type']
+    require(source_kind in ('BUCKET', 'MANAGED_FOLDER'),
+            'IAM_POLICY_RESOURCE_TYPE_INVALIDO')
+    expected_policy_file = ('bucket_policy_snapshot.json' if source_kind == 'BUCKET'
+                            else 'managed_folder_policy_snapshot.json')
+    if source_kind == 'BUCKET':
+        require(policy['resource_name'] == f'projects/_/buckets/{SILVER_BUCKET}',
+                'IAM_BUCKET_RESOURCE_DISTINTO')
+    else:
+        managed_root = f'projects/_/buckets/{SILVER_BUCKET}/managedFolders/'
+        require(type(policy['resource_name']) is str and
+                policy['resource_name'].startswith(managed_root),
+                'IAM_MANAGED_FOLDER_FUERA_DE_SCOPE')
+        managed_relative = policy['resource_name'][len(managed_root):]
+        require(managed_relative.startswith('staging/') and
+                all(_gcs_uri_parts(uri, SILVER_BUCKET).startswith(managed_relative)
+                    for uri in targets), 'IAM_MANAGED_FOLDER_NO_CUBRE_TARGETS')
+    require(type(policy['source_uri']) is str and
+            policy['source_uri'] == evidence_prefix+expected_policy_file and
+            type(policy['source_sha256']) is str and HEX.fullmatch(policy['source_sha256']) and
+            type(policy['etag']) is str and bool(policy['etag']) and
+            policy['version'] == 3 and type(policy['bindings']) is list,
+            'IAM_POLICY_SNAPSHOT_INVALIDA')
+    _generation(policy['source_generation'])
+    require(0 <= (now-_utc(policy['observed_at_utc'])).total_seconds() <= IAM_SCOPE_MAX_AGE_SECONDS,
+            'IAM_POLICY_SNAPSHOT_OBSOLETA')
+
+    role = doc['role_definition']
+    require(type(role) is dict and set(role) == {
+        'source_uri', 'source_generation', 'source_sha256', 'name',
+        'includedPermissions', 'observed_at_utc'},
+        'IAM_ROLE_EVIDENCIA_INCOMPLETA')
+    require(type(role['source_uri']) is str and
+            role['source_uri'] == evidence_prefix+'custom_role_definition.json' and
+            type(role['source_sha256']) is str and HEX.fullmatch(role['source_sha256']) and
+            type(role['name']) is str and role['name'].startswith('projects/'+PROJECT+'/roles/') and
+            type(role['includedPermissions']) is list and
+            'storage.objects.create' in role['includedPermissions'],
+            'IAM_ROLE_NO_ACREDITA_CREATE')
+    _generation(role['source_generation'])
+    require(0 <= (now-_utc(role['observed_at_utc'])).total_seconds() <= IAM_SCOPE_MAX_AGE_SECONDS,
+            'IAM_ROLE_EVIDENCIA_OBSOLETA')
+
+    # Solo se admite la condicion CEL de prefijo literal, sin OR, funciones
+    # alternativas ni expresiones no evaluadas. Requiere evidencia nueva Quality
+    # si la politica efectiva usa una expresion diferente.
+    expected_member = 'serviceAccount:' + context['service_account']
+    condition_pattern = re.compile(
+        r'''resource\.name\.startsWith\((["'])(projects/_/buckets/[^"']+/objects/[^"']+)\1\)\Z''')
+    matching = []
+    for binding in policy['bindings']:
+        if type(binding) is not dict or binding.get('role') != role['name']:
+            continue
+        if type(binding.get('members')) is not list or expected_member not in binding['members']:
+            continue
+        cond = binding.get('condition')
+        if type(cond) is not dict or type(cond.get('expression')) is not str:
+            continue
+        match = condition_pattern.fullmatch(cond['expression'])
+        if match is None:
+            continue
+        policy_prefix = match.group(2)
+        required_root = f'projects/_/buckets/{SILVER_BUCKET}/objects/staging/'
+        if not policy_prefix.startswith(required_root):
+            continue
+        if all(('projects/_/buckets/'+SILVER_BUCKET+'/objects/'+
+                _gcs_uri_parts(uri, SILVER_BUCKET)).startswith(policy_prefix)
+               for uri in targets):
+            matching.append(binding)
+    require(len(matching) == 1, 'IAM_POLICY_NO_ACREDITA_TODOS_LOS_OBJETOS')
+
+    deny = doc['independent_deny_review']
+    require(type(deny) is dict and set(deny) == {
+        'source_uri', 'source_generation', 'source_sha256', 'reviewer',
+        'principal', 'permission', 'objects_sha256', 'outcome', 'evaluated_at_utc'},
+        'IAM_DENY_REVIEW_INCOMPLETA')
+    require(type(deny['source_uri']) is str and
+            deny['source_uri'] == evidence_prefix+'deny_review.json' and
+            type(deny['source_sha256']) is str and HEX.fullmatch(deny['source_sha256']) and
+            type(deny['reviewer']) is str and bool(deny['reviewer']) and
+            deny['principal'] == expected_member and
+            deny['permission'] == 'storage.objects.create' and
+            deny['objects_sha256'] == sha256(canonical(targets)).hexdigest() and
+            deny['outcome'] == 'NO_APPLICABLE_DENY_VERIFIED' and
+            issued <= _utc(deny['evaluated_at_utc']) <= now,
+            'IAM_DENY_REVIEW_NO_ACREDITADA')
+    _generation(deny['source_generation'])
+    return True
+
+
+def _verified_iam_scope_attestation(client, refs, pub, context, context_sha):
+    """Lee los CUATRO documentos de evidencia por generaciones y SHA exactos.
+
+    Firma Quality es requisito, no sustituto de evaluar politica/rol/denegaciones.
+    Los tres anexos se fijan por SHA y se vinculan al documento firmado.
+    """
+    import puerta_silver_operativa_v1_candidata as gate
+    require(type(refs) is dict and set(refs) == {
+        'uri', 'generation', 'sha256', 'signature_uri',
+        'signature_generation', 'signature_sha256'},
+        'IAM_FIRMA_REFERENCIAS_INVALIDAS')
+    prefix = (f'gs://{CONTROL_BUCKET}/authorizations/silver_documental/'
+              f"run_id={context['run_id']}/attempt_id={context['attempt_id']}/")
+    require(refs['uri'] == prefix+'iam_scope_attestation.json' and
+            refs['signature_uri'] == prefix+'iam_scope_attestation.sig',
+            'IAM_FIRMA_RUTA_FUERA_DE_INTENTO')
+    raw = _read_pinned(client, refs['uri'], refs['generation'],
+                       refs['sha256'], bucket=CONTROL_BUCKET)
+    signature = _read_pinned(client, refs['signature_uri'],
+                             refs['signature_generation'], refs['signature_sha256'],
+                             bucket=CONTROL_BUCKET)
+    doc = gate.signed(raw, signature, pub)
+    validate_iam_scope_attestation(doc, context, context_sha)
+    for field in ('allow_policy', 'role_definition', 'independent_deny_review'):
+        evidence = doc[field]
+        evidence_raw = _read_pinned(client, evidence['source_uri'],
+                                    evidence['source_generation'],
+                                    evidence['source_sha256'], bucket=CONTROL_BUCKET)
+        parsed = json.loads(evidence_raw)
+        require(type(parsed) is dict, 'IAM_EVIDENCIA_NO_JSON:'+field)
+        if field == 'allow_policy':
+            require(parsed.get('version') == 3 and
+                    parsed.get('etag') == evidence['etag'] and
+                    parsed.get('bindings') == evidence['bindings'],
+                    'IAM_POLICY_SNAPSHOT_DISTINTA')
+        elif field == 'role_definition':
+            require(parsed.get('name') == evidence['name'] and
+                    parsed.get('includedPermissions') == evidence['includedPermissions'],
+                    'IAM_ROLE_EVIDENCIA_DISTINTA')
+        else:
+            require(parsed.get('principal') == evidence['principal'] and
+                    parsed.get('permission') == evidence['permission'] and
+                    parsed.get('objects_sha256') == evidence['objects_sha256'] and
+                    parsed.get('outcome') == evidence['outcome'] and
+                    parsed.get('evaluated_at_utc') == evidence['evaluated_at_utc'],
+                    'IAM_DENY_REVIEW_EVIDENCIA_DISTINTA')
+    return doc, sha256(raw).hexdigest()
+
+
+def validate_writer_permissions(client, context, entries, launch_refs, *, iam_attestation=None, context_sha=None):
     """Preclaim IAM no destructivo con recursos de OBJETO sujetos a condiciones.
 
     `Bucket.test_iam_permissions` evalua el bucket, no un objeto con resource.name
@@ -397,17 +628,16 @@ def validate_writer_permissions(client, context, entries, launch_refs):
             'storage.objects.list' in allowed,
             'IAM_INSUFICIENTE_PRECLAIM:'+SILVER_BUCKET+':list')
 
-    prefix = context['staging_prefix']
-    # 990 filas, 125 por parquet: 8 nombres create-only, mas ambos recibos
-    # del prefijo _quality. Los nombres se fijan sin generar ningun objeto.
-    targets = [prefix+f'parquet/part-{i:05d}.snappy.parquet'
-               for i in range(len(range(0, 990, MAX_PARQUET_ROWS)))]
-    targets.extend((
-        prefix+'_quality/manifest_candidate_documental.json',
-        prefix+'_quality/failure_candidate.json',
-    ))
-    for uri in targets:
-        check_object(SILVER_BUCKET, uri, 'storage.objects.create')
+    targets = expected_iam_create_targets(context)
+    if iam_attestation is None:
+        # Solo compatibilidad de pruebas offline antiguas: si el API HTTP 400
+        # para objeto futuro, se RECHAZA, no se deduce un permiso.
+        for uri in targets:
+            check_object(SILVER_BUCKET, uri, 'storage.objects.create')
+    else:
+        # En ejecución real la atestación SOLO llega desde la puerta firmada,
+        # leída por generación/SHA; se vuelve a evaluar en este preclaim.
+        validate_iam_scope_attestation(iam_attestation, context, context_sha)
     return True
 
 
@@ -496,7 +726,8 @@ def execute(args):
     """
     require(args.ack_supervised, 'SUPERVISION_EXPLICITA_OBLIGATORIA')
     needed = ('contract','quality_public_pem','trusted_refs','launch_refs',
-              'dependencies_zip','attempt_id','processor_commit','batch_id')
+              'iam_attestation_refs','dependencies_zip','attempt_id',
+              'processor_commit','batch_id')
     require(all(getattr(args,k,None) for k in needed), 'REFERENCIAS_QUALITY_FALTANTES')
     require(COMMIT.fullmatch(args.processor_commit) is not None,
             'COMMIT_NO_FIJADO')
@@ -531,9 +762,14 @@ def execute(args):
     index=prepare_document_index(pdf,txt)
     require(len(index)==990, 'INDEX_INCOMPLETO')
     validate_part_capacity(index)
-    # Preclaim: verificar IAM (sin escribir), staging vacio, limites e intento.
+    # Preclaim: evidencia de IAM firmada Quality, fijada al intento y los
+    # diez objetos exactos. El probe historico NO sustituye dicha evidencia.
+    iam_doc, iam_sha = _verified_iam_scope_attestation(
+        client, _read_json(args.iam_attestation_refs), pub, context, context_sha)
     validate_writer_permissions(client, context, entries,
-                                _read_json(args.launch_refs))
+                                _read_json(args.launch_refs),
+                                iam_attestation=iam_doc, context_sha=context_sha)
+    print('IAM_ATTESTATION_SHA256:', iam_sha, flush=True)
     object_prefix=_gcs_uri_parts(context['staging_prefix'],SILVER_BUCKET)
     require(not list(client.list_blobs(SILVER_BUCKET,prefix=object_prefix,max_results=1)),
             'STAGING_PREEXISTENTE_REQUIERE_CONCILIACION')
@@ -583,6 +819,7 @@ def parser():
     ap.add_argument('--quality-public-pem',type=Path)
     ap.add_argument('--trusted-refs',type=Path)
     ap.add_argument('--launch-refs',type=Path)
+    ap.add_argument('--iam-attestation-refs',type=Path)
     ap.add_argument('--dependencies-zip',type=Path)
     ap.add_argument('--attempt-id')
     ap.add_argument('--processor-commit')
