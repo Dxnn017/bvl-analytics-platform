@@ -1,0 +1,78 @@
+{
+  "bigquery_and_consumption_controls": 344,
+  "branch": "analytics-piero",
+  "commits": {
+    "bigquery_historical_preparation": "93a8a4b540828efd5157184085a088a84e231981",
+    "bigquery_historical_reconciliation": "7c77be9c0b8e71e3b7b8b2473a85700bd4f49c7b",
+    "bigquery_incremental": "05d2b78f168b771a2a08a6cedb1b5bc3f3dd41b8",
+    "bigquery_transactional": "0b68dac7a26ff43ed09b9218958185cd79514407",
+    "gold_v3": "62e0f0f76743822bc19859459e4307b2fb9b6ef2",
+    "matthew_consumption": "2034a909a37e19adb827b012d91f2b149bf284fa"
+  },
+  "deliveries": [
+    {
+      "commit": "62e0f0f76743822bc19859459e4307b2fb9b6ef2",
+      "filename": "ENTREGA_LIZETH_INTEGRAL_FASE6_V3.zip",
+      "operational_authorization": false,
+      "recipient": "Lizeth",
+      "sha256": "639a752125c90e7fd55eed8a733d437c5921ab504e0fc4fcd8eb8288a2074d71",
+      "size_bytes": 262280,
+      "technical_acceptance_reported": true,
+      "zip_entries": 23
+    },
+    {
+      "commit": "2034a909a37e19adb827b012d91f2b149bf284fa",
+      "filename": "ENTREGA_MATTHEW_GOLD_BIGQUERY_V1.zip",
+      "operational_authorization": false,
+      "recipient": "Matthew",
+      "sha256": "5ac1fceb0867f66c564647f255f677e69502c2fd5c4f7efb6b28737b19814311",
+      "size_bytes": 34361,
+      "technical_acceptance_reported": true,
+      "zip_entries": 26
+    }
+  ],
+  "gold_v3_independent_controls": 60,
+  "google_sql_engine_validated": false,
+  "official_sources_verified": false,
+  "operational_dependencies_pending": true,
+  "production_consumption_authorized": false,
+  "production_execution_authorized": false,
+  "products": {
+    "actividad_sab_diaria": {
+      "candidate_reference_rows": 21911,
+      "gold_columns": 41,
+      "staging_columns": 47
+    },
+    "empresa_trimestre": {
+      "candidate_reference_rows": 5158,
+      "gold_columns": 58,
+      "staging_columns": 64
+    },
+    "mercado_valor_diario": {
+      "candidate_reference_rows": 83130,
+      "gold_columns": 41,
+      "staging_columns": 47
+    }
+  },
+  "project_id": "bvl-analytics-2026",
+  "publication_authorized": false,
+  "quality_authorization_verified": false,
+  "region": "southamerica-west1",
+  "reported_technical_acceptances": 2,
+  "responsible": "Piero Alexis Mendoza Santos",
+  "schema_version": "BVL-PIERO-LOCAL-CLOSURE-v1",
+  "status": "LOCAL_TECHNICAL_SCOPE_COMPLETED",
+  "validation_controls": {
+    "consumption_contracts": 19,
+    "consumption_guide": 23,
+    "gold_detector_integration": 26,
+    "historical_adapter": 33,
+    "historical_complement_static": 25,
+    "historical_preparation": 35,
+    "historical_reconciliation": 20,
+    "incremental_preparation": 58,
+    "parquet_transfer": 23,
+    "transactional_engine": 53,
+    "transactional_sql_static": 29
+  }
+}
