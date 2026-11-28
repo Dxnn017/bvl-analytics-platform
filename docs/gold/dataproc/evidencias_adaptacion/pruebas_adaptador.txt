@@ -1,0 +1,30 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 23:23:30 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+test_01_null_tipado_y_conservacion (__main__.AdaptacionCotizaciones.test_01_null_tipado_y_conservacion) ... [Stage 0:>                                                          (0 + 2) / 2]                                                                                /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 48520), raddr=('127.0.0.1', 33053)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 38668), raddr=('127.0.0.1', 43997)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 43398), raddr=('127.0.0.1', 41283)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_02_decision_firmada_ausente (__main__.AdaptacionCotizaciones.test_02_decision_firmada_ausente) ... ok
+test_03_decision_no_aprobada (__main__.AdaptacionCotizaciones.test_03_decision_no_aprobada) ... ok
+test_04_valor_inventado_rechazado (__main__.AdaptacionCotizaciones.test_04_valor_inventado_rechazado) ... ok
+test_05_version_incompatible (__main__.AdaptacionCotizaciones.test_05_version_incompatible) ... ok
+test_06_no_sobrescribe_metadatos (__main__.AdaptacionCotizaciones.test_06_no_sobrescribe_metadatos) ... ok
+test_07_fuente_no_acreditada (__main__.AdaptacionCotizaciones.test_07_fuente_no_acreditada) ... ok
+test_08_integracion_preparacion_launcher (__main__.AdaptacionCotizaciones.test_08_integracion_preparacion_launcher) ... /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 57870), raddr=('127.0.0.1', 42455)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_09_auditoria_staging_con_adaptacion (__main__.AdaptacionCotizaciones.test_09_auditoria_staging_con_adaptacion) ... ok
+test_10_sin_evidencia_no_escribe (__main__.AdaptacionCotizaciones.test_10_sin_evidencia_no_escribe) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 16.225s
+
+OK

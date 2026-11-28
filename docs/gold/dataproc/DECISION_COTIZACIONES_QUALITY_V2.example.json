@@ -1,0 +1,20 @@
+{
+  "cotizaciones_adaptation": {
+    "decision_id": "id-asignado-por-quality",
+    "decision": "ALLOW_TYPED_NULLS",
+    "quality_approved": true,
+    "product": "mercado_diario/cotizaciones",
+    "version_id": "VERSION_SILVER_ACREDITADA",
+    "reason": "INSUFFICIENT_ACCREDITED_ROW_METADATA",
+    "columns": {
+      "fuente": {
+        "spark_type": "string",
+        "value": null
+      },
+      "fecha_ingesta": {
+        "spark_type": "date",
+        "value": null
+      }
+    }
+  }
+}

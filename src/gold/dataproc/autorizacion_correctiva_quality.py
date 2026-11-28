@@ -22,7 +22,7 @@ from autorizacion_gold_quality_v03 import (
 )
 
 
-CONTRATO = "BVL-GOLD-CORRECTIVE-STAGING-CANDIDATE-v1"
+CONTRATO = "BVL-GOLD-CORRECTIVE-STAGING-CANDIDATE-v2"
 
 PROYECTO = "bvl-analytics-2026"
 REGION = "southamerica-west1"
@@ -88,6 +88,7 @@ CAMPOS = {
     "staging_uri",
     "sab_coverage",
     "financial_decision",
+    "cotizaciones_adaptation",
 }
 
 
@@ -218,6 +219,66 @@ def validar_referencia_control(ref):
         and ref["size_bytes"] > 0,
         "Tamano invalido"
     )
+
+
+
+def validar_decision_cotizaciones(auth):
+
+    decision = auth.get("cotizaciones_adaptation")
+
+    exigir(
+        isinstance(decision, dict)
+        and set(decision) == {
+            "decision_id",
+            "decision",
+            "quality_approved",
+            "product",
+            "version_id",
+            "reason",
+            "columns",
+        },
+        "Decision de adaptacion ausente o incompleta"
+    )
+
+    validar_id(decision["decision_id"])
+
+    exigir(
+        decision["quality_approved"] is True
+        and decision["decision"] == "ALLOW_TYPED_NULLS"
+        and decision["product"]
+        == "mercado_diario/cotizaciones",
+        "Adaptacion de cotizaciones no autorizada"
+    )
+
+    exigir(
+        decision["reason"]
+        == "INSUFFICIENT_ACCREDITED_ROW_METADATA",
+        "Justificacion Quality incompatible"
+    )
+
+    exigir(
+        decision["version_id"]
+        == auth["sources"][
+            "mercado_diario/cotizaciones"
+        ]["version_id"],
+        "Decision para otra version de cotizaciones"
+    )
+
+    exigir(
+        decision["columns"] == {
+            "fuente": {
+                "spark_type": "string",
+                "value": None,
+            },
+            "fecha_ingesta": {
+                "spark_type": "date",
+                "value": None,
+            },
+        },
+        "Tratamiento de metadatos no autorizado"
+    )
+
+    return decision
 
 
 def validar_autorizacion_correctiva(
@@ -468,6 +529,8 @@ def validar_autorizacion_correctiva(
         "accepted_ids_sha256",
     ):
         validar_sha(financiera[campo])
+
+    validar_decision_cotizaciones(auth)
 
     return auth
 

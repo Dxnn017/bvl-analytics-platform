@@ -27,6 +27,10 @@ from integracion_quality_v03 import (
     MAX_BYTES_CANDIDATO,
 )
 
+from adaptador_cotizaciones_quality import (
+    adaptar_cotizaciones,
+)
+
 from ejecutor_portable import (
     construir_candidato,
     validar_claves,
@@ -645,6 +649,7 @@ def preparar_candidatos(
 
     candidatos = {}
     excepciones = {}
+    evidencia_adaptacion = None
 
     for producto in ORDEN:
 
@@ -655,6 +660,19 @@ def preparar_candidatos(
             for alias, fuente
             in verificadas[producto].items()
         }
+
+        if producto == "mercado_valor_diario":
+
+            comprobar_vigencia()
+
+            (
+                dataframes[producto]["cotizaciones"],
+                evidencia_adaptacion,
+            ) = adaptar_cotizaciones(
+                dataframes[producto]["cotizaciones"],
+                auth,
+                verificadas[producto]["cotizaciones"],
+            )
 
         parametros = {}
 
@@ -710,6 +728,8 @@ def preparar_candidatos(
         "candidatos": candidatos,
         "excepciones": excepciones,
         "cobertura_acreditada": cobertura is not None,
+        "cotizaciones_adaptation": evidencia_adaptacion,
+
         "verificar_vigencia": comprobar_vigencia,
         "publication_allowed": False,
     }

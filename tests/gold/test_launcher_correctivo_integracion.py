@@ -605,7 +605,15 @@ class IntegracionCorrectiva(unittest.TestCase):
                 "run_id=run-test/"
                 "attempt_id=attempt-test/"
             ),
-            "sources": {},
+            "sources": {
+                "mercado_diario/cotizaciones": {
+                    "version_id": "version-test",
+                },
+            },
+            "cotizaciones_adaptation": {
+                "decision_id": "cotizaciones-test",
+                "version_id": "version-test",
+            },
             "output_contracts": {},
             "financial_decision": {},
             "sab_coverage": None,
@@ -613,6 +621,14 @@ class IntegracionCorrectiva(unittest.TestCase):
 
         preparado = {
             "autorizacion": auth,
+            "cotizaciones_adaptation": {
+                "status": "APPLIED",
+                "authorization_id":
+                    auth["authorization_id"],
+                "version_id": "version-test",
+                "decision":
+                    auth["cotizaciones_adaptation"],
+            },
             "candidatos": {
                 "mercado_valor_diario": mercado,
                 "actividad_sab_diaria": sab,

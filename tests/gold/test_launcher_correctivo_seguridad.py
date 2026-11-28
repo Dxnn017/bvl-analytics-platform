@@ -227,6 +227,25 @@ class SeguridadCorrectiva(unittest.TestCase):
                 "attempt_id=attempt-test/"
             ),
             "sab_coverage": None,
+            "cotizaciones_adaptation": {
+                "decision_id": "cotizaciones-test",
+                "decision": "ALLOW_TYPED_NULLS",
+                "quality_approved": True,
+                "product": "mercado_diario/cotizaciones",
+                "version_id": "version-test",
+                "reason":
+                    "INSUFFICIENT_ACCREDITED_ROW_METADATA",
+                "columns": {
+                    "fuente": {
+                        "spark_type": "string",
+                        "value": None,
+                    },
+                    "fecha_ingesta": {
+                        "spark_type": "date",
+                        "value": None,
+                    },
+                },
+            },
             "financial_decision": {
                 "decision_id": "financial-test",
                 "decision": (

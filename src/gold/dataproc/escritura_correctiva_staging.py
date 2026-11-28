@@ -518,6 +518,24 @@ def escribir_correccion_supervisada(
     candidatos = preparado["candidatos"]
     excepciones = preparado["excepciones"]
 
+    adaptacion = preparado.get(
+        "cotizaciones_adaptation"
+    )
+
+    exigir(
+        isinstance(adaptacion, dict)
+        and adaptacion.get("status") == "APPLIED"
+        and adaptacion.get("decision")
+        == auth.get("cotizaciones_adaptation")
+        and adaptacion.get("version_id")
+        == auth["sources"][
+            "mercado_diario/cotizaciones"
+        ]["version_id"]
+        and adaptacion.get("authorization_id")
+        == auth["authorization_id"],
+        "Evidencia de adaptacion no acreditada"
+    )
+
     exigir(
         set(candidatos) == set(ORDEN)
         and set(excepciones) == set(EXCEPCIONES),
@@ -688,6 +706,8 @@ def escribir_correccion_supervisada(
                 "financial_exclusions": EXCEPCIONES,
                 "financial_decision":
                     auth["financial_decision"],
+                "cotizaciones_adaptation":
+                    adaptacion,
                 "sab_coverage_accredited":
                     preparado["cobertura_acreditada"],
                 "sab_coverage_reference":
