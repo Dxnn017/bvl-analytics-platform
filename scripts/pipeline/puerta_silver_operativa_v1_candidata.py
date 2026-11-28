@@ -8,6 +8,7 @@ Esta biblioteca depende de los modulos ya versionados en pipeline-daniela.
 from __future__ import annotations
 import hashlib
 import re
+import copy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from weakref import WeakKeyDictionary
@@ -17,7 +18,14 @@ import puerta_silver_v1_candidata as core
 
 CONTRACT_SHA256 = '6f33f3a88e04b38a5e75863d3ccc67005231f05d474b9916d34fd7030edef20a'
 QUALITY_PIN = '5c70c40088a680cfd7ced1859c4d6b335652d96991cdcae4268819fb4f90f5ce'
-ANNEX_SCHEMA = 'BVL-SILVER-OPERATIONAL-ANNEX-v1'  # PROPUESTA pendiente emision Quality
+ANNEX_SCHEMA = 'BVL-SILVER-OPERATIONAL-ANNEX-v1'  # historico, inmutable
+DOC_ANNEX_SCHEMA = 'BVL-SILVER-OPERATIONAL-ANNEX-DOCUMENTAL-v1'
+DOC_CLOSURE_SCHEMA = 'BVL-PHASE5-DOCUMENTAL-EXTENSION-CLOSURE-v1'
+DOC_EXTENSION_SCHEMA = 'BVL-SILVER-DOCUMENTAL-EXTENSION-v1'
+DOC_DATASET = 'smv/hechos_importancia'
+DOC_PRODUCT = 'hechos_importancia/documental_restringido'
+HIST_PRODUCT = 'hechos_importancia/eventos'
+DOC_SCOPE = 'DOCUMENTAL_RESTRINGIDO'
 CLOSURE_SCHEMA = 'BVL-PHASE5-CLOSURE-v1'
 AUTH_SCHEMA = 'BVL-SILVER-AUTH-v1'
 CONTROL = 'bvl26-control-7f3a9c'
@@ -63,8 +71,71 @@ def valid_product(name):
 def distinct(items, what):
     must(len(set(items)) == len(items), 'Elementos duplicados: ' + what)
 
+def documental_extension():
+    """Lista blanca cerrada; no habilita eventos ni identidad empresarial."""
+    return {
+        'schema_version': DOC_EXTENSION_SCHEMA,
+        'source_dataset': DOC_DATASET,
+        'silver_product': DOC_PRODUCT,
+        'historical_product_not_authorized': HIST_PRODUCT,
+        'mode': 'SINGLE_SOURCE',
+        'event_company_linkage_asserted': False,
+        'official_event_date_asserted': False,
+        'automatic_retry_allowed': False,
+        'official_publication_allowed': False,
+        'gold_consumption_allowed': False,
+    }
+
+
+def expected_documental_annex(historical_annex, historical_annex_sha256,
+                               historical_closure_sha256):
+    """Deriva una extension nueva sin mutar los documentos historicos firmados."""
+    must(historical_annex.get('schema_version') == ANNEX_SCHEMA,
+         'Anexo padre no es historico')
+    for sha in (historical_annex_sha256, historical_closure_sha256):
+        must(isinstance(sha, str) and core.HEX64.fullmatch(sha) is not None,
+             'Hash historico invalido')
+    doc = copy.deepcopy(historical_annex)
+    doc['schema_version'] = DOC_ANNEX_SCHEMA
+    doc['historical_annex_sha256'] = historical_annex_sha256
+    doc['historical_closure_sha256'] = historical_closure_sha256
+    doc['documental_extension'] = documental_extension()
+    rows = [p for p in doc['direct_processes']
+            if p['bronze_dataset'] == DOC_DATASET]
+    must(len(rows) == 1 and rows[0]['silver_products'] == [HIST_PRODUCT],
+         'Mapeo historico de Hechos inesperado')
+    rows[0]['silver_products'] = [DOC_PRODUCT]
+    return doc
+
+
+def expected_documental_closure(historical_closure, annex_raw,
+                                 historical_annex_sha256,
+                                 historical_closure_sha256, closed_at_utc):
+    must(historical_closure.get('schema_version') == CLOSURE_SCHEMA,
+         'Acta padre no es historica')
+    obj = copy.deepcopy(historical_closure)
+    obj.update({
+        'schema_version': DOC_CLOSURE_SCHEMA,
+        'status': 'DOCUMENTAL_EXTENSION_CLOSED',
+        'operational_annex_sha256': digest(annex_raw),
+        'historical_annex_sha256': historical_annex_sha256,
+        'historical_closure_sha256': historical_closure_sha256,
+        'documental_product': DOC_PRODUCT,
+        'closed_at_utc': closed_at_utc,
+    })
+    return obj
+
 def validate_annex(a, c):
-    must(a.get('schema_version') == ANNEX_SCHEMA, 'Esquema anexo no ratificado')
+    schema = a.get('schema_version')
+    must(schema in (ANNEX_SCHEMA, DOC_ANNEX_SCHEMA), 'Esquema anexo no ratificado')
+    if schema == ANNEX_SCHEMA:
+        must('documental_extension' not in a, 'Extension documental en anexo historico')
+    else:
+        must(a.get('documental_extension') == documental_extension(),
+             'Extension documental fuera de lista blanca')
+        for k in ('historical_annex_sha256', 'historical_closure_sha256'):
+            must(isinstance(a.get(k), str) and core.HEX64.fullmatch(a[k]) is not None,
+                 'Hash del documento historico ausente')
     same_context(a,c)
     must(a.get('status') == 'RATIFICADO' and a.get('quality_approved') is True, 'Anexo sin aprobacion Quality')
     direct = a.get('direct_processes')
@@ -80,14 +151,20 @@ def validate_annex(a, c):
         for name in products: valid_product(name)
         ds=next(d for d in c['datasets'] if d['dataset']==p['bronze_dataset'])
         if ds.get('proposed_silver_product'):
-            must(ds['proposed_silver_product'] in products, 'Mapeo distinto al contrato')
+            historical_hechos_override = (
+                schema == DOC_ANNEX_SCHEMA and p['bronze_dataset'] == DOC_DATASET
+                and ds['proposed_silver_product'] == HIST_PRODUCT)
+            if not historical_hechos_override:
+                must(ds['proposed_silver_product'] in products,
+                     'Mapeo distinto al contrato')
         outputs += products
     distinct(outputs,'productos directos')
     by_source={p['bronze_dataset']: p['silver_products'] for p in direct}
     must(set(by_source['smv/valores_inscritos']) == {
         'referencias_smv/valores_inscritos','referencias_smv/puente_ruc_nemonico'},
         'Valores inscritos requiere sus dos salidas')
-    must(by_source['smv/hechos_importancia']==['hechos_importancia/eventos'], 'Mapeo Hechos distinto')
+    expected_hechos = [HIST_PRODUCT] if schema == ANNEX_SCHEMA else [DOC_PRODUCT]
+    must(by_source[DOC_DATASET] == expected_hechos, 'Mapeo Hechos distinto')
     must(by_source['smv/hechos_valores_consulta']==['referencias_smv/hechos_valores_consulta'], 'Mapeo consulta distinto')
     derived=a.get('derived_processes')
     must(isinstance(derived,list) and len(derived)==1, 'Derivados deben ser explicitados')
@@ -108,10 +185,22 @@ def validate_annex(a, c):
     return a
 
 def validate_closure(x, c, annex_raw):
-    must(x.get('schema_version') == CLOSURE_SCHEMA, 'Esquema acta no reconocido')
+    schema = x.get('schema_version')
+    annex = core.load_strict(annex_raw)
+    if annex.get('schema_version') == DOC_ANNEX_SCHEMA:
+        must(schema == DOC_CLOSURE_SCHEMA and
+             x.get('status') == 'DOCUMENTAL_EXTENSION_CLOSED' and
+             x.get('documental_product') == DOC_PRODUCT and
+             x.get('historical_annex_sha256') == annex.get('historical_annex_sha256') and
+             x.get('historical_closure_sha256') == annex.get('historical_closure_sha256'),
+             'Acta de extension documental no vinculada')
+    else:
+        must(schema == CLOSURE_SCHEMA, 'Esquema acta no reconocido')
     same_context(x,c)
-    must(x.get('status') == 'PHASE5_CLOSED' and x.get('phase_5_closed') is True
-         and x.get('quality_approved') is True, 'Fase 5 no cerrada por Quality')
+    valid_status = ('DOCUMENTAL_EXTENSION_CLOSED' if schema == DOC_CLOSURE_SCHEMA
+                    else 'PHASE5_CLOSED')
+    must(x.get('status') == valid_status and x.get('phase_5_closed') is True
+         and x.get('quality_approved') is True, 'Fase 5/extension no cerrada por Quality')
     must(x.get('operational_annex_sha256') == digest(annex_raw), 'Acta no corresponde al anexo')
     core.utc(x.get('closed_at_utc'))
     return x
@@ -181,6 +270,14 @@ def validate_auth(x, c, a, annex_raw, closure_raw, now=None):
              'SHA Silver no valido')
         actual_silver.append(product)
     distinct(actual_silver,'Silver deps')
+    doc_scope = a.get('schema_version') == DOC_ANNEX_SCHEMA
+    if doc_scope:
+        must(mode == 'SINGLE_SOURCE' and x.get('dataset') == DOC_DATASET and
+             x.get('documental_scope') == DOC_SCOPE,
+             'Autorizacion no exclusiva del producto documental')
+    else:
+        must('documental_scope' not in x,
+             'Marcador documental prohibido con anexo historico')
     if mode=='SINGLE_SOURCE':
         must(len(actual_bronze)==1 and silver==[], 'SINGLE_SOURCE requiere un solo Bronze')
         must(x.get('dataset')==actual_bronze[0], 'Dataset no corresponde a dependencia')
@@ -268,12 +365,41 @@ def effective_identity_from_client(client):
 
 
 def validate_signed_bundle(contract_raw, annex_raw, annex_sig, closure_raw, closure_sig,
-                           auth_raw, auth_sig, trusted_quality_pem, now=None):
+                           auth_raw, auth_sig, trusted_quality_pem, now=None, *,
+                           historical_annex_raw=None, historical_annex_sig=None,
+                           historical_closure_raw=None, historical_closure_sig=None):
     """Validacion pura en memoria. NO lee GCS ni crea claim."""
     now=now or datetime.now(timezone.utc)
     c=check_base(contract_raw)
     a=validate_annex(signed(annex_raw,annex_sig,trusted_quality_pem),c)
     closure=validate_closure(signed(closure_raw,closure_sig,trusted_quality_pem),c,annex_raw)
+    historical = (historical_annex_raw, historical_annex_sig,
+                  historical_closure_raw, historical_closure_sig)
+    if a['schema_version'] == DOC_ANNEX_SCHEMA:
+        must(all(isinstance(v, bytes) for v in historical),
+             'Extension requiere anexo y acta historicos FIRMADOS')
+        prior_annex = validate_annex(
+            signed(historical_annex_raw, historical_annex_sig, trusted_quality_pem), c)
+        prior_closure = validate_closure(
+            signed(historical_closure_raw, historical_closure_sig, trusted_quality_pem),
+            c, historical_annex_raw)
+        must(prior_annex['schema_version'] == ANNEX_SCHEMA and
+             prior_closure['schema_version'] == CLOSURE_SCHEMA,
+             'Cadena historica invalida')
+        expected_annex = expected_documental_annex(
+            prior_annex, digest(historical_annex_raw), digest(historical_closure_raw))
+        must(a == expected_annex,
+             'Extension altera campos no autorizados del anexo historico')
+        must(core.utc(closure['closed_at_utc']) >= core.utc(prior_closure['closed_at_utc']),
+             'Acta documental anterior al cierre historico')
+        expected_closure = expected_documental_closure(
+            prior_closure, annex_raw, digest(historical_annex_raw),
+            digest(historical_closure_raw), closure['closed_at_utc'])
+        must(closure == expected_closure,
+             'Extension altera campos no autorizados del acta historica')
+    else:
+        must(all(v is None for v in historical),
+             'Anexo historico no admite referencias de extension')
     auth=validate_auth(signed(auth_raw,auth_sig,trusted_quality_pem),c,a,annex_raw,closure_raw,now=now)
     fp=fingerprint(auth)
     path=f'gs://{CONTROL}/authorizations/consumed/silver/run_id={c["run_id"]}/{fp}.json'
@@ -286,8 +412,10 @@ def check_gcs_signed_bundle(client, trusted_refs, trusted_pem, contract_raw, now
     SHA256 y referencias independientes de firma y su version. NO extraerlos
     del mismo JSON de autorizacion. NO SE INVOCA por CLI ni automaticamente.
     """
-    must(isinstance(trusted_refs,dict) and set(trusted_refs)=={'annex','closure','authorization'},
-         'Contexto de entrega de Quality incompleto')
+    original_refs = {'annex','closure','authorization'}
+    extended_refs = original_refs | {'historical_annex','historical_closure'}
+    must(isinstance(trusted_refs,dict) and set(trusted_refs) in
+         (original_refs, extended_refs), 'Contexto de entrega de Quality incompleto')
     doc={}
     for typ,refs in trusted_refs.items():
         must(isinstance(refs,dict),'Referencia externa invalida')
@@ -304,7 +432,16 @@ def check_gcs_signed_bundle(client, trusted_refs, trusted_pem, contract_raw, now
         doc[typ]=(gcs.read_exact_current_bytes(client, uri,refs['generation'],refs['sha256'],allowed_bucket=CONTROL),
                   gcs.read_exact_current_bytes(client,s_uri,refs['signature_generation'],
                                                refs['signature_sha256'], allowed_bucket=CONTROL))
-    plan=validate_signed_bundle(contract_raw,*doc['annex'],*doc['closure'],*doc['authorization'],trusted_pem,now)
+    history = {}
+    if set(trusted_refs) == extended_refs:
+        history = {
+            'historical_annex_raw': doc['historical_annex'][0],
+            'historical_annex_sig': doc['historical_annex'][1],
+            'historical_closure_raw': doc['historical_closure'][0],
+            'historical_closure_sig': doc['historical_closure'][1],
+        }
+    plan=validate_signed_bundle(contract_raw,*doc['annex'],*doc['closure'],
+                                *doc['authorization'],trusted_pem,now,**history)
     c=check_base(contract_raw)
     x=plan.authorization
     au,sg=authorization_paths(x['mode'],x.get('dataset'),x.get('silver_product'),c['run_id'],x['attempt_id'])

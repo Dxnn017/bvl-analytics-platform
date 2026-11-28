@@ -44,6 +44,13 @@ def load_json_records(raw_documents: list[bytes], *, required_wrappers=('Resulta
             # Algunas respuestas SMV contienen Code/Message aun cuando hay array.
             for code_key in ('ResponseCode', 'CodigoError'):
                 code = obj.get(code_key)
+                if code_key == 'ResponseCode' and code == 'OK':
+                    # Quality: solo contrato SMV OK + ConsultaGenerada + data.
+                    require(set(obj) == {'ResponseCode', 'Message', 'data'} and
+                            obj.get('Message') == 'ConsultaGenerada' and
+                            isinstance(obj.get('data'), list),
+                            'Respuesta SMV OK fuera del contrato acreditado')
+                    continue
                 if code is not None and str(code).strip() not in ('', '0', '00', '200'):
                     raise ScopeError(f'Respuesta de servicio invalida ({code_key})')
             found = [key for key in required_wrappers if key in obj]
@@ -181,7 +188,9 @@ FINANCIAL_RENAME = {
 def transform_financial(df, dataset):
     F = _pyspark()
     require(dataset in FINANCIAL, 'Familia financiera no ratificada')
-    require({'RUC', 'Ejercicio'} <= set(df.columns), 'Fuente financiera sin RUC/Ejercicio')
+    required = ({'RPJ', 'Ejercicio'} if dataset == 'smv/cambios_patrimonio'
+                else {'RUC', 'Ejercicio'})
+    require(required <= set(df.columns), 'Fuente financiera sin identificador/Ejercicio')
     before = df.count()
     for original, normalized in FINANCIAL_RENAME.items():
         if original in df.columns:
@@ -200,6 +209,10 @@ def transform_financial(df, dataset):
     # No descartar conflictos en granularidad sin contrato explicito.
     require(df.filter(F.col('ejercicio').isNull()).count() == 0,
             'Ejercicio financiero invalido: conciliacion requerida')
+    if dataset == 'smv/cambios_patrimonio':
+        # RPJ identifica la fuente. No fabricar RUC sin correspondencia acreditada.
+        require(df.filter(F.col('rpj').isNull() | (F.col('rpj') == '')).count() == 0,
+                'RPJ de Cambios Patrimonio nulo: requiere Quality')
     if 'ruc' in df.columns:
         require(df.filter(F.col('ruc').isNull() | (F.col('ruc') == '')).count() == 0,
                 'RUC financiero nulo: requiere Quality')

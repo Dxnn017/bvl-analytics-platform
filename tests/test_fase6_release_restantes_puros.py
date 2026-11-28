@@ -16,7 +16,7 @@ class TestRelease(unittest.TestCase):
         with zipfile.ZipFile(io.BytesIO(a)) as z:
             self.assertEqual(z.namelist(),['a.py','b.py'])
     def test_module_count(self):
-        self.assertEqual(len(rel.MODULES),15)
+        self.assertEqual(len(rel.MODULES),19)
         self.assertEqual(len(set(rel.MODULES)),len(rel.MODULES))
         self.assertEqual(len(set(rel.MODULES.values())),len(rel.MODULES))
     def test_rejects_path_traversal(self):
