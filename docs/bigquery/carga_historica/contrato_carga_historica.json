@@ -1,0 +1,131 @@
+{
+  "control_bucket": "bvl26-control-7f3a9c",
+  "datasets": {
+    "control": "gold_analytics_control",
+    "staging": "gold_analytics_staging",
+    "target": "gold_analytics"
+  },
+  "decimal_policy": {
+    "columns": [
+      "total_compras_diario",
+      "total_ventas_diario",
+      "total_actividad_diaria"
+    ],
+    "invalid_to_null_allowed": false,
+    "overflow_allowed": false,
+    "rounding_allowed": false,
+    "source_type": "decimal(34,2)",
+    "status": "CANDIDATE_PENDING_VALIDATION",
+    "target_type": "NUMERIC",
+    "transfer_type": "decimal(31,2)"
+  },
+  "execution_authorized": false,
+  "expected_counts_are_official": false,
+  "expected_total_columns": 140,
+  "expected_total_rows": 110199,
+  "financial_exceptions": {
+    "ambiguous_ruc": 6,
+    "invalid_ruc": 85,
+    "load_into_analytics": false,
+    "total": 91
+  },
+  "gold_base_commit": "62e0f0f76743822bc19859459e4307b2fb9b6ef2",
+  "location_proposed": "southamerica-west1",
+  "production_write_authorized": false,
+  "products": {
+    "actividad_sab_diaria": {
+      "bigquery_partition": "fecha",
+      "clustering": [
+        "codigo_sab"
+      ],
+      "expected_columns": 41,
+      "expected_rows": 21911,
+      "gcs_partitions": [
+        "anio",
+        "mes"
+      ],
+      "gold_contract": {
+        "path": "docs/bigquery/actividad_sab_diaria.json",
+        "sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe"
+      },
+      "keys": [
+        "fecha",
+        "codigo_sab"
+      ],
+      "staging_table_template": "gold_analytics_staging.actividad_sab_diaria_hist_{batch_id}",
+      "target_table": "gold_analytics.actividad_sab_diaria"
+    },
+    "empresa_trimestre": {
+      "bigquery_partition": "fecha_fin_trimestre",
+      "clustering": [
+        "id_registro",
+        "rpj"
+      ],
+      "expected_columns": 58,
+      "expected_rows": 5158,
+      "gcs_partitions": [
+        "anio",
+        "trimestre"
+      ],
+      "gold_contract": {
+        "path": "docs/bigquery/empresa_trimestre.json",
+        "sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705"
+      },
+      "keys": [
+        "id_registro"
+      ],
+      "staging_table_template": "gold_analytics_staging.empresa_trimestre_hist_{batch_id}",
+      "target_table": "gold_analytics.empresa_trimestre"
+    },
+    "mercado_valor_diario": {
+      "bigquery_partition": "fecha",
+      "clustering": [
+        "nemonico"
+      ],
+      "expected_columns": 41,
+      "expected_rows": 83130,
+      "gcs_partitions": [
+        "anio",
+        "mes"
+      ],
+      "gold_contract": {
+        "path": "docs/bigquery/mercado_valor_diario.json",
+        "sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340"
+      },
+      "keys": [
+        "nemonico",
+        "fecha"
+      ],
+      "staging_table_template": "gold_analytics_staging.mercado_valor_diario_hist_{batch_id}",
+      "target_table": "gold_analytics.mercado_valor_diario"
+    }
+  },
+  "prohibitions": {
+    "automatic_schema_changes": true,
+    "delete_operations": true,
+    "destination_write_truncate": true,
+    "official_gold_modification": true,
+    "wildcard_unaccredited_files": true
+  },
+  "project_id": "bvl-analytics-2026",
+  "publication_authorized": false,
+  "requirements": {
+    "concurrent_writer_exclusion": true,
+    "empty_initial_targets": true,
+    "immutable_transfer_required": true,
+    "official_gold_publication": true,
+    "replay_control": true,
+    "signed_load_authorization": true,
+    "transactional_confirmation": true,
+    "verified_exact_file_inventory": true,
+    "verified_generations": true,
+    "verified_manifest_signatures": true,
+    "verified_runtime_identity": true,
+    "verified_sha256": true
+  },
+  "schema_version": "BVL-BQ-HISTORICAL-LOAD-CANDIDATE-v0.1",
+  "source_bucket": "bvl26-gold-7f3a9c",
+  "source_prefix": "versions/",
+  "staging_write_authorized": false,
+  "status": "PROPUESTA_LOCAL_NO_AUTORIZADA"
+}

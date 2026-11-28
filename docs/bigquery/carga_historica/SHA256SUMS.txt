@@ -1,0 +1,2 @@
+96b436dd9313bf5387df52af7ebb8a1a79d06383a56cf18ab8bc1489f078abf7  docs/bigquery/carga_historica/PROCEDIMIENTO_CARGA_HISTORICA.md
+a4211c62c1ee9af1b36681eeca000a8582ebf453695569d8901dc3acce1b1bac  docs/bigquery/carga_historica/contrato_carga_historica.json

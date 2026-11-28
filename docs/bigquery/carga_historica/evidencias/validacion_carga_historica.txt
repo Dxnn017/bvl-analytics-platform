@@ -1,0 +1,64 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/28 00:05:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2][Stage 0:=============================>                             (1 + 1) / 2]                                                                                DECIMAL_CASO_00_OK
+DECIMAL_CASO_01_OK
+DECIMAL_CASO_02_OK
+DECIMAL_CASO_03_OK
+DECIMAL_CASO_04_OK
+DECIMAL_CASO_05_OK
+DECIMAL_CASO_06_OK
+DECIMAL_CASO_07_OK
+[Stage 1:>                                                          (0 + 2) / 2]                                                                                FIXTURE_GENERADO: mercado_valor_diario 83130 41
+[Stage 5:>                                                          (0 + 2) / 2]                                                                                FIXTURE_GENERADO: actividad_sab_diaria 21911 41
+FIXTURE_GENERADO: empresa_trimestre 5158 58
+[Stage 40:>                                                         (0 + 2) / 2][Stage 40:=============================>                            (1 + 1) / 2]                                                                                [Stage 44:>                                                         (0 + 2) / 4][Stage 44:=============================>                            (2 + 2) / 4][Stage 46:>                                                         (0 + 2) / 2][Stage 46:=============================>                            (1 + 1) / 2]                                                                                [Stage 50:==============>                                           (1 + 2) / 4][Stage 50:=============================>                            (2 + 2) / 4]                                                                                LOTE_MERCADO_VALOR_DIARIO_OK
+[Stage 56:>                                                         (0 + 2) / 2]                                                                                [Stage 60:>                                                         (0 + 2) / 4][Stage 60:=============================>                            (2 + 2) / 4]                                                                                LOTE_ACTIVIDAD_SAB_DIARIA_OK
+LOTE_EMPRESA_TRIMESTRE_OK
+LOTE_INCOMPLETO_RECHAZADO_OK
+COLUMNA_FALTANTE_RECHAZADA_OK
+COLUMNA_ADICIONAL_RECHAZADA_OK
+TIPO_INCORRECTO_RECHAZADO_OK
+CONTEO_INCORRECTO_RECHAZADO_OK
+CLAVE_NULA_RECHAZADA_OK
+CLAVE_VACIA_RECHAZADA_OK
+CLAVE_DUPLICADA_RECHAZADA_OK
+PARTICION_INVALIDA_RECHAZADA_OK
+NAN_RECHAZADO_OK
+INFINITO_RECHAZADO_OK
+DECIMAL_DESBORDADO_RECHAZADO_OK
+[Stage 118:>                                                        (0 + 2) / 2]                                                                                [Stage 123:>                                                        (0 + 2) / 4][Stage 123:==============>                                          (1 + 2) / 4][Stage 123:============================>                            (2 + 2) / 4][Stage 125:>                                                        (0 + 1) / 1]                                                                                [Stage 129:==============>                                          (1 + 2) / 4][Stage 129:============================>                            (2 + 2) / 4][Stage 129:==========================================>              (3 + 1) / 4]                                                                                PARQUET_ARCHIVOS: mercado_valor_diario 4
+ROUNDTRIP_MERCADO_VALOR_DIARIO_OK
+[Stage 135:>                                                        (0 + 2) / 2]                                                                                [Stage 140:============================>                            (2 + 2) / 4]                                                                                [Stage 146:============================>                            (2 + 2) / 4]                                                                                PARQUET_ARCHIVOS: actividad_sab_diaria 4
+ROUNDTRIP_ACTIVIDAD_SAB_DIARIA_OK
+[Stage 163:============================>                            (2 + 2) / 4]                                                                                PARQUET_ARCHIVOS: empresa_trimestre 4
+ROUNDTRIP_EMPRESA_TRIMESTRE_OK
+PLAN_LOCAL_VERIFICADO_OK
+PLAN_DETERMINISTA_OK
+PLAN_MODIFICADO_RECHAZADO_OK
+PLAN_CON_PERMISO_FALSO_RECHAZADO_OK
+PARQUET_ALTERADO_RECHAZADO_OK
+ARCHIVO_ADICIONAL_RECHAZADO_OK
+ARCHIVO_NO_PARQUET_RECHAZADO_OK
+INVENTARIO_RESTAURADO_OK
+EJECUCION_OPERATIVA_BLOQUEADA_OK
+
+=== RESUMEN HISTORICO BIGQUERY ===
+CONTROLES_FUNCIONALES: 35/35
+PRODUCTOS_HISTORICOS: 3/3
+REGISTROS_SINTETICOS: 110199
+COLUMNAS_GOLD: 140/140
+CASOS_DECIMALES: 8/8
+DECIMALES_SAB_ADAPTADOS: 3/3
+ROUNDTRIP_PARQUET: 3/3
+CONSERVACION_DATOS: True
+HUELLA_LOTE_VERIFICADA: True
+ALTERACIONES_RECHAZADAS: True
+BLOQUEO_OPERATIVO_ACTIVO: True
+DATOS_OFICIALES_PROCESADOS: False
+CONSTRUCTORES_GOLD_EJECUTADOS: 0
+AUTORIZACION_QUALITY_REAL: False
+GCP_EJECUTADO: False
+BIGQUERY_EJECUTADO: False
+PUBLICACION_AUTORIZADA: False
+VALIDACION_LOCAL_BIGQUERY_HISTORICO_OK
