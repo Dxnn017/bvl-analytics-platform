@@ -1,0 +1,67 @@
+26/11/27 20:50:58 WARN Utils: Your hostname, Debian12 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/11/27 20:50:58 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 20:50:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2]                                                                                [Stage 68:===========================================>              (3 + 1) / 4]                                                                                [Stage 72:===========================================>              (3 + 1) / 4]                                                                                [Stage 86:==============>                                           (1 + 2) / 4][Stage 86:=============================>                            (2 + 2) / 4][Stage 87:=============================>                            (2 + 2) / 4]                                                                                [Stage 91:===========================================>              (3 + 1) / 4][Stage 92:==============>                                           (1 + 2) / 4][Stage 92:=============================>                            (2 + 2) / 4]                                                                                [Stage 115:=> (2 + 2) / 4][Stage 116:>  (0 + 0) / 2][Stage 117:>  (0 + 0) / 2][Stage 116:>  (0 + 2) / 2][Stage 117:>  (0 + 0) / 2][Stage 118:>  (0 + 0) / 2][Stage 117:=> (1 + 1) / 2][Stage 118:>  (0 + 1) / 2][Stage 119:>  (0 + 0) / 2][Stage 118:=> (1 + 1) / 2][Stage 119:>  (0 + 1) / 2][Stage 121:>  (0 + 0) / 4]                                                                                [Stage 128:>                (0 + 2) / 4][Stage 129:>                (0 + 0) / 2][Stage 128:==>(3 + 1) / 4][Stage 129:>  (0 + 1) / 2][Stage 130:>  (0 + 0) / 2][Stage 130:>  (0 + 2) / 2][Stage 131:>  (0 + 0) / 2][Stage 132:>  (0 + 0) / 2][Stage 131:=> (1 + 1) / 2][Stage 132:>  (0 + 1) / 2][Stage 134:>  (0 + 0) / 4][Stage 132:>                (0 + 2) / 2][Stage 134:>                (0 + 0) / 4][Stage 134:========>        (2 + 2) / 4][Stage 137:>                (0 + 0) / 2]                                                                                [Stage 165:>  (0 + 2) / 2][Stage 166:>  (0 + 0) / 2][Stage 167:>  (0 + 0) / 2][Stage 166:=> (1 + 1) / 2][Stage 167:>  (0 + 1) / 2][Stage 168:>  (0 + 0) / 2][Stage 168:>                (0 + 2) / 2][Stage 170:>                (0 + 0) / 4][Stage 168:=> (1 + 1) / 2][Stage 170:>  (0 + 1) / 4][Stage 173:>  (0 + 0) / 2]                                                                                [Stage 258:============================>                            (2 + 2) / 4]                                                                                [Stage 273:============================>                            (2 + 2) / 4]                                                                                [Stage 278:==========================================>              (3 + 1) / 4]                                                                                [Stage 301:============================>                            (2 + 2) / 4][Stage 302:========>        (1 + 1) / 2][Stage 303:>                (0 + 1) / 2][Stage 303:>  (0 + 2) / 2][Stage 304:>  (0 + 0) / 2][Stage 305:>  (0 + 0) / 2][Stage 305:>                (0 + 2) / 2][Stage 309:>                (0 + 0) / 8]                                                                                [Stage 316:==>(3 + 1) / 4][Stage 317:>  (0 + 1) / 2][Stage 318:>  (0 + 0) / 2][Stage 317:=> (1 + 1) / 2][Stage 318:=> (1 + 1) / 2][Stage 319:>  (0 + 0) / 2][Stage 319:>  (0 + 2) / 2][Stage 320:>  (0 + 0) / 2][Stage 324:>  (0 + 0) / 8][Stage 320:========>        (1 + 1) / 2][Stage 324:>                (0 + 1) / 8]                                                                                [Stage 360:==>(3 + 1) / 4][Stage 361:>  (0 + 1) / 2][Stage 362:>  (0 + 0) / 2][Stage 361:=> (1 + 1) / 2][Stage 362:>  (0 + 1) / 2][Stage 363:>  (0 + 0) / 2][Stage 363:>  (0 + 2) / 2][Stage 364:>  (0 + 0) / 2][Stage 368:>  (0 + 0) / 8][Stage 364:>                (0 + 2) / 2][Stage 368:>                (0 + 0) / 8][Stage 364:========>        (1 + 1) / 2][Stage 368:========>        (4 + 1) / 8]                                                                                [Stage 404:>  (1 + 2) / 4][Stage 405:>  (0 + 0) / 2][Stage 406:>  (0 + 0) / 2][Stage 405:>  (0 + 2) / 2][Stage 406:>  (0 + 0) / 2][Stage 407:>  (0 + 0) / 2][Stage 406:=> (1 + 1) / 2][Stage 407:>  (0 + 1) / 2][Stage 408:>  (0 + 0) / 2][Stage 408:>                (0 + 2) / 2][Stage 412:>                (0 + 0) / 8][Stage 408:========>        (1 + 1) / 2][Stage 412:============>    (6 + 1) / 8]                                                                                [Stage 488:>  (0 + 2) / 2][Stage 489:>  (0 + 0) / 2][Stage 490:>  (0 + 0) / 2][Stage 489:========>        (1 + 1) / 2][Stage 490:>                (0 + 1) / 2][Stage 490:============================>                            (1 + 1) / 2]                                                                                [Stage 521:>                                                        (0 + 2) / 2]                                                                                [Stage 599:=========================================================(8 + 0) / 8]                                                                                [Stage 611:>                                                        (0 + 2) / 2]                                                                                [Stage 693:>                                                        (0 + 1) / 1]                                                                                === MERCADO INCREMENTAL ===
+
+Validacion de clave: claves afectadas
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold mercado candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+MERCADO_CONSERVA_FILAS: OK
+MERCADO_TRAZABILIDAD: OK
+MERCADO_PRECIO_ACTUALIZADO: OK
+MERCADO_PUENTE_CANONICO: OK
+MERCADO_NO_AFECTADOS_CONSERVADOS: OK
+
+Validacion de clave: claves afectadas
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold mercado candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+MERCADO_IDEMPOTENCIA: OK
+=== SAB INCREMENTAL ===
+
+Validacion de clave: Silver SAB afectado
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold SAB candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+SAB_CAMBIO_SOLO_METADATA: OK
+SAB_VALIDEZ_ARITMETICA: OK
+SAB_COBERTURA_INCOMPLETA: OK
+SAB_FILAS_CONSERVADAS: OK
+SAB_NO_AFECTADOS_CONSERVADOS: OK
+
+Validacion de clave: Silver SAB afectado
+Claves invalidas: 0
+Grupos duplicados: 0
+
+Validacion de clave: Gold SAB candidato
+Claves invalidas: 0
+Grupos duplicados: 0
+SAB_IDEMPOTENCIA: OK
+=== ELEGIBILIDAD FINANCIERA BNB ===
++----------------------------------------------------------------+---------+-------------+-------------------+----------------+--------------+--------------+------------------------+----------------------+--------------------+-------------------+
+|id_registro                                                     |ejercicio|trimestre_num|colision_financiera|apto_kpi_general|roa_calculable|roe_calculable|endeudamiento_calculable|margen_neto_calculable|autonomia_calculable|motivos_calidad    |
++----------------------------------------------------------------+---------+-------------+-------------------+----------------+--------------+--------------+------------------------+----------------------+--------------------+-------------------+
+|bdbfd44828e81c4c9af9857c451e7e48cd3a90d9287f19ce4ae70d33127f1337|2021     |3            |true               |false           |false         |false         |false                   |false                 |false               |COLISION_FINANCIERA|
+|df9a30da41782148b582f50650c03956072669d6969cdd6b1e48dcb86c86e636|2021     |3            |true               |false           |false         |false         |false                   |false                 |false               |COLISION_FINANCIERA|
+|e9acbda0e50c08cef751da73dc3f7f31838ff307df27a9998ffd03d3d4d09861|2021     |1            |true               |false           |false         |false         |false                   |false                 |false               |COLISION_FINANCIERA|
+|5a45976498b42b3d63bf141441a6e49412bffcbd73e397941dd0196a3a20853f|2021     |1            |true               |false           |false         |false         |false                   |false                 |false               |COLISION_FINANCIERA|
+|2c8fd96fb4f3df62bb06f94896a906d5ac250a151367dd4c353c347efe27a166|2021     |2            |true               |false           |false         |false         |false                   |false                 |false               |COLISION_FINANCIERA|
+|2950026544f0fe39a55141ea87f81da8100117210f69e649e8cab37f1285edc0|2021     |2            |true               |false           |false         |false         |false                   |false                 |false               |COLISION_FINANCIERA|
++----------------------------------------------------------------+---------+-------------+-------------------+----------------+--------------+--------------+------------------------+----------------------+--------------------+-------------------+
+
+BNB_SEIS_FILAS_CONSERVADAS: OK
+BNB_EXCLUIDOS_KPI: OK
+PUBLICACION_AUTORIZADA: False
+VALIDACION_RECALCULADORES_FASE6_OK

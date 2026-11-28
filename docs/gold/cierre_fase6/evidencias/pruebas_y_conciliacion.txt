@@ -1,0 +1,156 @@
+26/11/27 20:49:09 WARN Utils: Your hostname, Debian12 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/11/27 20:49:09 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 20:49:11 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2][Stage 0:=============================>                             (1 + 1) / 2]                                                                                [Stage 18:==============>                                           (1 + 2) / 4][Stage 18:=========>        (2 + 2) / 4][Stage 19:>                 (0 + 0) / 4][Stage 19:>                                                         (0 + 2) / 4][Stage 19:==============>                                           (1 + 2) / 4][Stage 19:=============================>                            (2 + 2) / 4]                                                                                [Stage 55:=============================>                            (1 + 1) / 2]                                                                                [Stage 109:>                                                        (0 + 2) / 2][Stage 109:============================>                            (1 + 1) / 2]                                                                                [Stage 126:>                                                        (0 + 2) / 2]                                                                                
+=== 1. NORMALIZACION CANONICA ===
+CLAVE_CANONICA_UNICA: OK
++------------------+----------------+---------+----------------+
+|_nemonico_canonico|fecha_cotizacion|registros|originales      |
++------------------+----------------+---------+----------------+
+|DEMO1             |2026-01-15      |2        |[ demo1 , DEMO1]|
++------------------+----------------+---------+----------------+
+
+COLISION_CANONICA_RECHAZADA: OK
+MOTIVO: COLISION_NEMONICO_CANONICO: fixture
++------------------+------------------+----------------+
+|_nemonico_canonico|_nemonico_original|fecha_cotizacion|
++------------------+------------------+----------------+
+|NULL              |NULL              |2026-01-15      |
++------------------+------------------+----------------+
+
+NEMONICO_INVALIDO_RECHAZADO: OK
+MOTIVO: NEMONICO_INVALIDO: fixture
++------------------+------------------+----------------+
+|_nemonico_canonico|_nemonico_original|fecha_cotizacion|
++------------------+------------------+----------------+
+|                  |                  |2026-01-15      |
++------------------+------------------+----------------+
+
+NEMONICO_INVALIDO_RECHAZADO: OK
+MOTIVO: NEMONICO_INVALIDO: fixture
++------------------+------------------+----------------+
+|_nemonico_canonico|_nemonico_original|fecha_cotizacion|
++------------------+------------------+----------------+
+|                  |                  |2026-01-15      |
++------------------+------------------+----------------+
+
+NEMONICO_INVALIDO_RECHAZADO: OK
+MOTIVO: NEMONICO_INVALIDO: fixture
+
+=== 2. COBERTURA SAB ===
++----------+----------+-----------------------+----------------+------------------+
+|fecha     |codigo_sab|actividad_diaria_valida|estado_cobertura|cobertura_completa|
++----------+----------+-----------------------+----------------+------------------+
+|2026-01-15|A         |true                   |COMPLETA        |true              |
+|2026-01-15|B         |true                   |COMPLETA        |true              |
+|2026-01-16|A         |true                   |PARCIAL         |false             |
+|2026-01-17|A         |true                   |DESCONOCIDA     |false             |
+|2026-01-18|A         |true                   |DESCONOCIDA     |false             |
++----------+----------+-----------------------+----------------+------------------+
+
+SAB_COMPLETA: OK
+SAB_PARCIAL: OK
+SAB_DESCONOCIDA: OK
+SAB_SIN_METADATOS: OK
+SAB_CONSERVA_FILAS: OK
+SAB_INDICADORES_ORIGINALES_CONSERVADOS: OK
+SAB_FECHA_DUPLICADA_RECHAZADA: OK
+MOTIVO: COBERTURA_SAB_FECHA_DUPLICADA
+SAB_VERSION_INCOMPATIBLE_RECHAZADA: OK
+MOTIVO: Version Silver incompatible.
+SAB_CONTEO_INCOMPATIBLE_RECHAZADO: OK
+MOTIVO: COBERTURA_SAB_CONTEOS_INCOMPATIBLES
+
+=== 3. CONCILIACION GOLD LOCAL ===
+
+PRODUCTO: mercado/mercado_valor_diario
+REGISTROS_LOCAL: 83130
+REGISTROS_GCP_REPORTADOS: 83130
+DIFERENCIA_LOCAL_GCP: 0
+CLAVES_INVALIDAS: 0
+GRUPOS_DUPLICADOS: 0
++----+-----+
+|anio|count|
++----+-----+
+|2021|15878|
+|2022|13303|
+|2023|13012|
+|2024|17016|
+|2025|23921|
++----+-----+
+
+
+PRODUCTO: mercado/actividad_sab_diaria
+REGISTROS_LOCAL: 22156
+REGISTROS_GCP_REPORTADOS: 21911
+DIFERENCIA_LOCAL_GCP: 245
+CLAVES_INVALIDAS: 0
+GRUPOS_DUPLICADOS: 0
++----+-----+
+|anio|count|
++----+-----+
+|2021| 4887|
+|2022| 4454|
+|2023| 4359|
+|2024| 4149|
+|2025| 4307|
++----+-----+
+
+
+PRODUCTO: empresas/empresa_trimestre
+REGISTROS_LOCAL: 5249
+REGISTROS_GCP_REPORTADOS: 5158
+DIFERENCIA_LOCAL_GCP: 91
+CLAVES_INVALIDAS: 0
+GRUPOS_DUPLICADOS: 0
++----+-----+
+|anio|count|
++----+-----+
+|2021| 1080|
+|2022| 1065|
+|2023| 1049|
+|2024| 1029|
+|2025| 1026|
++----+-----+
+
+
+=== AUDITORIA FINANCIERA BNB ===
++----------------------------------------------------------------+------+---------+-------------+------------+-------------+-------------------+
+|id_registro                                                     |rpj   |ejercicio|trimestre_num|activo_total|utilidad_neta|colision_financiera|
++----------------------------------------------------------------+------+---------+-------------+------------+-------------+-------------------+
+|e9acbda0e50c08cef751da73dc3f7f31838ff307df27a9998ffd03d3d4d09861|SG0005|2021     |1            |11408.0     |433.0        |true               |
+|5a45976498b42b3d63bf141441a6e49412bffcbd73e397941dd0196a3a20853f|SG0005|2021     |1            |11408.0     |196.0        |true               |
+|2c8fd96fb4f3df62bb06f94896a906d5ac250a151367dd4c353c347efe27a166|SG0005|2021     |2            |11417.0     |333.0        |true               |
+|2950026544f0fe39a55141ea87f81da8100117210f69e649e8cab37f1285edc0|SG0005|2021     |2            |11418.0     |147.0        |true               |
+|bdbfd44828e81c4c9af9857c451e7e48cd3a90d9287f19ce4ae70d33127f1337|SG0005|2021     |3            |12495.0     |529.0        |true               |
+|df9a30da41782148b582f50650c03956072669d6969cdd6b1e48dcb86c86e636|SG0005|2021     |3            |12495.0     |164.0        |true               |
+|dafb9de469d3dad3c93846cd626278b4727a9276a260552b2886053fce5cc205|SG0005|2021     |4            |12791.0     |144.0        |false              |
+|7a2ccf7e8fe856d5f98255b2e1c63cbecc3159b3d10ed9184122422d4179f91a|SG0005|2022     |1            |10986.0     |72.0         |false              |
+|ec83c1c826a5ccb3a9bc9502d33d4461ce1b748617b8108914cd80cae5c7b521|SG0005|2022     |2            |11003.0     |239.0        |false              |
+|c4f91ece5cae78b537869ed7305d62e2ec9e07f74330146dd7a9671018e8c17e|SG0005|2022     |3            |11728.0     |170.0        |false              |
+|c022501ed837645e3138ffeaf11de9ceddc3fb35b0beb5a80a3a41c05dddb95b|SG0005|2022     |4            |12804.0     |4.0          |false              |
+|1fec2cf6a96cc41055a9d7f2765bc9b06c9a2375f1a55136cbd3c9660bc2f55b|SG0005|2023     |1            |10777.0     |124.0        |false              |
+|4f0aa7f4c4121ee5104e17ac20fbe71bdeb211a9d9895b8415e7c2d1ea1fb2ee|SG0005|2023     |2            |11449.0     |136.0        |false              |
+|31ea628ecca448fc8cc89557a2d7b60464a672398dd7d43f0a7247c954767ab0|SG0005|2023     |3            |12003.0     |160.0        |false              |
+|be58050795240ffd9b7f9d598862762e19b62647a8fced95212f1a02a0e59028|SG0005|2023     |4            |12825.0     |213.0        |false              |
+|eadb1602e06af3bead1996526adcb4e6c8de82a242314396d11c0c14c01def6b|SG0005|2024     |1            |10905.0     |115.0        |false              |
+|6a39d3f17d0ca36a8faa3158a4447491fa69b2ecb74c66575aee5cfd5b243fcd|SG0005|2024     |2            |11481.0     |143.0        |false              |
+|10768aa1f4772c5539f88b928f209915450c7762853b7810814caa04afb61526|SG0005|2024     |3            |11830.0     |53.0         |false              |
+|392eefaac274a440d9919731220789d22837f1695549ffc20fe7763ffcccfd8c|SG0005|2024     |4            |12795.0     |386.0        |false              |
+|b2bd1c841887974a627402ed1ee66ca640dcb57b0d5d93c96af1a27d121054fe|SG0005|2025     |1            |11049.0     |187.0        |false              |
+|437edb3ad99b679b1868338166d4349df88d0b518fc63ced6383bfe0e3f5b776|SG0005|2025     |2            |11331.0     |50.0         |false              |
+|3f4d205c3fe64ce6f787ba99670852c354eec461826fa78f192609d97c309dce|SG0005|2025     |3            |11761.0     |77.0         |false              |
+|07ac5e2cb0feb6ca8a0455f0da5525cfb68edea177534bb24a407b3fa5ca1a74|SG0005|2025     |4            |11867.0     |118.0        |false              |
++----------------------------------------------------------------+------+---------+-------------+------------+-------------+-------------------+
+
+COLISIONES_FINANCIERAS_TOTAL: 6
+COLISIONES_BNB: 6
+COLUMNAS_FINANCIERAS: ['rpj', 'ejercicio', 'trimestre_num', 'id_registro', 'clave_negocio', 'ruc', 'ruc_valido', 'nombre_empresa', 'tipo_empresa', 'tipo_sector', 'ciiu', 'trimestre_original', 'tipo_informacion', 'metodo_flujo_efectivo', 'moneda_original', 'activo_total', 'pasivo_total', 'patrimonio_total', 'total_ingreso', 'utilidad_neta', 'cantidad_clave_negocio', 'colision_clave_negocio', 'fuente_datos', 'fecha_ingesta', 'moneda', 'periodo_valido', 'periodo', 'fecha_fin_trimestre', 'activo_valido', 'pasivo_valido', 'patrimonio_valido', 'patrimonio_positivo', 'ingreso_valido', 'ingreso_positivo', 'utilidad_valida', 'moneda_valida', 'identidad_contable_evaluable', 'diferencia_contable', 'identidad_contable_valida', 'cantidad_registros_empresa_periodo', 'colision_financiera', 'sin_incidencias_estructurales', 'apto_kpi_general', 'roa_calculable', 'roe_calculable', 'endeudamiento_calculable', 'margen_neto_calculable', 'autonomia_calculable', 'roa_aproximado_pct', 'roe_aproximado_pct', 'endeudamiento_pct', 'margen_neto_pct', 'autonomia_financiera_pct', 'resultado_financiero', 'patrimonio_negativo', 'motivos_calidad', 'anio', 'trimestre']
+
+TOTAL_GOLD_LOCAL: 110535
+TOTAL_GCP_REPORTADO: 110199
+DIFERENCIA_TOTAL: 336
+PUBLICACION_AUTORIZADA: False
+PRUEBAS_FOCALIZADAS_Y_AUDITORIA_FINALIZADAS_OK

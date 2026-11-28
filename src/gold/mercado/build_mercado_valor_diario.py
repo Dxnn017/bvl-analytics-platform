@@ -44,13 +44,55 @@ def validar_clave(df, claves, nombre):
         )
 
 
+def validar_nemonico_canonico(df, columna, adicionales, nombre):
+    """Valida claves canonicas sin modificar los registros originales."""
+
+    canonico = df.select(
+        F.upper(F.trim(F.col(columna))).alias("_nemonico_canonico"),
+        F.col(columna).alias("_nemonico_original"),
+        *adicionales,
+    )
+
+    claves = ["_nemonico_canonico", *adicionales]
+
+    invalidos = canonico.filter(
+        F.col("_nemonico_canonico").isNull()
+        | (F.col("_nemonico_canonico") == "")
+    )
+
+    colisiones = (
+        canonico.groupBy(*claves)
+        .agg(
+            F.count("*").alias("registros"),
+            F.collect_set("_nemonico_original").alias("originales"),
+        )
+        .filter(F.col("registros") > 1)
+    )
+
+    if invalidos.limit(1).count():
+        invalidos.show(20, truncate=False)
+        raise ValueError(f"NEMONICO_INVALIDO: {nombre}")
+
+    if colisiones.limit(1).count():
+        colisiones.show(20, truncate=False)
+        raise ValueError(f"COLISION_NEMONICO_CANONICO: {nombre}")
+
+
 def construir_gold(cotizaciones, tc, embig, puente):
+
+    validar_nemonico_canonico(
+        cotizaciones, "valor", ["fecha_cotizacion"], "cotizaciones"
+    )
+    validar_nemonico_canonico(
+        puente, "nemonico_valor", [], "puente_ruc_nemonico"
+    )
 
     # 1. Seleccion y estandarizacion de cotizaciones
 
     mercado = cotizaciones.select(
         F.col("fecha_cotizacion").alias("fecha"),
-        F.col("valor").alias("nemonico"),
+        F.upper(F.trim(F.col("valor"))).alias("nemonico"),
+        F.col("valor").alias("nemonico_original"),
         "descripcion",
         "fecha_anterior",
         F.col("cierre_anterior").alias("precio_anterior"),
@@ -88,7 +130,7 @@ def construir_gold(cotizaciones, tc, embig, puente):
     # 3. Integracion empresarial
 
     referencia = puente.select(
-        F.col("nemonico_valor").alias("nemonico"),
+        F.upper(F.trim(F.col("nemonico_valor"))).alias("nemonico"),
         "ruc",
         "razon_social",
         "codigo_isin",

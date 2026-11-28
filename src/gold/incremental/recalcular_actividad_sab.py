@@ -8,12 +8,26 @@ from pyspark.sql import functions as F
 from build_actividad_sab_diaria import construir_gold, validar_clave
 
 
-def recalcular_actividad_sab(silver_sab, gold_base, fechas_afectadas):
+def recalcular_actividad_sab(
+    silver_sab, gold_base, fechas_afectadas,
+    cobertura=None, version_silver=None,
+):
     """Reconstruye las fechas afectadas y conserva el resto de Gold."""
 
     fechas = fechas_afectadas.select(
         F.to_date("fecha").alias("fecha")
     ).distinct()
+
+    if cobertura:
+        from datetime import date
+
+        fechas_cobertura = silver_sab.sparkSession.createDataFrame(
+            [(date.fromisoformat(r["fecha_negociacion"]),)
+             for r in cobertura],
+            "fecha date",
+        )
+
+        fechas = fechas.unionByName(fechas_cobertura).distinct()
 
     if fechas.filter(F.col("fecha").isNull()).limit(1).count():
         raise ValueError("Hay fechas afectadas inválidas.")
@@ -31,7 +45,14 @@ def recalcular_actividad_sab(silver_sab, gold_base, fechas_afectadas):
         "Silver SAB afectado",
     )
 
-    gold_recalculado = construir_gold(silver_afectado)
+    gold_recalculado = construir_gold(
+        silver_afectado, cobertura, version_silver
+    )
+
+    from cobertura_sab import propagar_cobertura, COLUMNAS_COBERTURA
+
+    if not set(COLUMNAS_COBERTURA).issubset(gold_base.columns):
+        gold_base = propagar_cobertura(gold_base)
 
     # Conservar las fechas no afectadas, incluyendo otros meses.
     gold_conservado = gold_base.join(

@@ -6,6 +6,13 @@ from pyspark.sql import functions as F
 def detectar_claves_mercado(cotizaciones_anteriores, cotizaciones_nuevas):
     """Incluye claves anteriores y nuevas para correcciones y eliminaciones."""
 
+    from build_mercado_valor_diario import validar_nemonico_canonico
+
+    for fuente in (cotizaciones_anteriores, cotizaciones_nuevas):
+        validar_nemonico_canonico(
+            fuente, "valor", ["fecha_cotizacion"], "cotizaciones"
+        )
+
     anteriores = cotizaciones_anteriores
     nuevas = cotizaciones_nuevas
 
@@ -26,7 +33,7 @@ def detectar_claves_mercado(cotizaciones_anteriores, cotizaciones_nuevas):
 
     claves = (
         cambios.select(
-            F.col("valor").alias("nemonico"),
+            F.upper(F.trim(F.col("valor"))).alias("nemonico"),
             F.col("fecha_cotizacion").alias("fecha"),
         )
         .distinct()
@@ -51,6 +58,13 @@ def detectar_claves_mercado_integral(
         b = despues.select(*columnas)
         return a.exceptAll(b).unionByName(b.exceptAll(a))
 
+    from build_mercado_valor_diario import validar_nemonico_canonico
+
+    for fuente in (puente_antes, puente_nuevo):
+        validar_nemonico_canonico(
+            fuente, "nemonico_valor", [], "puente_ruc_nemonico"
+        )
+
     claves_cot = detectar_claves_mercado(cot_antes, cot_nuevas)
 
     fechas = (
@@ -63,18 +77,18 @@ def detectar_claves_mercado_integral(
 
     nemonicos = (
         cambios(puente_antes, puente_nuevo)
-        .select(F.col("nemonico_valor").alias("nemonico"))
+        .select(F.upper(F.trim(F.col("nemonico_valor"))).alias("nemonico"))
         .distinct()
     )
 
     cotizaciones = (
         cot_antes.select(
-            F.col("valor").alias("nemonico"),
+            F.upper(F.trim(F.col("valor"))).alias("nemonico"),
             F.col("fecha_cotizacion").alias("fecha"),
         )
         .unionByName(
             cot_nuevas.select(
-                F.col("valor").alias("nemonico"),
+                F.upper(F.trim(F.col("valor"))).alias("nemonico"),
                 F.col("fecha_cotizacion").alias("fecha"),
             )
         )

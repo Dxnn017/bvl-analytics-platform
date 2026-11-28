@@ -18,12 +18,36 @@ def recalcular_mercado_valor(
 
     from build_mercado_valor_diario import construir_gold, validar_clave
 
-    claves = claves_afectadas.select(*CLAVES).distinct()
+    from build_mercado_valor_diario import validar_nemonico_canonico
+
+    validar_nemonico_canonico(
+        cotizaciones, "valor", ["fecha_cotizacion"], "cotizaciones"
+    )
+
+    validar_nemonico_canonico(
+        gold_base, "nemonico", ["fecha"], "gold_base"
+    )
+
+    claves = claves_afectadas.select(
+        F.upper(F.trim("nemonico")).alias("nemonico"),
+        "fecha",
+    ).distinct()
+
+    validar_clave(claves, CLAVES, "claves afectadas")
+
+    if "nemonico_original" not in gold_base.columns:
+        gold_base = gold_base.withColumn(
+            "nemonico_original", F.col("nemonico")
+        )
+
+    gold_base = gold_base.withColumn(
+        "nemonico", F.upper(F.trim("nemonico"))
+    )
 
     # Incluye las claves antiguas para admitir eliminaciones.
     cotizaciones_afectadas = cotizaciones.join(
         claves,
-        (cotizaciones["valor"] == claves["nemonico"])
+        (F.upper(F.trim(cotizaciones["valor"])) == claves["nemonico"])
         & (cotizaciones["fecha_cotizacion"] == claves["fecha"]),
         "left_semi",
     )

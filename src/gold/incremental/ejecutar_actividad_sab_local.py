@@ -30,7 +30,14 @@ def main():
     parser.add_argument("--guardar-candidata", action="store_true")
     parser.add_argument("--silver-path")
     parser.add_argument("--gold-base-path")
+    parser.add_argument("--cobertura-json")
+    parser.add_argument("--version-silver")
     args = parser.parse_args()
+
+    cobertura = None
+    if args.cobertura_json:
+        with open(args.cobertura_json, encoding="utf-8") as archivo:
+            cobertura = json.load(archivo)["registros"]
 
     fecha = date.fromisoformat(args.fecha) if args.fecha else None
 
@@ -62,11 +69,16 @@ def main():
         else:
             fechas = spark.createDataFrame([(fecha,)], ["fecha"])
 
-        candidato = recalcular_actividad_sab(silver, gold, fechas)
+        candidato = recalcular_actividad_sab(
+            silver, gold, fechas, cobertura, args.version_silver
+        )
 
+        columnas = gold.columns
         diferencias = (
-            gold.exceptAll(candidato).count()
-            + candidato.exceptAll(gold).count()
+            gold.select(*columnas)
+            .exceptAll(candidato.select(*columnas)).count()
+            + candidato.select(*columnas)
+            .exceptAll(gold.select(*columnas)).count()
         )
 
         resultado = {

@@ -1,5 +1,7 @@
 
 import argparse
+import json
+from cobertura_sab import propagar_cobertura
 
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
@@ -35,7 +37,7 @@ def validar_clave(df, claves, nombre):
         )
 
 
-def construir_gold(sab):
+def construir_gold(sab, cobertura=None, version_silver=None):
 
     # 1. Seleccion y estandarizacion
 
@@ -275,7 +277,7 @@ def construir_gold(sab):
         )
     )
 
-    return gold
+    return propagar_cobertura(gold, cobertura, version_silver)
 
 
 def main():
@@ -294,7 +296,14 @@ def main():
         required=True
     )
 
+    parser.add_argument("--cobertura-json")
+    parser.add_argument("--version-silver")
     args = parser.parse_args()
+
+    cobertura = None
+    if args.cobertura_json:
+        with open(args.cobertura_json, encoding="utf-8") as archivo:
+            cobertura = json.load(archivo)["registros"]
 
     silver_root = args.silver_root.rstrip("/")
     gold_root = args.gold_root.rstrip("/")
@@ -339,7 +348,7 @@ def main():
 
         # Construccion Gold
 
-        gold = construir_gold(sab).cache()
+        gold = construir_gold(sab, cobertura, args.version_silver).cache()
 
         total_gold = gold.count()
 
