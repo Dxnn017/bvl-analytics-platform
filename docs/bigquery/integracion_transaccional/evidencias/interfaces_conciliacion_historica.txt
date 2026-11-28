@@ -1,0 +1,1596 @@
+
+=== ARCHIVO: src/gold/bigquery/historico/generar_validaciones_historicas.py ===
+"""Generador local de consultas GoogleSQL.
+
+No contiene clientes BigQuery ni GCS.
+No ejecuta las consultas generadas.
+"""
+
+import json
+import re
+
+from pathlib import Path
+
+from preparador_carga_historica import (
+    cargar_contratos,
+    exigir,
+    PRODUCTOS,
+)
+
+from trazabilidad_carga_historica import (
+    HASHES_CONTRATOS,
+    huella_archivo,
+)
+
+
+PROYECTO = "bvl-analytics-2026"
+
+DATASET = "gold_analytics"
+
+
+def identificador(nombre):
+
+    exigir(
+        isinstance(nombre, str)
+        and re.fullmatch(
+            r"[A-Za-z_][A-Za-z0-9_]*",
+            nombre,
+        ) is not None,
+        "Identificador SQL incompatible"
+    )
+
+    return f"`{nombre}`"
+
+
+def tabla(producto):
+
+    exigir(
+        producto in PRODUCTOS,
+        "Producto no admitido"
+    )
+
+    return (
+        f"`{PROYECTO}.{DATASET}."
+        f"{producto}`"
+    )
+
+
+def literal(valor):
+
+    exigir(
+        isinstance(valor, str)
+        and re.fullmatch(
+            r"[A-Za-z0-9_(),.-]+",
+            valor,
+        ) is not None,
+        "Literal SQL incompatible"
+    )
+
+    return "'" + valor + "'"
+
+
+def encabezado(producto, finalidad):
+
+    return (
+        "-- BVL Analytics Platform\n"
+        "-- ESTADO: CANDIDATO LOCAL NO AUTORIZADO\n"
+        f"-- Producto: {producto}\n"
+        f"-- Finalidad: {finalidad}\n"
+        "-- No ejecutar sin autorizacion expresa.\n\n"
+    )
+
+
+def consulta_calidad(producto, contrato):
+
+    gold = contrato["gold"]
+
+    config = contrato["configuracion"]
+
+    columnas = gold["columns"]
+
+    tipos = {
+        c["name"]: c["bigquery_type"]
+        for c in columnas
+    }
+
+    claves = gold["business_keys"]
+
+    claves_sql = ", ".join(
+        identificador(c)
+        for c in claves
+    )
+
+    fecha = identificador(
+        config["bigquery_partition"]
+    )
+
+    metricas = []
+
+    def agregar(nombre, expresion):
+
+        metricas.append(
+            (nombre, expresion)
+        )
+
+    for nombre in claves:
+
+        columna = identificador(nombre)
+
+        condicion = f"{columna} IS NULL"
+
+        if tipos[nombre] == "STRING":
+
+            condicion += (
+                f" OR TRIM({columna}) = ''"
+            )
+
+        agregar(
+            f"clave_invalida__{nombre}",
+            f"COUNTIF({condicion})",
+        )
+
+    for campo in columnas:
+
+        nombre = campo["name"]
+
+        columna = identificador(nombre)
+
+        if campo["nullable"] is False:
+
+            agregar(
+                f"nulo_obligatorio__{nombre}",
+                f"COUNTIF({columna} IS NULL)",
+            )
+
+        if campo["bigquery_type"] == "FLOAT64":
+
+            agregar(
+                f"no_finito__{nombre}",
+                f"COUNTIF(IS_NAN({columna}) "
+                f"OR IS_INF({columna}))",
+            )
+
+        if campo["bigquery_type"] == "NUMERIC":
+
+            agregar(
+                f"escala_invalida__{nombre}",
+                f"COUNTIF({columna} != "
+                f"TRUNC({columna}, 2))",
+            )
+
+    condicion = (
+        f"{fecha} IS NULL "
+        "OR `anio` IS DISTINCT FROM "
+        f"EXTRACT(YEAR FROM {fecha})"
+    )
+
+    if producto == "empresa_trimestre":
+
+        condicion += (
+            " OR `trimestre` IS DISTINCT FROM "
+            f"EXTRACT(QUARTER FROM {fecha})"
+        )
+
+    else:
+
+        condicion += (
+            " OR `mes` IS DISTINCT FROM "
+            f"EXTRACT(MONTH FROM {fecha})"
+        )
+
+    agregar(
+        "particiones_invalidas",
+        f"COUNTIF({condicion})",
+    )
+
+    expresiones = [
+        "COUNT(*) AS registros_observados"
+    ]
+
+    expresiones.extend(
+        f"{expresion} AS {identificador(nombre)}"
+        for nombre, expresion in metricas
+    )
+
+    select_metricas = ",\n    ".join(
+        expresiones
+    )
+
+    condiciones = [
+        "@expected_rows > 0",
+        "m.registros_observados = @expected_rows",
+        "d.claves_duplicadas = 0",
+    ]
+
+    condiciones.extend(
+        f"m.{identificador(nombre)} = 0"
+        for nombre, _ in metricas
+    )
+
+    criterio = "\n    AND ".join(
+        condiciones
+    )
+
+    return (
+        encabezado(
+            producto,
+            "Calidad historica",
+        )
+        + "-- Parametro obligatorio:\n"
+        "-- expected_rows INT64, obtenido del\n"
+        "-- manifest Gold oficialmente aprobado.\n"
+        f"-- Referencia candidata: "
+        f"{PRODUCTOS[producto]} filas.\n\n"
+        "WITH metricas AS (\n"
+        "  SELECT\n"
+        f"    {select_metricas}\n"
+        f"  FROM {tabla(producto)}\n"
+        "), duplicados AS (\n"
+        "  SELECT COUNT(*) AS claves_duplicadas\n"
+        "  FROM (\n"
+        f"    SELECT {claves_sql}\n"
+        f"    FROM {tabla(producto)}\n"
+        f"    GROUP BY {claves_sql}\n"
+        "    HAVING COUNT(*) > 1\n"
+        "  )\n"
+        ")\n"
+        "SELECT\n"
+        f"  {literal(producto)} AS producto,\n"
+        "  @expected_rows AS registros_esperados,\n"
+        "  m.*,\n"
+        "  d.claves_duplicadas,\n"
+        f"  ({criterio}) AS controles_aprobados\n"
+        "FROM metricas AS m\n"
+        "CROSS JOIN duplicados AS d;\n"
+    )
+
+
+def consulta_particiones(producto, contrato):
+
+    particiones = contrato[
+        "gold"
+    ]["source_partition_columns"]
+
+    columnas = ", ".join(
+        identificador(c)
+        for c in particiones
+    )
+
+    fecha = identificador(
+        contrato["configuracion"][
+            "bigquery_partition"
+        ]
+    )
+
+    return (
+        encabezado(
+            producto,
+            "Distribucion por particiones",
+        )
+        + "SELECT\n"
+        f"  {columnas},\n"
+        "  COUNT(*) AS registros,\n"
+        f"  MIN({fecha}) AS fecha_minima,\n"
+        f"  MAX({fecha}) AS fecha_maxima\n"
+        f"FROM {tabla(producto)}\n"
+        f"GROUP BY {columnas}\n"
+        f"ORDER BY {columnas};\n"
+    )
+
+
+def consulta_esquema(producto, contrato):
+
+    elementos = []
+
+    for posicion, campo in enumerate(
+        contrato["gold"]["columns"],
+        start=1,
+    ):
+
+        nombre = literal(
+            campo["name"]
+        )
+
+        tipo = literal(
+            campo["bigquery_type"]
+        )
+
+        nullable = literal(
+            "YES"
+            if campo["nullable"]
+            else "NO"
+        )
+
+        elementos.append(
+            f"STRUCT({posicion} AS posicion, "
+            f"{nombre} AS nombre, "
+            f"{tipo} AS tipo, "
+            f"{nullable} AS nullable)"
+        )
+
+    esquema = ",\n    ".join(
+        elementos
+    )
+
+    info = (
+        f"`{PROYECTO}.{DATASET}."
+        "INFORMATION_SCHEMA.COLUMNS`"
+    )
+
+    return (
+        encabezado(
+            producto,
+            "Comparacion de esquema",
+        )
+        + "WITH esperado AS (\n"
+        "  SELECT * FROM UNNEST([\n"
+        f"    {esquema}\n"
+        "  ])\n"
+        "), observado AS (\n"
+        "  SELECT\n"
+        "    ordinal_position AS posicion,\n"
+        "    column_name AS nombre,\n"
+        "    data_type AS tipo,\n"
+        "    is_nullable AS nullable\n"
+        f"  FROM {info}\n"
+        f"  WHERE table_name = {literal(producto)}\n"
+        "    AND is_system_defined = 'NO'\n"
+        ")\n"
+        "SELECT\n"
+        "  COALESCE(e.nombre, o.nombre) AS columna,\n"
+        "  e.posicion AS posicion_esperada,\n"
+        "  o.posicion AS posicion_observada,\n"
+        "  e.tipo AS tipo_esperado,\n"
+        "  o.tipo AS tipo_observado,\n"
+        "  e.nullable AS nullable_esperado,\n"
+        "  o.nullable AS nullable_observado,\n"
+        "  CASE\n"
+        "    WHEN e.nombre IS NULL THEN 'ADICIONAL'\n"
+        "    WHEN o.nombre IS NULL THEN 'FALTANTE'\n"
+        "    WHEN e.posicion != o.posicion "
+        "THEN 'POSICION_INCORRECTA'\n"
+        "    WHEN e.tipo != o.tipo "
+        "THEN 'TIPO_INCORRECTO'\n"
+        "    WHEN e.nullable != o.nullable "
+        "THEN 'NULABILIDAD_INCORRECTA'\n"
+        "    ELSE 'OK'\n"
+        "  END AS estado\n"
+        "FROM esperado AS e\n"
+        "FULL OUTER JOIN observado AS o\n"
+        "ON e.nombre = o.nombre\n"
+        "ORDER BY COALESCE(e.posicion, o.posicion);\n"
+    )
+
+
+def consulta_indicadores(producto, contrato):
+
+    expresiones = [
+        "COUNT(*) AS registros"
+    ]
+
+    for campo in contrato["gold"]["columns"]:
+
+        nombre = campo["name"]
+
+        tipo = campo["bigquery_type"]
+
+        if tipo not in (
+            "FLOAT64",
+            "NUMERIC",
+            "INT64",
+        ):
+
+            continue
+
+        columna = identificador(nombre)
+
+        expresiones.append(
+            f"COUNT({columna}) AS "
+            f"{identificador('presentes__' + nombre)}"
+        )
+
+        expresiones.append(
+            f"COUNTIF({columna} IS NULL) AS "
+            f"{identificador('nulos__' + nombre)}"
+        )
+
+        expresiones.append(
+            f"MIN({columna}) AS "
+            f"{identificador('min__' + nombre)}"
+        )
+
+        expresiones.append(
+            f"MAX({columna}) AS "
+            f"{identificador('max__' + nombre)}"
+        )
+
+        # BIGNUMERIC reduce el riesgo de
+        # desbordamiento en agregaciones NUMERIC.
+
+        if tipo in ("NUMERIC", "INT64"):
+
+            valor = (
+                f"CAST({columna} AS BIGNUMERIC)"
+            )
+
+        else:
+
+            valor = columna
+
+        expresiones.append(
+            f"AVG({valor}) AS "
+            f"{identificador('avg__' + nombre)}"
+        )
+
+    select_sql = ",\n  ".join(
+        expresiones
+    )
+
+    return (
+        encabezado(
+            producto,
+            "Perfil numerico para conciliacion",
+        )
+        + "SELECT\n"
+        f"  {select_sql}\n"
+        f"FROM {tabla(producto)};\n"
+    )
+
+
+GENERADORES = {
+    "01_calidad.sql": consulta_calidad,
+    "02_particiones.sql": consulta_particiones,
+    "03_esquema.sql": consulta_esquema,
+    "04_indicadores.sql": consulta_indicadores,
+}
+
+
+def generar_consultas(raiz):
+
+    raiz = Path(raiz).resolve()
+
+    _, contratos = cargar_contratos(raiz)
+
+    destino = (
+        raiz / "docs/bigquery/validacion_historica"
+    )
+
+    inventario = []
+
+    for producto in sorted(PRODUCTOS):
+
+        contrato = contratos[producto]
+
+        exigir(
+            contrato["sha256"]
+            == HASHES_CONTRATOS[producto],
+            "Contrato Gold no ratificado"
+        )
+
+        carpeta = destino / producto
+
+        carpeta.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        for nombre, generador in (
+            GENERADORES.items()
+        ):
+
+            consulta = generador(
+                producto,
+                contrato,
+            )
+
+            ruta = carpeta / nombre
+
+            exigir(
+                not ruta.exists(),
+                "Consulta existente: " + str(ruta)
+            )
+
+            ruta.write_text(
+                consulta,
+                encoding="utf-8",
+            )
+
+            inventario.append({
+                "product": producto,
+                "path":
+                    ruta.relative_to(raiz).as_posix(),
+                "gold_contract_sha256":
+                    contrato["sha256"],
+                **huella_archivo(ruta),
+            })
+
+            print(
+                "SQL_GENERADO:",
+                producto,
+                nombre,
+            )
+
+    exigir(
+        len(inventario) == 12,
+        "Inventario SQL incompleto"
+    )
+
+    manifiesto = {
+        "status":
+            "LOCAL_CANDIDATE_NOT_AUTHORIZED",
+        "query_count": len(inventario),
+        "queries": inventario,
+        "sql_execution_authorized": False,
+        "cloud_execution_authorized": False,
+        "publication_authorized": False,
+    }
+
+    ruta = destino / "inventario_consultas.json"
+
+    ruta.write_text(
+        json.dumps(
+            manifiesto,
+            indent=2,
+            sort_keys=True,
+        ) + "\n",
+        encoding="utf-8",
+    )
+
+    return manifiesto
+
+
+if __name__ == "__main__":
+
+    generar_consultas(Path.cwd())
+
+=== ARCHIVO: src/gold/bigquery/historico/conciliar_validacion_historica.py ===
+"""Conciliacion local de resultados historicos.
+
+No ejecuta SQL, no accede a GCP y no autoriza
+cargas ni consumo productivo.
+"""
+
+import math
+import re
+
+from datetime import date
+from decimal import Decimal
+
+from preparador_carga_historica import (
+    PRODUCTOS,
+    exigir,
+)
+
+from trazabilidad_carga_historica import (
+    HASHES_CONTRATOS,
+    huella_documento,
+    validar_sha,
+    validar_version,
+)
+
+
+POLITICA = {
+    "status": "CANDIDATE_PENDING_QUALITY",
+    "float_relative_tolerance": 1e-9,
+    "float_absolute_tolerance": 1e-8,
+    "decimal_exact_comparison": True,
+}
+
+
+def entero(valor):
+
+    exigir(
+        type(valor) is int and valor >= 0,
+        "Conteo invalido"
+    )
+
+    return valor
+
+
+def decimal_exacto(valor):
+
+    exigir(
+        isinstance(valor, str)
+        and re.fullmatch(
+            r"-?[0-9]+(?:\.[0-9]+)?",
+            valor,
+        ) is not None,
+        "Decimal debe conservarse como texto"
+    )
+
+    resultado = Decimal(valor)
+
+    exigir(
+        resultado.is_finite(),
+        "Decimal no finito"
+    )
+
+    return resultado
+
+
+def flotante(valor):
+
+    exigir(
+        type(valor) in (float, int),
+        "FLOAT64 incompatible"
+    )
+
+    resultado = float(valor)
+
+    exigir(
+        math.isfinite(resultado),
+        "FLOAT64 no finito"
+    )
+
+    return resultado
+
+
+def comparar_numero(
+    esperado,
+    observado,
+    tipo,
+):
+
+    if esperado is None or observado is None:
+
+        return (
+            esperado is None
+            and observado is None
+        )
+
+    if tipo == "FLOAT64":
+
+        return math.isclose(
+            flotante(esperado),
+            flotante(observado),
+            rel_tol=POLITICA[
+                "float_relative_tolerance"
+            ],
+            abs_tol=POLITICA[
+                "float_absolute_tolerance"
+            ],
+        )
+
+    if tipo == "INT64":
+
+        exigir(
+            type(esperado) is int
+            and type(observado) is int,
+            "INT64 incompatible"
+        )
+
+        return esperado == observado
+
+    exigir(
+        tipo in ("NUMERIC", "BIGNUMERIC"),
+        "Tipo numerico no admitido"
+    )
+
+    return (
+        decimal_exacto(esperado)
+        == decimal_exacto(observado)
+    )
+
+
+def metricas_calidad(contrato):
+
+    gold = contrato["gold"]
+
+    metricas = {
+        "claves_duplicadas",
+        "particiones_invalidas",
+    }
+
+    for clave in gold["business_keys"]:
+
+        metricas.add(
+            "clave_invalida__" + clave
+        )
+
+    for campo in gold["columns"]:
+
+        nombre = campo["name"]
+
+        if campo["nullable"] is False:
+
+            metricas.add(
+                "nulo_obligatorio__" + nombre
+            )
+
+        if campo["bigquery_type"] == "FLOAT64":
+
+            metricas.add(
+                "no_finito__" + nombre
+            )
+
+        if campo["bigquery_type"] == "NUMERIC":
+
+            metricas.add(
+                "escala_invalida__" + nombre
+            )
+
+    return metricas
+
+
+def validar_calidad(
+    producto,
+    resultado,
+    esperado,
+    contrato,
+):
+
+    metricas = metricas_calidad(contrato)
+
+    campos = metricas | {
+        "producto",
+        "registros_esperados",
+        "registros_observados",
+        "controles_aprobados",
+    }
+
+    exigir(
+        set(resultado) == campos,
+        "Resultado de calidad incompleto"
+    )
+
+    exigir(
+        resultado["producto"] == producto,
+        "Producto de calidad incompatible"
+    )
+
+    exigir(
+        entero(resultado["registros_esperados"])
+        == entero(resultado["registros_observados"])
+        == esperado,
+        "Conteo historico no conciliado"
+    )
+
+    for metrica in sorted(metricas):
+
+        exigir(
+            entero(resultado[metrica]) == 0,
+            "Control de calidad rechazado: "
+            + metrica
+        )
+
+    exigir(
+        resultado["controles_aprobados"] is True,
+        "Calidad historica no aprobada"
+    )
+
+
+def validar_esquema_observado(
+    resultado,
+    contrato,
+):
+
+    columnas = contrato["gold"]["columns"]
+
+    exigir(
+        len(resultado) == len(columnas),
+        "Cantidad de columnas incompatible"
+    )
+
+    esperadas = {
+        c["name"]: (i, c)
+        for i, c in enumerate(
+            columnas, start=1
+        )
+    }
+
+    vistas = set()
+
+    for fila in resultado:
+
+        nombre = fila["columna"]
+
+        exigir(
+            nombre in esperadas
+            and nombre not in vistas,
+            "Columna adicional o repetida"
+        )
+
+        vistas.add(nombre)
+
+        posicion, campo = esperadas[nombre]
+
+        nulabilidad = (
+            "YES" if campo["nullable"] else "NO"
+        )
+
+        exigir(
+            fila["estado"] == "OK"
+            and fila["posicion_esperada"]
+            == fila["posicion_observada"]
+            == posicion
+            and fila["tipo_esperado"]
+            == fila["tipo_observado"]
+            == campo["bigquery_type"]
+            and fila["nullable_esperado"]
+            == fila["nullable_observado"]
+            == nulabilidad,
+            "Diferencia de esquema: " + nombre
+        )
+
+    exigir(
+        vistas == set(esperadas),
+        "Esquema incompleto"
+    )
+
+
+def fecha_canonica(valor):
+
+    exigir(
+        isinstance(valor, str),
+        "Fecha debe conservarse como texto ISO"
+    )
+
+    resultado = date.fromisoformat(valor)
+
+    exigir(
+        resultado.isoformat() == valor,
+        "Fecha no canonica"
+    )
+
+    return resultado
+
+
+def normalizar_particiones(
+    producto,
+    filas,
+    contrato,
+    total,
+):
+
+    columnas = contrato["gold"][
+        "source_partition_columns"
+    ]
+
+    resultado = {}
+
+    for fila in filas:
+
+        exigir(
+            set(fila) == set(columnas) | {
+                "registros",
+                "fecha_minima",
+                "fecha_maxima",
+            },
+            "Campos de particion incompatibles"
+        )
+
+        clave = tuple(
+            entero(fila[c])
+            for c in columnas
+        )
+
+        exigir(
+            clave not in resultado,
+            "Particion repetida"
+        )
+
+        cantidad = entero(fila["registros"])
+
+        exigir(
+            cantidad > 0,
+            "Particion vacia"
+        )
+
+        minimo = fecha_canonica(
+            fila["fecha_minima"]
+        )
+
+        maximo = fecha_canonica(
+            fila["fecha_maxima"]
+        )
+
+        exigir(
+            minimo <= maximo,
+            "Intervalo temporal incompatible"
+        )
+
+        for fecha in (minimo, maximo):
+
+            periodo = fecha.month
+
+            if producto == "empresa_trimestre":
+
+                periodo = (
+                    (fecha.month - 1) // 3 + 1
+                )
+
+            exigir(
+                clave == (fecha.year, periodo),
+                "Fecha fuera de particion"
+            )
+
+        resultado[clave] = (
+            cantidad,
+            minimo.isoformat(),
+            maximo.isoformat(),
+        )
+
+    exigir(
+        sum(
+            valor[0]
+            for valor in resultado.values()
+        ) == total,
+        "Total por particiones incompatible"
+    )
+
+    return resultado
+
+
+def comparar_particiones(
+    producto,
+    esperadas,
+    observadas,
+    contrato,
+    total,
+):
+
+    origen = normalizar_particiones(
+        producto, esperadas, contrato, total
+    )
+
+    destino = normalizar_particiones(
+        producto, observadas, contrato, total
+    )
+
+    exigir(
+        origen == destino,
+        "Particiones no conciliadas"
+    )
+
+
+def validar_perfiles(
+    esperado,
+    observado,
+    contrato,
+    total,
+):
+
+    campos = {"registros"}
+
+    numericas = [
+        c for c in contrato["gold"]["columns"]
+        if c["bigquery_type"] in (
+            "FLOAT64",
+            "NUMERIC",
+            "INT64",
+        )
+    ]
+
+    for columna in numericas:
+
+        nombre = columna["name"]
+
+        campos.update(
+            prefijo + nombre
+            for prefijo in (
+                "presentes__",
+                "nulos__",
+                "min__",
+                "max__",
+                "avg__",
+            )
+        )
+
+    exigir(
+        set(esperado) == set(observado) == campos,
+        "Perfil numerico incompleto"
+    )
+
+    exigir(
+        entero(esperado["registros"])
+        == entero(observado["registros"])
+        == total,
+        "Conteo de perfil incompatible"
+    )
+
+    for columna in numericas:
+
+        nombre = columna["name"]
+
+        tipo = columna["bigquery_type"]
+
+        presentes = "presentes__" + nombre
+        nulos = "nulos__" + nombre
+
+        for perfil in (esperado, observado):
+
+            cantidad = entero(perfil[presentes])
+
+            exigir(
+                cantidad + entero(perfil[nulos])
+                == total,
+                "Conteos de perfil inconsistentes"
+            )
+
+            valores = [
+                perfil[prefijo + nombre]
+                for prefijo in (
+                    "min__", "max__", "avg__"
+                )
+            ]
+
+            exigir(
+                all(
+                    (valor is None)
+                    == (cantidad == 0)
+                    for valor in valores
+                ),
+                "Nulabilidad de perfil inconsistente"
+            )
+
+        exigir(
+            esperado[presentes]
+            == observado[presentes]
+            and esperado[nulos]
+            == observado[nulos],
+            "Conteos numericos no conciliados: "
+            + nombre
+        )
+
+        for prefijo in (
+            "min__", "max__", "avg__"
+        ):
+
+            campo = prefijo + nombre
+
+            tipo_comparacion = tipo
+
+            if (
+                prefijo == "avg__"
+                and tipo != "FLOAT64"
+            ):
+
+                tipo_comparacion = "BIGNUMERIC"
+
+            exigir(
+                comparar_numero(
+                    esperado[campo],
+                    observado[campo],
+                    tipo_comparacion,
+                ),
+                "Perfil numerico no conciliado: "
+                + campo
+            )
+
+
+def conciliar_producto(
+    producto,
+    origen,
+    resultados,
+    contrato,
+):
+
+    exigir(
+        producto in PRODUCTOS,
+        "Producto incompatible"
+    )
+
+    exigir(
+        origen["product"] == producto,
+        "Identidad de origen incompatible"
+    )
+
+    validar_version(
+        origen["version_id"]
+    )
+
+    validar_sha(
+        origen["manifest_sha256"]
+    )
+
+    exigir(
+        origen["gold_contract_sha256"]
+        == contrato["sha256"]
+        == HASHES_CONTRATOS[producto],
+        "Contrato Gold incompatible"
+    )
+
+    total = entero(origen["records_count"])
+
+    exigir(
+        total > 0,
+        "Origen sin registros"
+    )
+
+    exigir(
+        set(resultados) == {
+            "calidad",
+            "esquema",
+            "particiones",
+            "indicadores",
+        },
+        "Resultados historicos incompletos"
+    )
+
+    validar_esquema_observado(
+        resultados["esquema"],
+        contrato,
+    )
+
+    validar_calidad(
+        producto,
+        resultados["calidad"],
+        total,
+        contrato,
+    )
+
+    comparar_particiones(
+        producto,
+        origen["particiones"],
+        resultados["particiones"],
+        contrato,
+        total,
+    )
+
+    validar_perfiles(
+        origen["indicadores"],
+        resultados["indicadores"],
+        contrato,
+        total,
+    )
+
+    return {
+        "product": producto,
+        "version_id": origen["version_id"],
+        "records_count": total,
+        "manifest_sha256":
+            origen["manifest_sha256"],
+        "gold_contract_sha256":
+            contrato["sha256"],
+        "source_evidence_sha256":
+            huella_documento(origen),
+        "observed_results_sha256":
+            huella_documento(resultados),
+        "quality_reconciled": True,
+        "schema_reconciled": True,
+        "partitions_reconciled": True,
+        "numeric_profiles_reconciled": True,
+        "row_level_equality_verified": False,
+        "physical_table_layout_verified": False,
+        "official_source_verified": False,
+        "production_authorized": False,
+    }
+
+
+def conciliar_lote(
+    origenes,
+    resultados,
+    contratos,
+):
+
+    exigir(
+        set(origenes)
+        == set(resultados)
+        == set(contratos)
+        == set(PRODUCTOS),
+        "Lote historico incompleto"
+    )
+
+    productos = {
+        producto: conciliar_producto(
+            producto,
+            origenes[producto],
+            resultados[producto],
+            contratos[producto],
+        )
+        for producto in sorted(PRODUCTOS)
+    }
+
+    informe = {
+        "status":
+            "LOCAL_PROFILE_RECONCILIATION_ONLY",
+        "products": productos,
+        "products_reconciled": len(productos),
+        "total_records": sum(
+            p["records_count"]
+            for p in productos.values()
+        ),
+        "comparison_policy": dict(POLITICA),
+        "official_sources_verified": False,
+        "row_level_equality_verified": False,
+        "physical_table_layout_verified": False,
+        "quality_authorization_verified": False,
+        "production_authorized": False,
+        "publication_authorized": False,
+    }
+
+    return {
+        "report": informe,
+        "report_sha256":
+            huella_documento(informe),
+    }
+
+=== ARCHIVO: tests/gold/manual/validacion_conciliacion_historica.py ===
+"""Pruebas locales de conciliacion de perfiles.
+
+Resultados SQL sinteticos, contratos reales.
+Sin Spark ni clientes cloud.
+"""
+
+from copy import deepcopy
+from pathlib import Path
+
+from preparador_carga_historica import (
+    cargar_contratos,
+    PRODUCTOS,
+)
+
+from trazabilidad_carga_historica import (
+    huella_documento,
+)
+
+from conciliar_validacion_historica import (
+    conciliar_lote,
+    metricas_calidad,
+    comparar_numero,
+)
+
+
+_, contratos = cargar_contratos(Path.cwd())
+
+MERCADO = "mercado_valor_diario"
+SAB = "actividad_sab_diaria"
+EMPRESA = "empresa_trimestre"
+
+aprobados = []
+
+
+def aprobar(nombre):
+
+    aprobados.append(nombre)
+
+    print(nombre + "_OK")
+
+
+def fixture():
+
+    origenes = {}
+    resultados = {}
+
+    for producto, cantidad in PRODUCTOS.items():
+
+        contrato = contratos[producto]
+
+        esquema = []
+
+        perfil = {
+            "registros": cantidad
+        }
+
+        for posicion, campo in enumerate(
+            contrato["gold"]["columns"],
+            start=1,
+        ):
+
+            nombre = campo["name"]
+
+            tipo = campo["bigquery_type"]
+
+            nullable = (
+                "YES"
+                if campo["nullable"]
+                else "NO"
+            )
+
+            esquema.append({
+                "columna": nombre,
+                "posicion_esperada": posicion,
+                "posicion_observada": posicion,
+                "tipo_esperado": tipo,
+                "tipo_observado": tipo,
+                "nullable_esperado": nullable,
+                "nullable_observado": nullable,
+                "estado": "OK",
+            })
+
+            if tipo not in (
+                "FLOAT64", "NUMERIC", "INT64"
+            ):
+
+                continue
+
+            perfil["presentes__" + nombre] = (
+                cantidad
+            )
+
+            perfil["nulos__" + nombre] = 0
+
+            if tipo == "FLOAT64":
+
+                valor = 100.25
+                promedio = valor
+
+            elif tipo == "INT64":
+
+                valor = 100
+                promedio = "100.00"
+
+            else:
+
+                valor = "100.25"
+                promedio = valor
+
+            perfil["min__" + nombre] = valor
+            perfil["max__" + nombre] = valor
+            perfil["avg__" + nombre] = promedio
+
+        periodo = (
+            "trimestre"
+            if producto == EMPRESA
+            else "mes"
+        )
+
+        fecha = (
+            "2025-03-31"
+            if producto == EMPRESA
+            else "2025-01-02"
+        )
+
+        particiones = [{
+            "anio": 2025,
+            periodo: 1,
+            "registros": cantidad,
+            "fecha_minima": fecha,
+            "fecha_maxima": fecha,
+        }]
+
+        calidad = {
+            "producto": producto,
+            "registros_esperados": cantidad,
+            "registros_observados": cantidad,
+            "controles_aprobados": True,
+            **{
+                metrica: 0
+                for metrica in metricas_calidad(
+                    contrato
+                )
+            },
+        }
+
+        origenes[producto] = {
+            "product": producto,
+            "version_id": "fixture-local-v1",
+            "manifest_sha256": "a" * 64,
+            "gold_contract_sha256":
+                contrato["sha256"],
+            "records_count": cantidad,
+            "particiones": deepcopy(particiones),
+            "indicadores": deepcopy(perfil),
+        }
+
+        resultados[producto] = {
+            "calidad": calidad,
+            "esquema": esquema,
+            "particiones": particiones,
+            "indicadores": perfil,
+        }
+
+    return origenes, resultados
+
+
+def rechazar(nombre, modificar, mensaje):
+
+    origenes, resultados = fixture()
+
+    modificar(origenes, resultados)
+
+    try:
+
+        conciliar_lote(
+            origenes,
+            resultados,
+            contratos,
+        )
+
+    except ValueError as error:
+
+        assert mensaje in str(error), str(error)
+
+        aprobar(nombre)
+
+    else:
+
+        raise AssertionError(
+            "Debio rechazarse: " + nombre
+        )
+
+
+origenes, resultados = fixture()
+
+informe = conciliar_lote(
+    origenes,
+    resultados,
+    contratos,
+)
+
+assert informe["report"][
+    "products_reconciled"
+] == 3
+
+assert informe["report"][
+    "total_records"
+] == 110199
+
+assert informe["report_sha256"] == (
+    huella_documento(informe["report"])
+)
+
+aprobar("CONCILIACION_TRES_PRODUCTOS")
+
+assert conciliar_lote(
+    origenes, resultados, contratos
+) == informe
+
+aprobar("INFORME_DETERMINISTA")
+
+assert informe["report"][
+    "production_authorized"
+] is False
+
+assert informe["report"][
+    "official_sources_verified"
+] is False
+
+aprobar("INFORME_NO_OPERATIVO")
+
+rechazar(
+    "PRODUCTO_FALTANTE_RECHAZADO",
+    lambda o, r: r.pop(SAB),
+    "Lote historico incompleto",
+)
+
+rechazar(
+    "CONTEO_INCORRECTO_RECHAZADO",
+    lambda o, r: r[MERCADO]["calidad"].update(
+        registros_observados=1
+    ),
+    "Conteo historico no conciliado",
+)
+
+rechazar(
+    "DUPLICADOS_RECHAZADOS",
+    lambda o, r: r[MERCADO]["calidad"].update(
+        claves_duplicadas=1
+    ),
+    "Control de calidad rechazado",
+)
+
+rechazar(
+    "CLAVES_NULAS_RECHAZADAS",
+    lambda o, r: r[MERCADO]["calidad"].update(
+        clave_invalida__nemonico=1
+    ),
+    "Control de calidad rechazado",
+)
+
+rechazar(
+    "METRICA_FALTANTE_RECHAZADA",
+    lambda o, r: r[MERCADO]["calidad"].pop(
+        "particiones_invalidas"
+    ),
+    "Resultado de calidad incompleto",
+)
+
+rechazar(
+    "ESQUEMA_INCORRECTO_RECHAZADO",
+    lambda o, r: r[MERCADO]["esquema"][0].update(
+        tipo_observado="INT64"
+    ),
+    "Diferencia de esquema",
+)
+
+rechazar(
+    "COLUMNA_FALTANTE_RECHAZADA",
+    lambda o, r: r[SAB]["esquema"].pop(),
+    "Cantidad de columnas incompatible",
+)
+
+rechazar(
+    "PARTICION_INVALIDA_RECHAZADA",
+    lambda o, r:
+        r[EMPRESA]["particiones"][0].update(
+            trimestre=2
+        ),
+    "Fecha fuera de particion",
+)
+
+rechazar(
+    "CONTEO_PARTICION_RECHAZADO",
+    lambda o, r:
+        r[MERCADO]["particiones"][0].update(
+            registros=1
+        ),
+    "Total por particiones incompatible",
+)
+
+rechazar(
+    "PERIODO_DIFERENTE_RECHAZADO",
+    lambda o, r:
+        r[MERCADO]["particiones"][0].update(
+            mes=2,
+            fecha_minima="2025-02-03",
+            fecha_maxima="2025-02-03",
+        ),
+    "Particiones no conciliadas",
+)
+
+rechazar(
+    "PERFIL_MONETARIO_ALTERADO_RECHAZADO",
+    lambda o, r:
+        r[SAB]["indicadores"].update(
+            avg__total_compras_diario="100.26"
+        ),
+    "Perfil numerico no conciliado",
+)
+
+rechazar(
+    "PERFIL_FLOAT_ALTERADO_RECHAZADO",
+    lambda o, r:
+        r[MERCADO]["indicadores"].update(
+            avg__precio_cierre=999.0
+        ),
+    "Perfil numerico no conciliado",
+)
+
+rechazar(
+    "PERFIL_NAN_RECHAZADO",
+    lambda o, r:
+        r[MERCADO]["indicadores"].update(
+            avg__precio_cierre=float("nan")
+        ),
+    "FLOAT64 no finito",
+)
+
+rechazar(
+    "PERFIL_NULO_INCONSISTENTE_RECHAZADO",
+    lambda o, r:
+        r[MERCADO]["indicadores"].update(
+            avg__precio_cierre=None
+        ),
+    "Nulabilidad de perfil inconsistente",
+)
+
+rechazar(
+    "CONTRATO_ALTERADO_RECHAZADO",
+    lambda o, r: o[SAB].update(
+        gold_contract_sha256="0" * 64
+    ),
+    "Contrato Gold incompatible",
+)
+
+assert comparar_numero(
+    100.25,
+    100.250000001,
+    "FLOAT64",
+)
+
+aprobar("TOLERANCIA_FLOAT_ACEPTADA")
+
+assert not comparar_numero(
+    "99999999999999999999999999999.98",
+    "99999999999999999999999999999.99",
+    "NUMERIC",
+)
+
+aprobar("PRECISION_MONETARIA_CONSERVADA")
+
+assert len(aprobados) == 20, aprobados
+
+print("\n=== RESUMEN DE CONCILIACION ===")
+print("CONTROLES_CONCILIACION: 20/20")
+print("PRODUCTOS_CONCILIADOS_SINTETICOS: 3/3")
+print("REGISTROS_REFERENCIA_SINTETICOS: 110199")
+print("RESULTADOS_SQL_SINTETICOS: True")
+print("COMPARACION_MONETARIA_EXACTA: True")
+print("TOLERANCIA_FLOAT_CANDIDATA: True")
+print("IGUALDAD_FILA_A_FILA_ACREDITADA: False")
+print("FUENTES_OFICIALES_ACREDITADAS: False")
+print("AUTORIZACION_OPERATIVA_REAL: False")
+print("GCP_EJECUTADO: False")
+print("BIGQUERY_EJECUTADO: False")
+print("CONCILIACION_HISTORICA_LOCAL_OK")

@@ -1,0 +1,46 @@
+{
+  "status": "LOCAL_HISTORICAL_COMPLEMENT_ONLY",
+  "batch_id_example": "BATCH_CANDIDATO",
+  "products": [
+    "actividad_sab_diaria",
+    "empresa_trimestre",
+    "mercado_valor_diario"
+  ],
+  "files": [
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_historico_complementario/actividad_sab_diaria_igualdad.sql",
+      "sha256": "564b42305008a4fadc0c10c99ec7a8d3acde8e4da35c510bd16123e3fbd81063",
+      "size_bytes": 7666
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_historico_complementario/actividad_sab_diaria_layout.sql",
+      "sha256": "8c8925e5e0b36901210950f31cb6ed563572b3e11eaa83bced6a4615fb3619d4",
+      "size_bytes": 5606
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_historico_complementario/empresa_trimestre_igualdad.sql",
+      "sha256": "ec3c2145200b5fd55c95ae3fa254924643e0e7bd33d9b04f7637a221e201b5bb",
+      "size_bytes": 9071
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_historico_complementario/empresa_trimestre_layout.sql",
+      "sha256": "d1672b6236774e44174594d016969cd252419fa62bce3410a66407442dfbc7df",
+      "size_bytes": 7233
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_historico_complementario/mercado_valor_diario_igualdad.sql",
+      "sha256": "2ed77dc6f4874b007902654963800dbc30d3620d215da79d172fe07209a0a87c",
+      "size_bytes": 7138
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_historico_complementario/mercado_valor_diario_layout.sql",
+      "sha256": "188f205c399b5580955d4282afdb585a9e0a23db1241390102777ec3e8fac4c3",
+      "size_bytes": 5479
+    }
+  ],
+  "official_source_verified": false,
+  "google_sql_engine_validated": false,
+  "execution_authorized": false,
+  "production_write_authorized": false,
+  "publication_authorized": false
+}

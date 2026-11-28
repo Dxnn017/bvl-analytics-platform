@@ -1,0 +1,37 @@
+{
+  "status": "LOCAL_SQL_CANDIDATE_NOT_AUTHORIZED",
+  "base_commit": "05d2b78f168b771a2a08a6cedb1b5bc3f3dd41b8",
+  "files": [
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_candidato/actividad_sab_diaria_transaccional_v2.sql",
+      "sha256": "f7157d071985160474322dfc45c44e08b94d2e3311b04db4235f9ada73d78c11",
+      "size_bytes": 28001
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_candidato/control_transaccional_v2.sql",
+      "sha256": "9b546075b8adddd410dfbb14ae68e73477de38841021f7b420dff59d936dd0b9",
+      "size_bytes": 1456
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_candidato/empresa_trimestre_transaccional_v2.sql",
+      "sha256": "cf4b96bcfe3ace3a0c73d07593de47f0a40e9ee3e50da8758b6da5646dbb716a",
+      "size_bytes": 29972
+    },
+    {
+      "path": "docs/bigquery/integracion_transaccional/sql_candidato/mercado_valor_diario_transaccional_v2.sql",
+      "sha256": "e60e6aa40d3d934c6adc2e236f7b6e8247137eaa20aa75027780e84f856a0796",
+      "size_bytes": 25107
+    }
+  ],
+  "products": [
+    "actividad_sab_diaria",
+    "empresa_trimestre",
+    "mercado_valor_diario"
+  ],
+  "execution_authorized": false,
+  "delete_authorized": false,
+  "production_write_authorized": false,
+  "publication_authorized": false,
+  "google_sql_engine_validated": false,
+  "distributed_lock_verified": false
+}
