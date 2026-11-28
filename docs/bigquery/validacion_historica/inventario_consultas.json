@@ -1,0 +1,93 @@
+{
+  "cloud_execution_authorized": false,
+  "publication_authorized": false,
+  "queries": [
+    {
+      "gold_contract_sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "path": "docs/bigquery/validacion_historica/actividad_sab_diaria/01_calidad.sql",
+      "product": "actividad_sab_diaria",
+      "sha256": "371d8c0c7aceb61a6bcfd346abf4f245467f055aef488e6f3fce34a32f76a937",
+      "size_bytes": 5430
+    },
+    {
+      "gold_contract_sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "path": "docs/bigquery/validacion_historica/actividad_sab_diaria/02_particiones.sql",
+      "product": "actividad_sab_diaria",
+      "sha256": "d6478807e73324b0a88a1615f4385bf83cf224b2f0a09dcf40cefdad9a875c15",
+      "size_bytes": 407
+    },
+    {
+      "gold_contract_sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "path": "docs/bigquery/validacion_historica/actividad_sab_diaria/03_esquema.sql",
+      "product": "actividad_sab_diaria",
+      "sha256": "8e8905bc51af982b9300422632836779da6776e59e6203ead3d97c3346d0fd2a",
+      "size_bytes": 5120
+    },
+    {
+      "gold_contract_sha256": "f6c520defe557a979306dfcd8da05b97be2ac30aeba8271be8adaa53edad0bbe",
+      "path": "docs/bigquery/validacion_historica/actividad_sab_diaria/04_indicadores.sql",
+      "product": "actividad_sab_diaria",
+      "sha256": "68c40eae7750b252544cbe297c9f262c70315c49ecacc73b373a6528c2d379ca",
+      "size_bytes": 9551
+    },
+    {
+      "gold_contract_sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "path": "docs/bigquery/validacion_historica/empresa_trimestre/01_calidad.sql",
+      "product": "empresa_trimestre",
+      "sha256": "5ff682749a574e7c8ae42cde17f0d75fd736dd04faed676fb3bb69b40b96fe72",
+      "size_bytes": 4787
+    },
+    {
+      "gold_contract_sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "path": "docs/bigquery/validacion_historica/empresa_trimestre/02_particiones.sql",
+      "product": "empresa_trimestre",
+      "sha256": "ca6ff34a3ed822afbe4a6f4a7822c22a376ab85dd9879a8500a9fd006d44b277",
+      "size_bytes": 447
+    },
+    {
+      "gold_contract_sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "path": "docs/bigquery/validacion_historica/empresa_trimestre/03_esquema.sql",
+      "product": "empresa_trimestre",
+      "sha256": "c71e626520ecfd847de3b588101a44aebcbfb7ad4d19df5bcfb7defab8dec69a",
+      "size_bytes": 6583
+    },
+    {
+      "gold_contract_sha256": "6cfa9e3cf6ddb78d4ac8a7b97b4d35cb5b869185ab2ba7ccccb0ea6d5171e705",
+      "path": "docs/bigquery/validacion_historica/empresa_trimestre/04_indicadores.sql",
+      "product": "empresa_trimestre",
+      "sha256": "abca8a85932eb3382f29da3a6654b314786521924bbb866715da3b27adb28259",
+      "size_bytes": 5323
+    },
+    {
+      "gold_contract_sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "path": "docs/bigquery/validacion_historica/mercado_valor_diario/01_calidad.sql",
+      "product": "mercado_valor_diario",
+      "sha256": "f0ec9110f4fc501910198d0c4aa5a4e2d07a6d2289b5eac2baed81d625e641e1",
+      "size_bytes": 3249
+    },
+    {
+      "gold_contract_sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "path": "docs/bigquery/validacion_historica/mercado_valor_diario/02_particiones.sql",
+      "product": "mercado_valor_diario",
+      "sha256": "a80d2a9281e84dae0152e71fa3bb85745113d5035c88063c0c5ebd2087a9bcb0",
+      "size_bytes": 407
+    },
+    {
+      "gold_contract_sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "path": "docs/bigquery/validacion_historica/mercado_valor_diario/03_esquema.sql",
+      "product": "mercado_valor_diario",
+      "sha256": "ada28328662502edf4f45b0c659bcc9a0e9be213ddc00fa50978680a78a8b9e7",
+      "size_bytes": 4982
+    },
+    {
+      "gold_contract_sha256": "3e984da7684e08e3d2c825933cb4d7e02e8f6a1dbadcf367c5749093c380d340",
+      "path": "docs/bigquery/validacion_historica/mercado_valor_diario/04_indicadores.sql",
+      "product": "mercado_valor_diario",
+      "sha256": "75a5821a881f6c6ff5c2ceda571c24f2d5f62685485165646d42939bce9154f6",
+      "size_bytes": 4949
+    }
+  ],
+  "query_count": 12,
+  "sql_execution_authorized": false,
+  "status": "LOCAL_CANDIDATE_NOT_AUTHORIZED"
+}
