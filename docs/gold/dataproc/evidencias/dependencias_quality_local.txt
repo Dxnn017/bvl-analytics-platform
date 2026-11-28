@@ -1,0 +1,7 @@
+PYTHON: 3.11.2
+pyspark: 3.5.1
+pyarrow: 18.1.0
+cryptography: 50.0.2
+google-cloud-storage: NO_INSTALADO
+google-auth: NO_INSTALADO
+DEPENDENCIAS_GCP_PENDIENTES_DE_VALIDACION

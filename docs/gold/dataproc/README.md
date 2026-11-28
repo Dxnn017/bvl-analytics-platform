@@ -92,3 +92,24 @@ deliberadamente no operativos.
 No se modificaron recursos GCP.
 No se utilizaron credenciales cloud.
 No se consumieron créditos GCP durante estas pruebas.
+
+## Actualizacion Quality v0.3
+
+La integracion candidata se documenta en:
+
+- ENTREGA_QUALITY_V03.md
+- PARAMETROS_EJECUCION_GCP.md
+
+El paquete actualizado contiene 78 modulos.
+
+La interfaz Python Quality ha sido conectada al ejecutor.
+El modo CLI preflight-quality permanece bloqueado.
+
+Para esta entrega debe utilizarse:
+
+    evidencias/SHA256_PAQUETE_QUALITY_V03.txt
+
+Los hashes de la preparacion Dataproc anterior corresponden
+al commit historico ed7b069.
+
+No se sobrescriben las evidencias historicas.

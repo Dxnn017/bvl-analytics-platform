@@ -1,0 +1,24 @@
+26/11/27 21:22:42 WARN Utils: Your hostname, Debian12 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+26/11/27 21:22:42 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 21:22:43 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+test_01_materializacion_generacion_exacta (__main__.TestMaterializacionQuality.test_01_materializacion_generacion_exacta) ... [Stage 0:>                                                          (0 + 2) / 2]                                                                                /usr/lib/python3.11/socket.py:777: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 48604), raddr=('127.0.0.1', 41083)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_02_contenido_alterado_rechazado (__main__.TestMaterializacionQuality.test_02_contenido_alterado_rechazado) ... ok
+test_03_conteo_incompatible_rechazado (__main__.TestMaterializacionQuality.test_03_conteo_incompatible_rechazado) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 13.565s
+
+OK
++----------+-----------------+----+---+
+|codigo_sab|fecha_negociacion|anio|mes|
++----------+-----------------+----+---+
+|S01       |2026-01-15       |2026|1  |
+|S02       |2026-01-15       |2026|1  |
++----------+-----------------+----+---+
+
+PARQUET_Y_PARTICIONES_VERIFICADOS_OK

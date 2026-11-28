@@ -30,16 +30,45 @@ from control_versiones_gold import (
 )
 
 
+def preparar_preflight_candidato(
+    spark, cliente, producto, evidencias, pem_quality,
+):
+    """Interfaz supervisada para preparar un candidato en memoria.
+
+    No crea clientes GCS ni habilita operaciones cloud.
+    El cliente y las evidencias deben ser suministrados
+    por el llamador bajo un contexto autorizado.
+    """
+
+    from integracion_quality_v03 import (
+        preparar_candidato_quality,
+    )
+
+    return preparar_candidato_quality(
+        spark,
+        cliente,
+        producto,
+        evidencias,
+        pem_quality,
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
         "--modo",
-        choices=["smoke-test"],
+        choices=["smoke-test", "preflight-quality"],
         required=True,
     )
 
     argumentos = parser.parse_args()
+
+    if argumentos.modo == "preflight-quality":
+        parser.error(
+            "Preflight cloud bloqueado: faltan insumos oficiales "
+            "y autorizacion operativa. No se iniciara Spark."
+        )
 
     spark = (
         SparkSession.builder

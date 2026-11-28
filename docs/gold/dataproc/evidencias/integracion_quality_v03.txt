@@ -1,0 +1,11 @@
+test_01_prioridades_y_bloqueos (__main__.TestIntegracionQuality.test_01_prioridades_y_bloqueos) ... ok
+test_02_dependencias_incompletas (__main__.TestIntegracionQuality.test_02_dependencias_incompletas) ... ok
+test_03_autorizacion_de_otra_fuente (__main__.TestIntegracionQuality.test_03_autorizacion_de_otra_fuente) ... ok
+test_04_preflight_rechazado_no_procesa (__main__.TestIntegracionQuality.test_04_preflight_rechazado_no_procesa) ... ok
+test_05_integracion_preflight_ejecutor (__main__.TestIntegracionQuality.test_05_integracion_preflight_ejecutor) ... ok
+test_06_cambio_concurrente_no_procesa (__main__.TestIntegracionQuality.test_06_cambio_concurrente_no_procesa) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.006s
+
+OK
