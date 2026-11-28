@@ -1,0 +1,59 @@
+{
+  "corridas": [
+    {
+      "run_id": "f5805fed7eec47a08d326a2969224063",
+      "tipo_ejecucion": "local",
+      "modelo_version": "demo-1",
+      "f1_clase_minoritaria": 0.7716535433070866,
+      "f1_baseline_minoritaria": 0.0,
+      "versiones_gold_json": "{\"version_gold_mercado\": \"muestra1\", \"version_gold_sab\": \"muestra1\", \"version_gold_empresa\": \"muestra1\"}",
+      "estado": "OK",
+      "fecha_ejecucion_utc": "2026-11-28T07:09:37.288024+00:00",
+      "fecha_corte_min": "2024-05-01",
+      "fecha_corte_max": "2024-06-28",
+      "registros_evaluados": 354,
+      "registros_insertados": 354,
+      "registros_actualizados": 0,
+      "cambios_clase_detectados": 0
+    },
+    {
+      "run_id": "7a65146ad9424aa894c34439cd36bb6e",
+      "tipo_ejecucion": "local",
+      "modelo_version": "demo-1",
+      "f1_clase_minoritaria": 0.7769784172661871,
+      "f1_baseline_minoritaria": 0.0,
+      "versiones_gold_json": "{\"version_gold_mercado\": \"muestra1\", \"version_gold_sab\": \"muestra1\", \"version_gold_empresa\": \"muestra1\"}",
+      "estado": "OK",
+      "fecha_ejecucion_utc": "2026-11-28T07:11:28.416567+00:00",
+      "fecha_corte_min": "2024-05-01",
+      "fecha_corte_max": "2024-07-02",
+      "registros_evaluados": 371,
+      "registros_insertados": 17,
+      "registros_actualizados": 1,
+      "cambios_clase_detectados": 0
+    },
+    {
+      "run_id": "b373421f757e4606bb3cf73de7a45e30",
+      "tipo_ejecucion": "local",
+      "modelo_version": "demo-1",
+      "f1_clase_minoritaria": 0.7769784172661871,
+      "f1_baseline_minoritaria": 0.0,
+      "versiones_gold_json": "{\"version_gold_mercado\": \"muestra1\", \"version_gold_sab\": \"muestra1\", \"version_gold_empresa\": \"muestra1\"}",
+      "estado": "OK",
+      "fecha_ejecucion_utc": "2026-11-28T07:11:54.373678+00:00",
+      "fecha_corte_min": "2024-05-01",
+      "fecha_corte_max": "2024-07-02",
+      "registros_evaluados": 371,
+      "registros_insertados": 0,
+      "registros_actualizados": 0,
+      "cambios_clase_detectados": 0
+    }
+  ],
+  "duplicados": 0,
+  "fecha_visible": "2024-07-02",
+  "kpis": {
+    "Valores evaluados": "9",
+    "Valores con riesgo alto": "2",
+    "HHI del mercado": "5,200"
+  }
+}

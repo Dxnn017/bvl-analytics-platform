@@ -27,3 +27,9 @@ outputs/tmp/
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+# Estado local de ML
+outputs/*.sqlite
+.pytest_cache/
+spark-warehouse/
+artifacts/

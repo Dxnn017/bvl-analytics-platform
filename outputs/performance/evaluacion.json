@@ -1,0 +1,51 @@
+{
+  "seed": 42,
+  "corte": "2024-04-30",
+  "clase_baseline": 0.0,
+  "modelo": {
+    "matriz": [
+      [
+        156,
+        17,
+        4
+      ],
+      [
+        6,
+        82,
+        8
+      ],
+      [
+        7,
+        12,
+        54
+      ]
+    ],
+    "soporte_alto": 73,
+    "precision_alto": 0.8181818181818182,
+    "recall_alto": 0.7397260273972602,
+    "f1_alto": 0.7769784172661871
+  },
+  "baseline": {
+    "matriz": [
+      [
+        177,
+        0,
+        0
+      ],
+      [
+        96,
+        0,
+        0
+      ],
+      [
+        73,
+        0,
+        0
+      ]
+    ],
+    "soporte_alto": 73,
+    "precision_alto": 0,
+    "recall_alto": 0.0,
+    "f1_alto": 0.0
+  }
+}
