@@ -470,12 +470,14 @@ def validate_iam_scope_attestation(doc, context, context_sha, *, now=None):
     require(0 <= (now-_utc(role['observed_at_utc'])).total_seconds() <= IAM_SCOPE_MAX_AGE_SECONDS,
             'IAM_ROLE_EVIDENCIA_OBSOLETA')
 
-    # Solo se admite la condicion CEL de prefijo literal, sin OR, funciones
-    # alternativas ni expresiones no evaluadas. Requiere evidencia nueva Quality
-    # si la politica efectiva usa una expresion diferente.
+    # Lista cerrada de expresiones CEL: prefijo simple heredado o la condicion
+    # IAM real de Quality, con comprobacion literal de Object y del prefijo.
+    # No se evalua CEL arbitrario ni se aceptan operadores adicionales.
     expected_member = 'serviceAccount:' + context['service_account']
-    condition_pattern = re.compile(
+    simple_condition = re.compile(
         r'''resource\.name\.startsWith\((["'])(projects/_/buckets/[^"']+/objects/[^"']+)\1\)\Z''')
+    object_condition = re.compile(
+        r'''resource\.type *== *(["'])storage\.googleapis\.com/Object\1 *&& *resource\.name\.startsWith\((["'])(projects/_/buckets/[^"']+/objects/[^"']+)\2\)\Z''')
     matching = []
     for binding in policy['bindings']:
         if type(binding) is not dict or binding.get('role') != role['name']:
@@ -485,10 +487,15 @@ def validate_iam_scope_attestation(doc, context, context_sha, *, now=None):
         cond = binding.get('condition')
         if type(cond) is not dict or type(cond.get('expression')) is not str:
             continue
-        match = condition_pattern.fullmatch(cond['expression'])
-        if match is None:
-            continue
-        policy_prefix = match.group(2)
+        expression = cond['expression']
+        match = simple_condition.fullmatch(expression)
+        if match is not None:
+            policy_prefix = match.group(2)
+        else:
+            match = object_condition.fullmatch(expression)
+            if match is None:
+                continue
+            policy_prefix = match.group(3)
         required_root = f'projects/_/buckets/{SILVER_BUCKET}/objects/staging/'
         if not policy_prefix.startswith(required_root):
             continue
